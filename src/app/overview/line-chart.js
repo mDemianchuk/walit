@@ -1,25 +1,33 @@
-new Chart(document.getElementById("line-chart"), {
+new Chart(document.getElementById('line-chart'), {
     type: 'line',
     data: {
-        // days of the month
-        labels: fillArray(1,31,31),
+        // x axis - days of the month
+        labels: incrementFill(1, 31),
         datasets: [{
-            label: "Spent this month",
-            data: [86,86,100,106,107, 200, 500, 634, 800, 1110],
+            label: 'Spent this month',
+            data: randomFill(getNumberOfDaysInCurrentMonth(), 15),
+            pointRadius: 1,
+            borderWidth: 1,
+            borderColor: '#000',
+            fill: false,
+        }, {
+            label: 'Spent previous month',
+            data: randomFill(getNumberOfDaysInPreviousMonth(), 15),
             pointRadius: 0,
             borderWidth: 1,
-            borderColor: "#000",
+            borderDash: [3],
+            borderColor: 'rgba(0,0,0,0.3)',
             fill: false,
         }, {
             label: 'Limit',
-            fill: 'top',
-            backgroundColor: "rgba(255,0,0,0.1)",
-            borderColor: "#FF0000",
-            borderWidth: 1,
-            pointRadius: 0,
-            borderDash: [10],
             // straight line
-            data: fillArray(1000,1000,31),
+            data: new Array(31).fill(3000),
+            pointRadius: 0,
+            borderWidth: 1,
+            borderDash: [10],
+            borderColor: '#FF0000',
+            backgroundColor: 'rgba(255,0,0,0.1)',
+            fill: 'top',
         },
         ]
     },
@@ -40,16 +48,29 @@ new Chart(document.getElementById("line-chart"), {
     }
 });
 
-function fillArray(start, end, len) {
-    if(start == end) {
-        return Array(len).fill(start);
-    } else {
-        var arr = new Array(len);
-        for(var i = start; i <= end; i++) {
-            arr[i-1] = i;
-        }
-        return arr;
+function incrementFill(start, end) {
+    let arr = new Array(end);
+    for (let i = start; i <= end; i++) {
+        arr[i - 1] = i;
     }
+    return arr;
 }
 
+function randomFill(len, step) {
+    let arr = new Array(len);
+    let sum = 0;
+    for (let i = 1; i <= len; i++) {
+        sum += i * (Math.floor(Math.random() * step) + 1);
+        arr[i - 1] = sum;
+    }
+    return arr;
+}
 
+function getNumberOfDaysInCurrentMonth() {
+    return new Date().getDate();
+}
+
+function getNumberOfDaysInPreviousMonth() {
+    let currentDate = new Date();
+    return new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 0).getDate();
+}
