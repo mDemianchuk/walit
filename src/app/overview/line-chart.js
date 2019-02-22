@@ -1,18 +1,21 @@
+import * as dateUtil from "../utils/date-util.js";
+import * as arrayUtil from "../utils/array-util.js";
+
 new Chart(document.getElementById('line-chart'), {
     type: 'line',
     data: {
         // x axis - days of the month
-        labels: incrementFill(1, 31),
+        labels: arrayUtil.incrementFill(1, 31),
         datasets: [{
             label: 'Spent this month',
-            data: randomFill(getNumberOfDaysInCurrentMonth(), 15),
+            data: arrayUtil.randomFill(dateUtil.getNumberOfDaysInCurrentMonth(), 15),
             pointRadius: 1,
             borderWidth: 1,
             borderColor: '#000',
             fill: false,
         }, {
             label: 'Spent previous month',
-            data: randomFill(getNumberOfDaysInPreviousMonth(), 15),
+            data: arrayUtil.randomFill(dateUtil.getNumberOfDaysInPreviousMonth(), 15),
             pointRadius: 0,
             borderWidth: 1,
             borderDash: [3],
@@ -48,29 +51,3 @@ new Chart(document.getElementById('line-chart'), {
     }
 });
 
-function incrementFill(start, end) {
-    let arr = new Array(end);
-    for (let i = start; i <= end; i++) {
-        arr[i - 1] = i;
-    }
-    return arr;
-}
-
-function randomFill(len, step) {
-    let arr = new Array(len);
-    let sum = 0;
-    for (let i = 1; i <= len; i++) {
-        sum += i * (Math.floor(Math.random() * step) + 1);
-        arr[i - 1] = sum;
-    }
-    return arr;
-}
-
-function getNumberOfDaysInCurrentMonth() {
-    return new Date().getDate();
-}
-
-function getNumberOfDaysInPreviousMonth() {
-    let currentDate = new Date();
-    return new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 0).getDate();
-}
