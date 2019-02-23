@@ -1,5 +1,6 @@
 main {
-    text-align: center;
+    width: 500px;
+    margin: auto;
 }
 
 h1 {
@@ -8,11 +9,6 @@ h1 {
 
 p {
     margin-top: 0;
-}
-
-form {
-    margin: auto;
-    width: 500px;
 }
 
 input, select {
