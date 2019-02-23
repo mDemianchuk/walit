@@ -1,0 +1,34 @@
+main {
+    text-align: center;
+}
+
+h1 {
+    margin-bottom: 0;
+}
+
+p {
+    margin-top: 0;
+}
+
+form {
+    margin: auto;
+    width: 500px;
+}
+
+input, select {
+    font-family: inherit;
+    width: 200px;
+    height: 30px;
+    margin: 5px;
+    -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
+    -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
+    box-sizing: border-box;
+}
+
+input[type="submit"] {
+    width: auto;
+}
+
+#name-form {
+    width: 414px;
+}
