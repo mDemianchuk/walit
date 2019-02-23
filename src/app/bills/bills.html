@@ -5,6 +5,7 @@
     <title>Bills</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../../assets/stylesheets/shared/topnav.css">
+    <link rel="stylesheet" href="../../assets/stylesheets/bills/bills.css">
 </head>
 
 <body>
@@ -18,5 +19,33 @@
         <a href="#"><i class="fa fa-bell-o"></i> </a>
     </div>
 </nav>
+<main>
+    <h1>Add your own bill</h1>
+    <p>We'll help you manage it</p>
+    <form class="bill-form">
+        <input id="name-form" type="text" placeholder=" Name of bill"/>
+        <br>
+        <select>
+            <option value="" disabled selected>Type of bill</option>
+            <option value="utilities">Utilities</option>
+            <option value="rent">Rent</option>
+            <option value="medical">Medical</option>
+            <option value="education">Education</option>
+            <option value="loans">Loans</option>
+        </select>
+        <input type="number" min="0" placeholder=" Amount due"/>
+        <br>
+        <input placeholder=" Due date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"/>
+        <select>
+            <option value="" disabled selected>How often?</option>
+            <option value="onetime">One time</option>
+            <option value="weekly">Weekly</option>
+            <option value="biweekly">Biweekly</option>
+            <option value="monthly">Monthly</option>
+        </select>
+        <br>
+        <input type="submit" value="Add">
+    </form>
+</main>
 </body>
 </html>
