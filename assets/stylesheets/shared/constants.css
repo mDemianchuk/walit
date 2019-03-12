@@ -19,4 +19,7 @@
     --form-height: 30px;
     --form-width: 200px;
     --form-margin: 5px;
+
+    /* table constants */
+    --table-padding: 20px;
 }

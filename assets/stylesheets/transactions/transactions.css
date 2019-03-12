@@ -1,0 +1,15 @@
+main {
+    text-align: center;
+}
+
+table {
+    margin: auto;
+}
+
+tr, td {
+    padding: var(--table-padding);
+}
+
+tbody > tr > :nth-child(5)::before {
+    content: "$";
+}
