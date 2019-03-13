@@ -5,13 +5,11 @@ main {
 
 h1 {
     margin-bottom: 0;
-}
-
-p {
-    margin-top: 0;
+    font-weight: var(--header-font-weight);
 }
 
 input, select {
+    color: inherit;
     font-family: inherit;
     width: var(--form-width);
     height: var(--form-height);
@@ -21,7 +19,7 @@ input, select {
     box-sizing: border-box;
 }
 
-input[type="submit"] {
+input[type="button"] {
     width: auto;
 }
 

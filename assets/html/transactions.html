@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Transactions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../stylesheets/shared/constants.css">
+    <link rel="stylesheet" href="../stylesheets/shared/navbar.css">
+    <link rel="stylesheet" href="../stylesheets/transactions.css">
+</head>
+
+<body>
+<nav class="navbar">
+    <a href="overview.html">Overview</a>
+    <a class="active" href="transactions.html">Transactions</a>
+    <a href="bills.html">Bills</a>
+    <div class="navbar-right">
+        <a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
+        <a href="#"><i class="fa fa-fw fa-user"></i> Log Out</a>
+        <a href="#"><i class="fa fa-bell-o"></i> </a>
+    </div>
+</nav>
+<main>
+    <h1>Add a transaction</h1>
+    <form class="transaction-form">
+        <input id="description" type="text" placeholder=" Description of transaction"/>
+        <br>
+        <select id="category">
+            <option value="" disabled selected> Category</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Rent">Rent</option>
+            <option value="Medical">Medical</option>
+            <option value="Education">Education</option>
+            <option value="Loans">Loans</option>
+        </select>
+        <input id="amount" type="number" min="0" placeholder=" Amount"/>
+        <br>
+        <input id='date' placeholder=" Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"/>
+        <select id="type">
+            <option value="" disabled selected> Type</option>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+        </select>
+        <br>
+        <input type="button" id='add-button' value="Add">
+    </form>
+</main>
+<script type="module" src="../../dist/assets/scripts/index.bundle.js"></script>
+</body>
+</html>

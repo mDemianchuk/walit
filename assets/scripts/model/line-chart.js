@@ -1,5 +1,8 @@
-import * as dateUtil from "../utils/date-util.js";
-import * as arrayUtil from "../utils/array-util.js";
+const Chart = require('chart.js');
+const dateUtil = require('./../utils/date-util');
+const arrayUtil = require('./../utils/array-util');
+
+Chart.defaults.global.defaultFontSize = 14;
 
 new Chart(document.getElementById('line-chart'), {
     type: 'line',
@@ -36,10 +39,6 @@ new Chart(document.getElementById('line-chart'), {
     },
     options: {
         responsive: false,
-        title: {
-            display: true,
-            text: 'Spent in February'
-        },
         scales: {
             xAxes: [{
                 display: false

@@ -1,19 +1,21 @@
 :root {
     /* page constants */
-    --min-page-width: 700px;
+    --min-page-width: 1000px;
 
     /* font constants */
     --page-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
     --navbar-font-size: 17px;
+    --header-font-weight: 400;
 
     /* color constants */
-    --navbar-background-color: #A31621;
-    --navbar-active-background-color: #DB222A;
+    --navbar-background-color: #c94b4b;
+    --navbar-active-background-color: rgba(255, 255, 255, 0.2);
     --navbar-text-color: #FCFAF9;
+    --backfround-gradien: linear-gradient(45deg, var(--navbar-background-color), #4b134f);
 
     /* chart constants */
-    --chart-width: 600px;
-    --chart-padding: 25px;
+    --chart-width: 800px;
+    --chart-padding: 0px 25px 25px 25px;
 
     /* form constants */
     --form-height: 30px;

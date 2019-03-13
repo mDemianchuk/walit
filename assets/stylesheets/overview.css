@@ -1,0 +1,11 @@
+.chart {
+    margin: auto;
+    width: var(--chart-width);
+    padding: var(--chart-padding);
+}
+
+h1 {
+    font-weight: var(--header-font-weight);
+    text-align: center;
+    margin-bottom: 0;
+}

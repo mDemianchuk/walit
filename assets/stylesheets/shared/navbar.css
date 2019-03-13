@@ -6,7 +6,7 @@ body {
 
 /* Add a black background color to the top navigation */
 .navbar {
-    background-color: var(--navbar-background-color);
+    background: var(--backfround-gradien);
     overflow: hidden;
 }
 

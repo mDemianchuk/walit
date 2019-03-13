@@ -1,7 +1,10 @@
+const Chart = require('chart.js');
+
+Chart.defaults.global.defaultFontSize = 14;
+
 new Chart(document.getElementById('doughnut-chart'), {
     type: 'doughnut',
     data: {
-
         labels: ['Rent', 'Tuition', 'Bills', 'Gas', 'Insurance'],
         datasets: [
             {
@@ -12,10 +15,6 @@ new Chart(document.getElementById('doughnut-chart'), {
         ]
     },
     options: {
-        responsive: false,
-        title: {
-            display: true,
-            text: 'Where did you spend your money?'
-        }
+        responsive: false
     }
 });
