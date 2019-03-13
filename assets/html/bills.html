@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <title>Bills</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../../assets/stylesheets/shared/constants.css">
-    <link rel="stylesheet" href="../../assets/stylesheets/shared/navbar.css">
-    <link rel="stylesheet" href="../../assets/stylesheets/bills/bills.css">
-
+    <link rel="stylesheet" href="../stylesheets/shared/constants.css">
+    <link rel="stylesheet" href="../stylesheets/shared/navbar.css">
+    <link rel="stylesheet" href="../stylesheets/bills.css">
 </head>
 
 <body>
 <nav class="navbar">
-    <a href="../overview/overview.html">Overview</a>
-    <a href="../transactions/transactions.html">Transactions</a>
+    <a href="overview.html">Overview</a>
+    <a href="transactions.html">Transactions</a>
     <a class="active" href="bills.html">Bills</a>
     <div class="navbar-right">
         <a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
@@ -23,17 +22,16 @@
 </nav>
 <main>
     <h1>Add your own bill</h1>
-    <p>We'll help you manage it</p>
     <form class="bill-form">
         <input id="name-form" type="text" placeholder=" Name of bill"/>
         <br>
         <select>
-            <option value="" disabled selected>Type of bill</option>
-            <option value="utilities">Utilities</option>
-            <option value="rent">Rent</option>
-            <option value="medical">Medical</option>
-            <option value="education">Education</option>
-            <option value="loans">Loans</option>
+            <option value="" disabled selected>Category of bill</option>
+            <option value="Utilities">Utilities</option>
+            <option value="Rent">Rent</option>
+            <option value="Medical">Medical</option>
+            <option value="Education">Education</option>
+            <option value="Loans">Loans</option>
         </select>
         <input type="number" min="0" placeholder=" Amount due"/>
         <br>
@@ -46,7 +44,7 @@
             <option value="monthly">Monthly</option>
         </select>
         <br>
-        <input type="submit" value="Add">
+        <input type="button" value="Add">
     </form>
 </main>
 </body>

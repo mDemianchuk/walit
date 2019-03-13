@@ -1,10 +1,11 @@
 :root {
     /* page constants */
-    --min-page-width: 700px;
+    --min-page-width: 1000px;
 
     /* font constants */
     --page-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
     --navbar-font-size: 17px;
+    --header-font-weight: 400;
 
     /* color constants */
     --navbar-background-color: #A31621;
@@ -12,8 +13,8 @@
     --navbar-text-color: #FCFAF9;
 
     /* chart constants */
-    --chart-width: 600px;
-    --chart-padding: 25px;
+    --chart-width: 800px;
+    --chart-padding: 0px 25px 25px 25px;
 
     /* form constants */
     --form-height: 30px;

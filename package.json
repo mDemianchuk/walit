@@ -1,0 +1,20 @@
+{
+  "name": "walit",
+  "version": "0.0.1",
+  "description": "A personal budget manager",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mDemianchuk/walit.git"
+  },
+  "author": "Asbel Assefa, Vihar Doshi, Shend Vishi, and Mykola Demianchuk",
+  "homepage": "https://mdemianchuk.github.io/walit/",
+  "dependencies": {
+    "browserify": "^16.2.3",
+    "chart.js": "^2.7.3",
+    "event-stream": "^4.0.1",
+    "gulp": "^4.0.0",
+    "gulp-rename": "^1.4.0",
+    "uuid": "^3.3.2",
+    "vinyl-source-stream": "^2.0.0"
+  }
+}
