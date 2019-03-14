@@ -2,14 +2,19 @@
     /* page constants */
     --min-page-width: 700px;
 
+    /* navbar constants */
+    --navbar-background-color: #c94b4b;
+    --navbar-active-background-color: rgba(255, 255, 255, 0.2);
+    --navbar-text-color: #fcfaf9;
+    --navbar-font-size: 17px;
+    --navbar-padding: 14px 16px;
+
     /* font constants */
     --page-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    --navbar-font-size: 17px;
+    --font-weight: 400;
 
     /* color constants */
-    --navbar-background-color: #A31621;
-    --navbar-active-background-color: #DB222A;
-    --navbar-text-color: #FCFAF9;
+    --backfround-gradien: linear-gradient(45deg, var(--navbar-background-color), #4b134f);
 
     /* chart constants */
     --chart-width: 600px;
