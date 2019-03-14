@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Overview</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../stylesheets/shared/constants.css">
+    <link rel="stylesheet" href="../stylesheets/shared/page.css">
+    <link rel="stylesheet" href="../stylesheets/shared/navbar.css">
+    <link rel="stylesheet" href="../stylesheets/charts.css">
+</head>
+
+<body>
+<nav class="navbar">
+    <a class="active" href="overview.html">Overview</a>
+    <a href="transactions.html">Transactions</a>
+    <a href="bills.html">Bills</a>
+    <div class="navbar-right">
+        <a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
+        <a href="#"><i class="fa fa-fw fa-user"></i> Log Out</a>
+        <a href="#"><i class="fa fa-bell-o"></i> </a>
+    </div>
+</nav>
+<main>
+    <h1>Spent this month</h1>
+    <canvas class="chart" id="line-chart"></canvas>
+    <h1>Where did you spend your money?</h1>
+    <canvas class="chart" id="doughnut-chart"></canvas>
+    <script type="module" src="../scripts/model/line-chart.js"></script>
+    <script type="module" src="../scripts/model/doughnut-chart.js"></script>
+</main>
+</body>
+</html>

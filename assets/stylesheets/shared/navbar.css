@@ -1,12 +1,6 @@
-body {
-    font-family: var(--page-font);
-    min-width: var(--min-page-width);
-    margin: 0;
-}
-
 /* Add a black background color to the top navigation */
 .navbar {
-    background-color: var(--navbar-background-color);
+    background: var(--backfround-gradien);
     overflow: hidden;
 }
 
@@ -14,7 +8,7 @@ body {
 .navbar a {
     float: left;
     text-align: center;
-    padding: 14px 16px;
+    padding: var(--navbar-padding);
     text-decoration: none;
     font-size: var(--navbar-font-size);
     color: var(--navbar-text-color);
