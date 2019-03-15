@@ -5,9 +5,9 @@ p {
 input,
 select {
     font-family: inherit;
-    width: var(--form-width);
-    height: var(--form-height);
-    margin: var(--form-margin) var(--form-margin) var(--form-margin) 0;
+    width: var(--input-width);
+    height: var(--input-height);
+    margin: var(--input-margin) var(--input-margin) var(--input-margin) 0;
     -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
     -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
     box-sizing: border-box;
@@ -18,5 +18,5 @@ input[type="button"] {
 }
 
 #name-form {
-    width: calc((var(--form-width) + var(--form-margin)) * 2); /* (200px + 5px) * 2 */
+    width: calc((var(--input-width) + var(--input-margin)) * 2);
 }

@@ -20,10 +20,15 @@
     --chart-width: 600px;
     --chart-padding: 25px;
 
-    /* form constants */
-    --form-height: 30px;
-    --form-width: 200px;
-    --form-margin: 5px;
+    /* input constants */
+    --input-height: 30px;
+    --input-width: 200px;
+    --input-margin: 5px;
+
+    /* login input constants */
+    --login-input-height: 45px;
+    --login-input-width: 300px;
+    --login-input-margin: 10px;
 
     /* table constants */
     --table-padding: 20px;
