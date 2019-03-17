@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../stylesheets/shared/constants.css">
     <link rel="stylesheet" href="../stylesheets/shared/page.css">
     <link rel="stylesheet" href="../stylesheets/shared/navbar.css">
+    <link rel="stylesheet" href="../stylesheets/shared/input-forms.css">
     <link rel="stylesheet" href="../stylesheets/transactions.css">
 </head>
 
@@ -22,6 +23,22 @@
     </div>
 </nav>
 <main>
+    <h1>Add a transaction</h1>
+    <form class="transaction-form">
+        <input class="double-size-input" type="text" placeholder="Description of transaction"/>
+        <br>
+        <input type="text" placeholder="Category"/>
+        <input id="amount" type="number" min="0" placeholder="Amount"/>
+        <br>
+        <input id='date' placeholder="Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"/>
+        <select id="type">
+            <option value="" disabled selected> Type</option>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+        </select>
+        <br>
+        <input type="button" id="add-button" value="Add">
+    </form>
     <h1>Most recent transactions</h1>
     <table id="transactions">
         <thead>
@@ -29,7 +46,7 @@
             <th>Date</th>
             <th>Description</th>
             <th>Category</th>
-            <th id="amount">Amount</th>
+            <th>Amount</th>
             <th>Type</th>
         </tr>
         </thead>
