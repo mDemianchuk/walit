@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../stylesheets/shared/constants.css">
     <link rel="stylesheet" href="../stylesheets/shared/page.css">
     <link rel="stylesheet" href="../stylesheets/shared/navbar.css">
-    <link rel="stylesheet" href="../stylesheets/bills.css">
+    <link rel="stylesheet" href="../stylesheets/shared/input-forms.css">
 </head>
 
 <body>
@@ -23,9 +23,8 @@
 </nav>
 <main>
     <h1>Add your own bill</h1>
-    <p>We'll help you manage it</p>
     <form class="bill-form">
-        <input id="name-form" type="text" placeholder=" Name of bill"/>
+        <input class="double-size-input" type="text" placeholder="Name of bill"/>
         <br>
         <select>
             <option value="" disabled selected>Type of bill</option>
@@ -35,7 +34,7 @@
             <option value="education">Education</option>
             <option value="loans">Loans</option>
         </select>
-        <input type="number" min="0" placeholder=" Amount due"/>
+        <input type="number" min="0" placeholder="Amount due"/>
         <br>
         <input placeholder=" Due date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"/>
         <select>
@@ -46,7 +45,7 @@
             <option value="monthly">Monthly</option>
         </select>
         <br>
-        <input type="button" value="Add">
+        <input type="button" id="add-button" value="Add">
     </form>
 </main>
 </body>
