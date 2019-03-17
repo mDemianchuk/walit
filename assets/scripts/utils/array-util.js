@@ -1,4 +1,4 @@
-export function incrementFill(start, end) {
+function incrementFill(start, end) {
     let arr = new Array(end);
     for (let i = start; i <= end; i++) {
         arr[i - 1] = i;
@@ -6,7 +6,7 @@ export function incrementFill(start, end) {
     return arr;
 }
 
-export function randomFill(len, step) {
+function randomFill(len, step) {
     let arr = new Array(len);
     let sum = 0;
     for (let i = 1; i <= len; i++) {
@@ -15,3 +15,8 @@ export function randomFill(len, step) {
     }
     return arr;
 }
+
+module.exports = {
+    incrementFill,
+    randomFill
+};
