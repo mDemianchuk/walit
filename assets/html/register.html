@@ -7,18 +7,25 @@
     <link rel="stylesheet" href="../stylesheets/shared/page.css">
     <link rel="stylesheet" href="../stylesheets/login.css">
 </head>
-
 <body>
 <main>
     <div class="login-container">
-        <form action="overview.html">
+        <form action="login.html">
+            <input type="text" class="text-line" placeholder="First Name" required>
+            <br>
+            <input type="text" class="text-line" placeholder="Last Name" required>
+            <br>
             <input type="text" class="text-line" placeholder="Username" required>
             <br>
             <input type="password" class="text-line" placeholder="Password" required>
             <br>
-            <input type="submit" value="Log In">
+            <input type="email" class="text-line" placeholder="E-mail Address" required>
             <br>
-            <span>Not registered? <a href="register.html">Create an account</a></span>
+            <input type="phone" class="text-line" placeholder="Phone number" required>
+            <br>
+            <input type="submit" value="Register">
+            <br>
+            <span>Already have an account? <a href="login.html">Log in</a></span>
         </form>
     </div>
 </main>
