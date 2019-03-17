@@ -1,0 +1,21 @@
+{
+  "name": "walit",
+  "version": "1.0.0",
+  "description": "A personal budget manager",
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mDemianchuk/walit.git"
+  },
+  "author": "Asbel Assefa, Vihar Doshi, Shend Vishi, and Mykola Demianchuk",
+  "homepage": "https://mdemianchuk.github.io/walit/",
+  "devDependencies": {
+    "chart.js": "^2.7.3",
+    "uuid": "^3.3.2",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  },
+  "dependencies": {}
+}

@@ -1,21 +1,24 @@
-new Chart(document.getElementById('doughnut-chart'), {
-    type: 'doughnut',
-    data: {
+const Chart = require('chart.js');
 
-        labels: ['Rent', 'Tuition', 'Bills', 'Gas', 'Insurance'],
-        datasets: [
-            {
-                label: '$',
-                backgroundColor: ['#3e95cd', '#8e5ea2','#3cba9f','#e8c3b9','#c45850'],
-                data: [600,1000,234,112,75]
-            }
-        ]
-    },
-    options: {
-        responsive: false,
-        title: {
-            display: true,
-            text: 'Where did you spend your money?'
+function displayChart(element, labels, backgroundColor, data) {
+    new Chart(element, {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [
+                {
+                    label: '$',
+                    backgroundColor: backgroundColor,
+                    data: data
+                }
+            ]
+        },
+        options: {
+            responsive: false
         }
-    }
-});
+    });
+}
+
+module.exports = {
+    displayChart
+};
