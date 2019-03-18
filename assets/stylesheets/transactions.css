@@ -1,5 +1,6 @@
 table {
-    margin: auto;
+    margin: var(--transactions-table-margin);
+    width: var(--transactions-table-width);
 }
 
 th,
@@ -8,4 +9,26 @@ td {
     padding: var(--table-padding);
 }
 
-/* TODO: the transaction table should be of fixed height (for example 250px) and scrollable */
+tbody {
+    display: var(--transactions-table-tbody-display);
+    overflow-y: var(--transactions-table-tbody-overflow-y);
+    overflow-x: var(--transactions-table-tbody-overflow-x);
+    height: var(--transactions-table-tbody-height);
+}
+
+thead {
+    display: var(--transactions-table-thead-display);
+    width: var(--transactions-table-thead-width);
+    table-layout: var(--transactions-table-thead-table-layout);
+}
+
+tbody tr {
+    table-layout: var(--transactions-table-tbody-tr-table-layout);
+    display: var(--transactions-table-tbody-tr-display);
+    width: var(--transactions-table-tbody-tr-width);
+}
+
+
+tr:nth-child(even) {
+    background-color: var(--transactions-table-even-row-background);
+}

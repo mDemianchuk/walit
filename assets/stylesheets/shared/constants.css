@@ -31,5 +31,18 @@
     --login-form-margin: 50px;
 
     /* table constants */
-    --table-padding: 20px;
+    --table-padding: 10px;
+    --transactions-table-width: 60%;
+    --transactions-table-margin: auto auto 30px;
+    --transactions-table-even-row-background: #f2f2f2;
+    --transactions-table-thead-display: table;
+    --transactions-table-thead-width: calc(100% - 17px); /* calc() function subtracts 17px from the width of the parent element */
+    --transactions-table-thead-table-layout: fixed;
+    --transactions-table-tbody-display: block;
+    --transactions-table-tbody-overflow-y: scroll;
+    --transactions-table-tbody-overflow-x: hidden;
+    --transactions-table-tbody-height: 400px;
+    --transactions-table-tbody-tr-table-layout: fixed;
+    --transactions-table-tbody-tr-display: table;
+    --transactions-table-tbody-tr-width: 100%;
 }

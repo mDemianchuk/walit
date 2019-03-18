@@ -44,17 +44,18 @@
     </form>
     <div id="transactions">
         <h1>Most recent transactions</h1>
-        <table id="transaction-table" class="fixed-header">
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Amount</th>
-                <th>Type</th>
-            </tr>
-            </thead>
-        </table>
+            <table id="transactions-table">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Type</th>
+                </tr>
+                </thead>
+                <tbody id="transactions-table-body"> </tbody>
+            </table>
     </div>
 </main>
 <script src="./../../dist/transactions.js"></script>
