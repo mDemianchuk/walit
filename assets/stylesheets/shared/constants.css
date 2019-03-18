@@ -21,14 +21,14 @@
     --chart-padding: 25px;
 
     /* input constants */
-    --input-height: 30px;
-    --input-width: 200px;
-    --input-margin: 5px;
+    --input-height: 45px;
+    --input-width: 300px;
+    --input-margin: 10px;
+    --input-padding-left: 5px;
+    --input-text-color: black;
 
-    /* login input constants */
-    --login-input-height: 45px;
-    --login-input-width: 300px;
-    --login-input-margin: 10px;
+    /* login form constants */
+    --login-form-margin: 50px;
 
     /* table constants */
     --table-padding: 20px;
