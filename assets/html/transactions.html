@@ -25,13 +25,16 @@
 <main>
     <h1>Add a transaction</h1>
     <form class="transaction-form">
-        <input id="description" class="double-size-input" type="text" placeholder="Description of transaction"/>
+        <input id="description" class="text-line" type="text" placeholder="Description of transaction">
         <br>
-        <input id="category" type="text" placeholder="Category"/>
-        <input id="amount" type="number" min="0" placeholder="Amount"/>
+        <input id="category" class="text-line" type="text" placeholder="Category">
         <br>
-        <input id="date" placeholder="Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')"/>
-        <select id="type">
+        <input id="amount" class="text-line" type="number" min="0" placeholder="Amount">
+        <br>
+        <input id="date" class="text-line" placeholder="Date" type="text" onfocus="(this.type='date')"
+               onblur="(this.type='text')">
+        <br>
+        <select id="type" class="text-line">
             <option value="" disabled selected> Type</option>
             <option value="Income">Income</option>
             <option value="Expense">Expense</option>

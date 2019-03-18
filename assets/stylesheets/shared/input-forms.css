@@ -3,16 +3,31 @@ select {
     font-family: inherit;
     width: var(--input-width);
     height: var(--input-height);
-    margin: var(--input-margin) var(--input-margin) var(--input-margin) 0;
+    margin: var(--input-margin);
     -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
     -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
     box-sizing: border-box;
 }
 
-input[type="button"] {
-    width: auto;
+input.text-line {
+    padding-left: var(--input-padding-left);
 }
 
-.double-size-input {
-    width: calc((var(--input-width) + var(--input-margin)) * 2);
+input::placeholder,
+option {
+    color: var(--input-text-color);
+}
+
+input[type="button"] {
+    border: none;
+    outline: none;
+    color: var(--navbar-text-color);
+    background: var(--backfround-gradien);
+}
+
+.text-line {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: solid var(--navbar-background-color) 1px;
 }

@@ -11,15 +11,15 @@ body {
 }
 
 form {
-    margin: 50px;
+    margin: var(--login-form-margin);
 }
 
 input {
     font-family: inherit;
     color: var(--navbar-text-color);
-    width: var(--login-input-width);
-    height: var(--login-input-height);
-    margin: var(--login-input-margin);
+    width: var(--input-width);
+    height: var(--input-height);
+    margin: var(--input-margin);
     -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
     -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
     box-sizing: border-box;
@@ -32,15 +32,15 @@ input[type="submit"] {
     background-color: var(--navbar-text-color);
 }
 
-::placeholder {
-    color: var(--navbar-text-color);
-}
-
 .text-line {
     background-color: transparent;
     outline: none;
     border: none;
     border-bottom: solid var(--navbar-text-color) 1px;
+}
+
+::placeholder {
+    color: var(--navbar-text-color);
 }
 
 span {
