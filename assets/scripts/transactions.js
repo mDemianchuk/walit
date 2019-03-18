@@ -11,9 +11,9 @@ function displayTable() {
 function displayTransaction(transaction) {
     transactionDiv.style.display = 'block';
 
-    let transactionTable = document.getElementById('transaction-table');
+    let transactionTableBody = document.getElementById('transactions-table-body');
 
-    let row = transactionTable.insertRow();
+    let row = transactionTableBody.insertRow();
 
     let dateColumn = row.insertCell(0);
     dateColumn.innerHTML = dateUtil.getShortDate(transaction.date);
