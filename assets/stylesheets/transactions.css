@@ -7,3 +7,5 @@ tr,
 td {
     padding: var(--table-padding);
 }
+
+/* TODO: the transaction table should be of fixed height (for example 250px) and scrollable */
