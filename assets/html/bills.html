@@ -24,9 +24,9 @@
 <main>
     <h1>Add your own bill</h1>
     <form class="bill-form">
-        <input class="text-line" type="text" placeholder="Description of bill">
+        <input type="text" placeholder="Description of bill">
         <br>
-        <select id="bill-categoty" class="text-line">
+        <select id="bill-categoty">
             <option value="" disabled selected>Category</option>
             <option value="utilities">Utilities</option>
             <option value="rent">Rent</option>
@@ -35,12 +35,12 @@
             <option value="loans">Loans</option>
         </select>
         <br>
-        <input class="text-line" type="number" min="0" placeholder="Amount due">
+        <input type="number" min="0" placeholder="Amount due">
         <br>
-        <input class="text-line" placeholder=" Due date" type="text" onfocus="(this.type='date')"
+        <input placeholder=" Due date" type="text" onfocus="(this.type='date')"
                onblur="(this.type='text')"/>
         <br>
-        <select class="text-line">
+        <select>
             <option value="" disabled selected>How often?</option>
             <option value="onetime">One time</option>
             <option value="weekly">Weekly</option>
