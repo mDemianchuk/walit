@@ -1,6 +1,6 @@
 table {
     margin: var(--transactions-table-margin);
-    width: var(--transactions-table-width);
+    width: 60%;
 }
 
 th,
@@ -10,24 +10,23 @@ td {
 }
 
 tbody {
-    display: var(--transactions-table-tbody-display);
-    overflow-y: var(--transactions-table-tbody-overflow-y);
-    overflow-x: var(--transactions-table-tbody-overflow-x);
+    display: block;
+    overflow-y: scroll;
+    overflow-x: hidden;
     height: var(--transactions-table-tbody-height);
 }
 
 thead {
-    display: var(--transactions-table-thead-display);
-    width: var(--transactions-table-thead-width);
-    table-layout: var(--transactions-table-thead-table-layout);
+    display: table;
+    width: calc(100% - var(--scrollbar-width));
+    table-layout: fixed;
 }
 
 tbody tr {
-    table-layout: var(--transactions-table-tbody-tr-table-layout);
-    display: var(--transactions-table-tbody-tr-display);
-    width: var(--transactions-table-tbody-tr-width);
+    table-layout: fixed;
+    display: table;
+    width: 100%;
 }
-
 
 tr:nth-child(even) {
     background-color: var(--transactions-table-even-row-background);

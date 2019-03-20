@@ -7,6 +7,10 @@ select {
     -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
     -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
     box-sizing: border-box;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    border-bottom: solid var(--navbar-background-color) 1px;
 }
 
 input.text-line {
@@ -23,11 +27,4 @@ input[type="button"] {
     outline: none;
     color: var(--navbar-text-color);
     background: var(--backfround-gradien);
-}
-
-.text-line {
-    background-color: transparent;
-    outline: none;
-    border: none;
-    border-bottom: solid var(--navbar-background-color) 1px;
 }
