@@ -34,6 +34,5 @@
     /* table constants */
     --table-padding: 10px;
     --transactions-table-margin: auto auto 30px;
-    --transactions-table-even-row-background: #f2f2f2;
     --transactions-table-tbody-height: 400px;
 }

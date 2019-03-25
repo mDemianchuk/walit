@@ -1,33 +1,36 @@
 table {
-    margin: var(--transactions-table-margin);
     width: 60%;
-}
-
-th,
-tr,
-td {
-    padding: var(--table-padding);
-}
-
-tbody {
-    display: block;
-    overflow-y: scroll;
-    overflow-x: hidden;
     height: var(--transactions-table-tbody-height);
+    margin: var(--transactions-table-margin);
+    table-layout: fixed;
+    overflow: hidden;
 }
 
 thead {
+    width: 100%;
     display: table;
-    width: calc(100% - var(--scrollbar-width));
-    table-layout: fixed;
+    border-bottom: solid var(--navbar-background-color) 3px;
+}
+
+tbody {
+    height: var(--transactions-table-tbody-height);
+    width: calc(100% + var(--scrollbar-width));
+    display: block;
+    overflow-y: scroll;
+    padding-right: var(--scrollbar-width); /* Increase/decrease this value for cross-browser compatibility */
 }
 
 tbody tr {
-    table-layout: fixed;
-    display: table;
     width: 100%;
+    border-bottom: solid var(--navbar-background-color) 1px;
+    display: table;
 }
 
-tr:nth-child(even) {
-    background-color: var(--transactions-table-even-row-background);
+table td,
+table th {
+    width: 20%;
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: var(--table-padding);
 }
