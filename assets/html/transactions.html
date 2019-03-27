@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
     <meta charset="utf-8">
     <title>Transactions</title>
@@ -31,7 +31,7 @@
         <br>
         <input id="amount" type="number" min="0" placeholder="Amount">
         <br>
-        <input id="date" placeholder="Date" type="text" onfocus="(this.type='date')"
+        <input id="date" placeholder="Date" type="text" onclick="isFutureDate" onfocus="(this.type='date')"
                onblur="(this.type='text')">
         <br>
         <select id="type">

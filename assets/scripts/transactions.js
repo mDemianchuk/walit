@@ -1,22 +1,19 @@
 const Transaction = require('./model/transaction');
 const jsonUtil = require('./utils/json-util');
 const dateUtil = require('./utils/date-util');
-
+const validUtil = require('./utils/validation-util');
+const Modernizr = require('modernizr')
 function displayTable() {
     for (let transaction of transactionList) {
         displayTransaction(transaction);
     }
 }
-
 function displayTransaction(transaction) {
     transactionDiv.style.display = 'block';
 
     let transactionTableBody = document.getElementById('transactions-table-body');
 
-    let row = transactionTableBody.insertRow();
-
-    let dateColumn = row.insertCell(0);
-    dateColumn.innerHTML = dateUtil.getShortDate(transaction.date);
+    let row = transactionTableBody.insertRow();   
 
     let descriptionColumn = row.insertCell(1);
     descriptionColumn.innerHTML = transaction.description;
@@ -47,8 +44,9 @@ addButton.addEventListener('click', () => {
     let type = document.getElementById('type').value;
     let description = document.getElementById('description').value;
     let category = document.getElementById('category').value;
-    let amount = document.getElementById('amount').value;
-
+    let amount = setInputFilter(document.getElementById('amount'), function(value) {
+      return /^-?\d*[.,]?\d*$/.test(value);
+    });   
     let transaction = new Transaction(date, type, description, category, amount);
     transactionList.push(transaction);
 
