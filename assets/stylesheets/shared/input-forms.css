@@ -1,30 +1,41 @@
 input,
 select {
-    font-family: inherit;
-    width: var(--input-width);
-    height: var(--input-height);
-    margin: var(--input-margin);
-    -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
-    -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
-    box-sizing: border-box;
-    background-color: transparent;
-    outline: none;
-    border: none;
-    border-bottom: solid var(--navbar-background-color) 1px;
+  font-family: inherit;
+  width: var(--input-width);
+  height: var(--input-height);
+  margin: var(--input-margin);
+  -webkit-box-sizing: border-box;
+  /* For legacy WebKit based browsers */
+  -moz-box-sizing: border-box;
+  /* For legacy (Firefox <29) Gecko based browsers */
+  box-sizing: border-box;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border-bottom: solid var(--navbar-background-color) 1px;
 }
 
-input.text-line {
-    padding-left: var(--input-padding-left);
+input {
+  padding-left: var(--input-padding-left);
 }
 
 input::placeholder,
 option {
-    color: var(--input-text-color);
+  color: var(--input-text-color);
 }
 
-input[type="button"] {
-    border: none;
-    outline: none;
-    color: var(--navbar-text-color);
-    background: var(--backfround-gradien);
+input[type="submit"] {
+  border: none;
+  outline: none;
+  color: var(--navbar-text-color);
+  background: var(--background-gradient);
+}
+
+::-webkit-inner-spin-button {
+  display: none;
+}
+
+::-webkit-calendar-picker-indicator {
+  font-size: 9px;
+  background: none;
 }

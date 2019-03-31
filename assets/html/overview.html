@@ -1,34 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title>Overview</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../stylesheets/shared/constants.css">
-    <link rel="stylesheet" href="../stylesheets/shared/page.css">
-    <link rel="stylesheet" href="../stylesheets/shared/navbar.css">
-    <link rel="stylesheet" href="../stylesheets/charts.css">
+  <meta charset="utf-8">
+  <title>Overview | waLit - Your Personal Budget Manager</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../stylesheets/shared/constants.css">
+  <link rel="stylesheet" href="../stylesheets/shared/page.css">
+  <link rel="stylesheet" href="../stylesheets/shared/navbar.css">
+  <link rel="stylesheet" href="../stylesheets/charts.css">
 </head>
 
 <body>
-<nav class="navbar">
-    <a class="active" href="overview.html">Overview</a>
-    <a href="transactions.html">Transactions</a>
-    <a href="bills.html">Bills</a>
-    <div class="navbar-right">
-        <a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
-        <a href="login.html"><i class="fa fa-fw fa-user"></i> Log Out</a>
-        <a href="#"><i class="fa fa-bell-o"></i> </a>
+  <nav>
+    <div class="navbar-group">
+      <a class="active" href="overview.html">Overview</a>
+      <a href="transactions.html">Transactions</a>
     </div>
-</nav>
-<main>
+    <div class="navbar-group">
+      <a class="logo" href="overview.html">waLit</a>
+    </div>
+    <div class="navbar-group">
+      <a href="#"><i class="fa fa-cog" aria-hidden="true"></i>Settings</a>
+      <a href="login.html"><i class="fa fa-fw fa-user"></i>Log Out</a>
+    </div>
+  </nav>
+  <main>
     <h1>Spent this month</h1>
     <canvas class="chart" id="line-chart"></canvas>
     <h1>Where did you spend your money?</h1>
     <canvas class="chart" id="doughnut-chart"></canvas>
     <script src="../../dist/charts.js"></script>
-</main>
+  </main>
 </body>
+
 </html>
 
 <!--TODO: dynamically update charts with new transactions -->

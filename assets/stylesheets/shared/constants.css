@@ -1,21 +1,25 @@
 :root {
     /* page constants */
-    --min-page-width: 700px;
+    --min-page-width: 750px;
     --scrollbar-width: 17px;
+    --hover-transition: all 0.3s ease-in-out;
 
     /* navbar constants */
+    --navbar-height: 3em;
     --navbar-background-color: #c94b4b;
     --navbar-active-background-color: rgba(255, 255, 255, 0.2);
     --navbar-text-color: #fcfaf9;
-    --navbar-font-size: 17px;
-    --navbar-padding: 14px 16px;
+    --navbar-font-size: 1em;
+    --navbar-logo-size: 1.6em;
+    --navbar-padding: 0 1em;
+    --navbar-link-size: 6em;
+    --navbar-icon-padding: 0.5em;
 
     /* font constants */
-    --page-font: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    --font-weight: 400;
+    --page-font: 'Poppins', sans-serif;
 
     /* color constants */
-    --backfround-gradien: linear-gradient(45deg, var(--navbar-background-color), #4b134f);
+    --background-gradient: linear-gradient(45deg, var(--navbar-background-color), #4b134f);
 
     /* chart constants */
     --chart-width: 600px;
@@ -25,11 +29,11 @@
     --input-height: 45px;
     --input-width: 300px;
     --input-margin: 10px;
-    --input-padding-left: 5px;
+    --input-padding-left: 4px;
     --input-text-color: black;
 
     /* login form constants */
-    --login-form-margin: 50px;
+    --login-form-padding: 0 50px 50px 50px;
 
     /* table constants */
     --table-padding: 10px;

@@ -1,31 +1,47 @@
-/* Add a black background color to the top navigation */
-.navbar {
-    background: var(--backfround-gradien);
-    overflow: hidden;
+nav {
+  display: flex;
+  justify-content: space-evenly;
+  background: var(--background-gradient);
+  overflow: hidden;
+  height: var(--navbar-height);
 }
 
-/* Style the links inside the navigation bar */
-.navbar a {
-    float: left;
-    text-align: center;
-    padding: var(--navbar-padding);
-    text-decoration: none;
-    font-size: var(--navbar-font-size);
-    color: var(--navbar-text-color);
+.navbar-group {
+  display: flex;
 }
 
-/* Change the color of links on hover */
-.navbar a:hover {
-    color: var(--navbar-background-color);
-    background-color: var(--navbar-text-color);
+nav .logo {
+  font-size: var(--navbar-logo-size);
 }
 
-/* Add a color to the active/current link */
-.navbar a.active {
-    color: var(--navbar-text-color);
-    background-color: var(--navbar-active-background-color);
+nav a {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  width: var(--navbar-link-size);
+  padding: var(--navbar-padding);
+  font-size: var(--navbar-font-size);
+  color: var(--navbar-text-color);
 }
 
-.navbar-right {
-    float: right;
+nav a.logo:hover {
+  padding: 0 0.55em;
+  font-size: calc(var(--navbar-logo-size) + 0.2em);
+  transition: var(--hover-transition);
+}
+
+nav a:not(.logo):hover {
+  padding: 0 0.64em;
+  font-size: calc(var(--navbar-font-size) + 0.1em);
+  transition: var(--hover-transition);
+}
+
+nav a.active {
+  color: var(--navbar-text-color);
+  background-color: var(--navbar-active-background-color);
+}
+
+i {
+  padding-right: var(--navbar-icon-padding);
 }

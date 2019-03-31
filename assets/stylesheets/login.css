@@ -1,49 +1,57 @@
 body {
-    background: var(--backfround-gradien);
+  background: var(--background-gradient);
 }
 
 .login-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: var(--navbar-active-background-color);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--navbar-active-background-color);
 }
 
 form {
-    margin: var(--login-form-margin);
+  padding: var(--login-form-padding);
 }
 
 input {
-    font-family: inherit;
-    color: var(--navbar-text-color);
-    width: var(--input-width);
-    height: var(--input-height);
-    margin: var(--input-margin);
-    -webkit-box-sizing: border-box; /* For legacy WebKit based browsers */
-    -moz-box-sizing: border-box; /* For legacy (Firefox <29) Gecko based browsers */
-    box-sizing: border-box;
-    background-color: transparent;
-    outline: none;
-    border: none;
-    border-bottom: solid var(--navbar-text-color) 1px;
+  font-family: inherit;
+  color: var(--navbar-text-color);
+  width: var(--input-width);
+  height: var(--input-height);
+  margin: var(--input-margin);
+  -webkit-box-sizing: border-box;
+  /* For legacy WebKit based browsers */
+  -moz-box-sizing: border-box;
+  /* For legacy (Firefox <29) Gecko based browsers */
+  box-sizing: border-box;
+  background-color: transparent;
+  outline: none;
+  border: none;
+  border-bottom: solid var(--navbar-text-color) 1px;
 }
 
 input[type="submit"] {
-    border: none;
-    outline: none;
-    color: var(--navbar-background-color);
-    background-color: var(--navbar-text-color);
+  border: none;
+  outline: none;
+  color: var(--navbar-background-color);
+  background-color: var(--navbar-text-color);
 }
 
 ::placeholder {
-    color: var(--navbar-text-color);
+  color: var(--navbar-text-color);
 }
 
 span {
-    color: var(--navbar-text-color);
+  color: var(--navbar-text-color);
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
+}
+
+p {
+  margin: 0.5em auto;
+  color: var(--navbar-text-color);
+  font-size: 3em;
 }
