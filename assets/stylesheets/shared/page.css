@@ -1,19 +1,19 @@
 html {
-    height: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: var(--page-font);
 }
 
 body {
-    font-family: var(--page-font);
-    min-width: var(--min-page-width);
-    margin: 0;
+  min-width: var(--min-page-width);
+  margin: 0;
 }
 
 main {
-    margin: auto;
-    text-align: center;
+  margin: auto;
+  text-align: center;
 }
 
 h1 {
-    margin-bottom: 0;
-    font-weight: var(--font-weight);
+  margin-bottom: 0;
 }

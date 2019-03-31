@@ -1,36 +1,37 @@
 table {
-    width: 60%;
-    height: var(--transactions-table-tbody-height);
-    margin: var(--transactions-table-margin);
-    table-layout: fixed;
-    overflow: hidden;
+  width: 60%;
+  height: var(--transactions-table-tbody-height);
+  margin: var(--transactions-table-margin);
+  table-layout: fixed;
+  overflow: hidden;
 }
 
 thead {
-    width: 100%;
-    display: table;
-    border-bottom: solid var(--navbar-background-color) 3px;
+  width: 100%;
+  display: table;
+  border-bottom: solid var(--navbar-background-color) 3px;
 }
 
 tbody {
-    height: var(--transactions-table-tbody-height);
-    width: calc(100% + var(--scrollbar-width));
-    display: block;
-    overflow-y: scroll;
-    padding-right: var(--scrollbar-width); /* Increase/decrease this value for cross-browser compatibility */
+  height: var(--transactions-table-tbody-height);
+  width: calc(100% + var(--scrollbar-width));
+  display: block;
+  overflow-y: scroll;
+  padding-right: var(--scrollbar-width);
+  /* Increase/decrease this value for cross-browser compatibility */
 }
 
 tbody tr {
-    width: 100%;
-    border-bottom: solid var(--navbar-background-color) 1px;
-    display: table;
+  width: 100%;
+  border-bottom: solid var(--navbar-background-color) 1px;
+  display: table;
 }
 
 table td,
 table th {
-    width: 20%;
-    max-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    padding: var(--table-padding);
+  width: 20%;
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: var(--table-padding);
 }

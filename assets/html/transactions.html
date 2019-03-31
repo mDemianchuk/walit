@@ -1,63 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="utf-8">
-    <title>Transactions</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="../stylesheets/shared/constants.css">
-    <link rel="stylesheet" href="../stylesheets/shared/page.css">
-    <link rel="stylesheet" href="../stylesheets/shared/navbar.css">
-    <link rel="stylesheet" href="../stylesheets/shared/input-forms.css">
-    <link rel="stylesheet" href="../stylesheets/transactions.css">
+  <meta charset="utf-8">
+  <title>Transactions | waLit - Your Personal Budget Manager</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../stylesheets/shared/constants.css">
+  <link rel="stylesheet" href="../stylesheets/shared/page.css">
+  <link rel="stylesheet" href="../stylesheets/shared/navbar.css">
+  <link rel="stylesheet" href="../stylesheets/shared/input-forms.css">
+  <link rel="stylesheet" href="../stylesheets/transactions.css">
 </head>
 
 <body>
-<nav class="navbar">
-    <a href="overview.html">Overview</a>
-    <a class="active" href="transactions.html">Transactions</a>
-    <a href="bills.html">Bills</a>
-    <div class="navbar-right">
-        <a href="#"><i class="fa fa-cog" aria-hidden="true"></i> Settings</a>
-        <a href="login.html"><i class="fa fa-fw fa-user"></i> Log Out</a>
-        <a href="#"><i class="fa fa-bell-o"></i> </a>
+  <nav>
+    <div class="navbar-group">
+      <a href="overview.html">Overview</a>
+      <a class="active" href="transactions.html">Transactions</a>
     </div>
-</nav>
-<main>
+    <div class="navbar-group">
+      <a class="logo" href="overview.html">waLit</a>
+    </div>
+    <div class="navbar-group">
+      <a href="#"><i class="fa fa-cog" aria-hidden="true"></i>Settings</a>
+      <a href="login.html"><i class="fa fa-fw fa-user"></i>Log Out</a>
+    </div>
+  </nav>
+  <main>
     <h1>Add a transaction</h1>
     <form class="transaction-form">
-        <input id="description" type="text" placeholder="Description of transaction">
-        <br>
-        <input id="category" type="text" placeholder="Category">
-        <br>
-        <input id="amount" type="number" min="0" placeholder="Amount">
-        <br>
-        <input id="date" placeholder="Date" type="text" onfocus="(this.type='date')"
-               onblur="(this.type='text')">
-        <br>
-        <select id="type">
-            <option value="" disabled selected> Type</option>
-            <option value="Income">Income</option>
-            <option value="Expense">Expense</option>
-        </select>
-        <br>
-        <input id="add-button" type="button" value="Add">
+      <input id="description" type="text" placeholder="Description of transaction" required>
+      <br>
+      <input id="category" type="text" placeholder="Category" required>
+      <br>
+      <input id="amount" type="number" min="0" step="0.01" placeholder="Amount" required>
+      <br>
+      <input id="date" placeholder="Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" required>
+      <br>
+      <select id="how-often" required>
+        <option value="" disabled selected>How often?</option>
+        <option value="onetime">One time</option>
+        <option value="weekly">Weekly</option>
+        <option value="biweekly">Biweekly</option>
+        <option value="monthly">Monthly</option>
+      </select>
+      <br>
+      <select id="type" required>
+        <option value="" disabled selected>Type</option>
+        <option value="Income">Income</option>
+        <option value="Expense">Expense</option>
+      </select>
+      <br>
+      <input id="add-button" type="submit" value="Add">
     </form>
     <div id="transactions">
-        <h1>Most recent transactions</h1>
-        <table id="transactions-table">
-            <thead>
-            <tr>
-                <th>Date</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Amount</th>
-                <th>Type</th>
-            </tr>
-            </thead>
-            <tbody id="transactions-table-body"></tbody>
-        </table>
+      <h1>Most recent transactions</h1>
+      <table id="transactions-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody id="transactions-table-body"></tbody>
+      </table>
     </div>
-</main>
-<script src="./../../dist/transactions.js"></script>
+  </main>
+  <script src="./../../dist/transactions.js"></script>
 </body>
+
 </html>

@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title>Log In | waLit - Your Personal Budget Manager</title>
+  <title>Sign Up | waLit - Your Personal Budget Manager</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
   <link rel="stylesheet" href="../stylesheets/shared/constants.css">
   <link rel="stylesheet" href="../stylesheets/shared/page.css">
@@ -13,15 +13,23 @@
 <body>
   <main>
     <div class="login-container">
-      <p class="logo">waLit</p>
-      <form action="overview.html">
+      <form action="login.html">
+        <p class="logo">waLit</p>
+        <input type="text" placeholder="First Name" required>
+        <br>
+        <input type="text" placeholder="Last Name" required>
+        <br>
         <input type="text" placeholder="Username" required>
         <br>
         <input type="password" placeholder="Password" required>
         <br>
-        <input type="submit" value="Log In">
+        <input type="email" placeholder="E-mail Address" required>
         <br>
-        <span>Not registered? <a href="signup.html">Create an account</a></span>
+        <input type="phone" placeholder="Phone number" required>
+        <br>
+        <input type="submit" value="Sign Up">
+        <br>
+        <span>Already have an account? <a href="login.html">Log In</a></span>
       </form>
     </div>
   </main>
