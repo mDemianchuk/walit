@@ -2,18 +2,31 @@ html {
   height: 100%;
   box-sizing: border-box;
   font-family: var(--page-font);
+  font-size: var(--font-size);
 }
 
 body {
+  width: 100%;
   min-width: var(--min-page-width);
   margin: 0;
 }
 
 main {
-  margin: auto;
   text-align: center;
 }
 
 h1 {
   margin-bottom: 0;
+}
+
+h3 {
+  margin-top: 0;
+  color: var(--secondary-text-color)
+}
+
+.page-container {
+  width: 60%;
+  margin: auto;
+  padding: var(--page-padding);
+  display: inline-block;
 }

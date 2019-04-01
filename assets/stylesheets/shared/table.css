@@ -1,0 +1,38 @@
+
+table {
+  width: 100%;
+  margin: var(--transactions-table-margin);
+  table-layout: fixed;
+  overflow: hidden;
+  /*border: solid black 1px;*/
+}
+
+thead {
+  width: 100%;
+  display: table;
+  border-bottom: solid var(--main-background-color) 3px;
+}
+
+tbody {
+  height: 100%;
+  max-height: var(--transactions-table-tbody-height);
+  width: calc(100% + var(--scrollbar-width));
+  padding-right: var(--scrollbar-width);
+  display: block;
+  overflow-y: scroll;
+}
+
+tbody tr {
+  width: 100%;
+  border-bottom: solid grey 1px;
+  display: table;
+}
+
+table td,
+table th {
+  width: 20%;
+  max-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: var(--table-padding);
+}

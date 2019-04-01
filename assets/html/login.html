@@ -14,17 +14,15 @@
   <main>
     <div class="login-container">
       <p class="logo">waLit</p>
-      <form action="overview.html">
-        <input type="text" placeholder="Username" required>
-        <br>
-        <input type="password" placeholder="Password" required>
-        <br>
+      <form name="login-form" action="overview.html">
+        <input class="valid" name="username" type="text" placeholder="Username">
+        <input class="valid" name="password" type="password" placeholder="Password">
         <input type="submit" value="Log In">
-        <br>
         <span>Not registered? <a href="signup.html">Create an account</a></span>
       </form>
     </div>
   </main>
+  <script type="text/javascript" src="../../dist/login_validate.js"></script>
 </body>
 
 </html>

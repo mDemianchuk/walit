@@ -4,12 +4,15 @@
 <head>
   <meta charset="utf-8">
   <title>Transactions | waLit - Your Personal Budget Manager</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../stylesheets/shared/constants.css">
   <link rel="stylesheet" href="../stylesheets/shared/page.css">
   <link rel="stylesheet" href="../stylesheets/shared/navbar.css">
-  <link rel="stylesheet" href="../stylesheets/shared/input-forms.css">
+  <link rel="stylesheet" href="../stylesheets/shared/input-form.css">
+  <link rel="stylesheet" href="../stylesheets/shared/large-button.css">
+  <link rel="stylesheet" href="../stylesheets/shared/table.css">
+  <link rel="stylesheet" href="../stylesheets/shared/modal-container.css">
   <link rel="stylesheet" href="../stylesheets/transactions.css">
 </head>
 
@@ -28,49 +31,98 @@
     </div>
   </nav>
   <main>
-    <h1>Add a transaction</h1>
-    <form class="transaction-form">
-      <input id="description" type="text" placeholder="Description of transaction" required>
-      <br>
-      <input id="category" type="text" placeholder="Category" required>
-      <br>
-      <input id="amount" type="number" min="0" step="0.01" placeholder="Amount" required>
-      <br>
-      <input id="date" placeholder="Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" required>
-      <br>
-      <select id="how-often" required>
-        <option value="" disabled selected>How often?</option>
-        <option value="onetime">One time</option>
-        <option value="weekly">Weekly</option>
-        <option value="biweekly">Biweekly</option>
-        <option value="monthly">Monthly</option>
-      </select>
-      <br>
-      <select id="type" required>
-        <option value="" disabled selected>Type</option>
-        <option value="Income">Income</option>
-        <option value="Expense">Expense</option>
-      </select>
-      <br>
-      <input id="add-button" type="submit" value="Add">
-    </form>
-    <div id="transactions">
-      <h1>Most recent transactions</h1>
-      <table id="transactions-table">
-        <thead>
-          <tr>
-            <th>Date</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Amount</th>
-            <th>Type</th>
-          </tr>
-        </thead>
-        <tbody id="transactions-table-body"></tbody>
-      </table>
+    <div class="page-container">
+      <h1>Your most recent transactions</h1>
+      <h3>waLit made your finances easy</h3>
+      <div id="transactions-container" class="transactions-container">
+        <table id="transactions-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Description</th>
+              <th>Category</th>
+              <th>Amount</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody id="transactions-table-body"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="page-container">
+      <button id="add-transaction-button" class="large-button">
+        <span class="icon"><i class="fas fa-plus"></i></span>
+        <div class="title">Add a transaction</div>
+        <div class="subtitle">Spent or made some $? Let's add it</div>
+      </button>
+      <button id="find-transactions-button" class="large-button">
+        <span class="icon"><i class="fas fa-search"></i></span>
+        <div class="title">Find transactions</div>
+        <div class="subtitle">Looking for something? Let's find it</div>
+      </button>
+    </div>
+    <div id="add-transaction-modal" class="modal-container" >
+      <div class="modal-content">
+        <h1>Add a transaction</h1>
+        <h3>waLit made your finances easy</h3>
+        <form id="add-transaction-form" name="add-transaction-form" class="transaction-form">
+          <input id="add-description" name="add-description" class="double" type="text" maxlength="30" placeholder="Description of transaction" autocomplete="off">
+          <input id="add-category" name="add-category" class="double" list="add-categories" maxlength="20" placeholder="Category" autocomplete="off">
+          <datalist id="add-categories">
+            <option value="Utilities">
+            <option value="Rent">
+            <option value="Medical">
+            <option value="Education">
+            <option value="Loans">
+          </datalist>
+          <input id="add-date" name="add-date" class="single" placeholder="Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
+          <select id="add-how-often" name="add-how-often" class="single">
+            <option value="" disabled selected>How often?</option>
+            <option value="onetime">One time</option>
+            <option value="weekly">Weekly</option>
+            <option value="biweekly">Biweekly</option>
+            <option value="monthly">Monthly</option>
+          </select>
+          <input id="add-amount" name="add-amount" class="single" type="number" min="0" step="0.01" placeholder="Amount">
+          <select id="add-type" name="add-type" class="single">
+            <option value="" disabled selected>Type</option>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+          </select>
+          <input id="add-transaction-submit" class="single" type="submit" value="Add">
+        </form>
+      </div>
+    </div>
+    <div id="find-transactions-modal" class="modal-container">
+      <div class="modal-content">
+        <h1>Find transactions</h1>
+        <h3>waLit made your finances easy</h3>
+        <form id="find-transactions-form" name="find-transactions-form" class="transaction-form">
+          <input id="find-description" name="find-description" class="double" type="text" maxlength="30" placeholder="Description of transaction" autocomplete="off">
+          <input id="find-category" name="find-category" class="double" list="find-categories" maxlength="20" placeholder="Category" autocomplete="off">
+          <datalist id="find-categories">
+            <option value="Utilities">
+            <option value="Rent">
+            <option value="Medical">
+            <option value="Education">
+            <option value="Loans">
+          </datalist>
+          <select id="find-type" name="find-type" class="double">
+            <option value="" disabled selected>Type</option>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+          </select>
+          <input id="find-date-after" name="find-date-after" class="single" placeholder="After the date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
+          <input id="find-date-before" name="find-date-before" class="single" placeholder="Before the date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
+          <input id="find-less-than" name="find-less-than" class="single" type="number" min="0" step="0.01" placeholder="Less than">
+          <input id="find-more-than" name="find-more-than" class="single" type="number" min="0" step="0.01" placeholder="More than">
+          <input id="find-transactions-submit" class="single" type="submit" value="Find">
+        </form>
+      </div>
     </div>
   </main>
   <script src="./../../dist/transactions.js"></script>
+  <script type="text/javascript" src="./../../dist/transactions_validate.js"></script>
 </body>
 
 </html>

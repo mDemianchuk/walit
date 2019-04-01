@@ -34,9 +34,10 @@ function displayChart(element, labels, currentMonthData, previousMonthData, limi
       }, ]
     },
     options: {
-      responsive: false,
-      labels: {
-        fontFamily: "'Poppins', sans-serif;"
+      legend: {
+        labels: {
+          fontFamily: "'Poppins', sans-serif"
+        }
       },
       scales: {
         xAxes: [{
