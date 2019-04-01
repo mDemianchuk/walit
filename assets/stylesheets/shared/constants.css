@@ -2,15 +2,14 @@
     /* page constants */
     --min-page-width: 750px;
     --scrollbar-width: 17px;
+    --font-size: 0.9em;
     --hover-transition: all 0.3s ease-in-out;
+    --page-padding: 1.5em;
 
     /* navbar constants */
-    --navbar-height: 3em;
-    --navbar-background-color: #c94b4b;
-    --navbar-active-background-color: rgba(255, 255, 255, 0.2);
-    --navbar-text-color: #fcfaf9;
-    --navbar-font-size: 1em;
-    --navbar-logo-size: 1.6em;
+    --navbar-height: 4em;
+    --navbar-font-size: 1.2em;
+    --navbar-logo-size: 2em;
     --navbar-padding: 0 1em;
     --navbar-link-size: 6em;
     --navbar-icon-padding: 0.5em;
@@ -19,24 +18,34 @@
     --page-font: 'Poppins', sans-serif;
 
     /* color constants */
-    --background-gradient: linear-gradient(45deg, var(--navbar-background-color), #4b134f);
-
-    /* chart constants */
-    --chart-width: 600px;
-    --chart-padding: 25px;
+    --main-text-color: black;
+    --main-text-color-inverse: #fcfaf9;
+    --secondary-text-color: grey;
+    --main-background-color: #c94b4b;
+    --active-background-color: rgba(255, 255, 255, 0.2);
+    --inactive-background-color: rgba(0, 0, 0, 0.4);
+    --background-gradient: linear-gradient(45deg, var(--main-background-color), #4b134f);
 
     /* input constants */
-    --input-height: 45px;
-    --input-width: 300px;
-    --input-margin: 10px;
+    --input-height: 3em;
+    --input-width: 20em;
+    --input-margin: 0.5em;
     --input-padding-left: 4px;
-    --input-text-color: black;
+    --calendar-picker-size: 0.7em;
+
+    /* large button constants */
+    --large-button-height: 7em;
+    --large-button-width: 20em;
+    --large-button-margin: 1em;
+    --large-button-title-size: 1.2em;
 
     /* login form constants */
-    --login-form-padding: 0 50px 50px 50px;
+    --login-form-padding: 3em 0;
+    --login-logo-size: 3em;
+    --login-logo-margin: auto;
 
     /* table constants */
-    --table-padding: 10px;
+    --table-padding: 1em;
     --transactions-table-margin: auto auto 30px;
-    --transactions-table-tbody-height: 400px;
+    --transactions-table-tbody-height: 25em;
 }

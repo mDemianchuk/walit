@@ -3,20 +3,22 @@ body {
 }
 
 .login-container {
+  width: 30em;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: var(--navbar-active-background-color);
-}
-
-form {
+  background-color: var(--active-background-color);
   padding: var(--login-form-padding);
 }
 
+form {
+
+}
+.valid,
 input {
-  font-family: inherit;
-  color: var(--navbar-text-color);
+  font: inherit;
+  color: var(--main-text-color-inverse);
   width: var(--input-width);
   height: var(--input-height);
   margin: var(--input-margin);
@@ -28,30 +30,37 @@ input {
   background-color: transparent;
   outline: none;
   border: none;
-  border-bottom: solid var(--navbar-text-color) 1px;
+  border-bottom: solid var(--main-text-color-inverse) 1px;
+}
+
+.invalid {
+  border-bottom: solid var(--main-background-color) 2px;
+  transition: all 0.5s ease-in-out;
 }
 
 input[type="submit"] {
+  cursor: pointer;
   border: none;
   outline: none;
-  color: var(--navbar-background-color);
-  background-color: var(--navbar-text-color);
+  color: var(--main-background-color);
+  background-color: var(--main-text-color-inverse);
 }
 
 ::placeholder {
-  color: var(--navbar-text-color);
+  color: var(--main-text-color-inverse);
 }
 
 span {
-  color: var(--navbar-text-color);
+  white-space: nowrap;
+  color: var(--main-text-color-inverse);
 }
 
 a {
   text-decoration: none;
 }
 
-p {
-  margin: 0.5em auto;
-  color: var(--navbar-text-color);
-  font-size: 3em;
+.logo {
+  margin: var(--login-logo-margin);
+  color: var(--main-text-color-inverse);
+  font-size: var(--login-logo-size);
 }

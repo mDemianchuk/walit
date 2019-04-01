@@ -12,7 +12,11 @@ function displayChart(element, labels, backgroundColor, data) {
       }]
     },
     options: {
-      responsive: false
+      legend: {
+        labels: {
+          fontFamily: "'Poppins', sans-serif"
+        }
+      }
     }
   });
 }

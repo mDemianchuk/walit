@@ -1,0 +1,20 @@
+.modal-container {
+  height: 100%;
+  width: 100%;
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  background-color: var(--inactive-background-color);
+}
+
+.modal-content {
+  width: 50%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: var(--main-text-color-inverse);
+  padding: var(--page-padding);
+}
