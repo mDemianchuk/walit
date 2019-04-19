@@ -1,8 +1,9 @@
 # Created by https://www.gitignore.io/api/node,webstorm
 # Edit at https://www.gitignore.io/?templates=node,webstorm
 
-### Webpack ###
-dist/
+### Custom ###
+package-lock.json
+**/scriptBundles
 
 ### Node ###
 # Logs

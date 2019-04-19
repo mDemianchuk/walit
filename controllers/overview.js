@@ -1,8 +1,8 @@
-const dateUtil = require('./utils/date-util');
-const arrayUtil = require('./utils/array-util');
-const lineChart = require('./model/line-chart');
-const doughnutChart = require('./model/doughnut-chart');
-const displayUtil = require('./utils/display-util');
+const dateUtil = require('../utils/date-util');
+const arrayUtil = require('../utils/array-util');
+const lineChart = require('../models/line-chart');
+const doughnutChart = require('../models/doughnut-chart');
+const displayUtil = require('../utils/display-util');
 
 let lineChartButton = document.getElementById('line-chart-button');
 let lineChartContainer = document.getElementById('line-chart-container');
