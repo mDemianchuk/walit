@@ -1,8 +1,8 @@
-const Transaction = require('./model/transaction');
-const jsonUtil = require('./utils/json-util');
-const dateUtil = require('./utils/date-util');
-const displayUtil = require('./utils/display-util');
-const CustomValidator = require('./utils/validate/transactions-validate');
+const Transaction = require('../models/transaction');
+const jsonUtil = require('../utils/json-util');
+const dateUtil = require('../utils/date-util');
+const displayUtil = require('../utils/display-util');
+const CustomValidator = require('../utils/validate/transactions-validate');
 
 function displayTable(condition) {
   for (let transaction of transactionList) {

@@ -19,11 +19,11 @@
 <body>
   <nav>
     <div class="navbar-group">
-      <a href="overview.html">Overview</a>
-      <a class="active" href="transactions.html">Transactions</a>
+      <a href="/overview">Overview</a>
+      <a class="active" href="/transactions">Transactions</a>
     </div>
     <div class="navbar-group">
-      <a class="logo" href="overview.html">waLit</a>
+      <a class="logo" href="/overview">waLit</a>
     </div>
     <div class="navbar-group">
       <a href="#"><i class="fa fa-cog" aria-hidden="true"></i>Settings</a>
@@ -65,7 +65,7 @@
       <div class="modal-content">
         <h1>Add a transaction</h1>
         <h3>waLit made your finances easy</h3>
-        <form id="add-transaction-form" name="add-transaction-form" class="transaction-form">
+        <form id="add-transaction-form" name="add-transaction-form" class="transaction-form" method="post">
           <input id="add-description" name="add-description" class="double" type="text" maxlength="30" placeholder="Description of transaction" autocomplete="off">
           <input id="add-category" name="add-category" class="double" list="add-categories" maxlength="20" placeholder="Category" autocomplete="off">
           <datalist id="add-categories">
@@ -97,7 +97,7 @@
       <div class="modal-content">
         <h1>Find transactions</h1>
         <h3>waLit made your finances easy</h3>
-        <form id="find-transactions-form" name="find-transactions-form" class="transaction-form">
+        <form id="find-transactions-form" name="find-transactions-form" class="transaction-form" method="get">
           <input id="find-description" name="find-description" class="double" type="text" maxlength="30" placeholder="Description of transaction" autocomplete="off">
           <input id="find-category" name="find-category" class="double" list="find-categories" maxlength="20" placeholder="Category" autocomplete="off">
           <datalist id="find-categories">
@@ -121,8 +121,8 @@
       </div>
     </div>
   </main>
-  <script src="./../../dist/transactions.js"></script>
-  <script type="text/javascript" src="./../../dist/transactions_validate.js"></script>
+  <script src="../scriptBundles/transactions.js"></script>
+  <script type="text/javascript" src="../scriptBundles/transactions_validate.js"></script>
 </body>
 
 </html>

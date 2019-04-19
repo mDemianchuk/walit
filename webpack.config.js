@@ -1,13 +1,13 @@
 module.exports = {
   entry: {
-    transactions: './assets/scripts/transactions.js',
-    overview: './assets/scripts/overview.js',
-    login_validate: './assets/scripts/utils/validate/login-validate.js',
-    signup_validate: './assets/scripts/utils/validate/signup-validate.js',
-    transactions_validate: './assets/scripts/utils/validate/transactions-validate.js'
+    transactions: './controllers/transactions.js',
+    overview: './controllers/overview.js',
+    login_validate: './utils/validate/login-validate.js',
+    signup_validate: './utils/validate/signup-validate.js',
+    transactions_validate: './utils/validate/transactions-validate.js'
   },
   output: {
-    filename: '[name].js',
-    path: __dirname + '/dist'
+    path: __dirname + '/public/scriptBundles',
+    filename: '[name].js'
   }
 };
