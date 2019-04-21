@@ -2,7 +2,7 @@ body {
   background: var(--background-gradient);
 }
 
-.login-container {
+.central-container {
   width: 30em;
   position: fixed;
   top: 50%;
@@ -60,4 +60,13 @@ a {
   margin: var(--login-logo-margin);
   color: var(--main-text-color-inverse);
   font-size: var(--login-logo-size);
+}
+
+option:enabled {
+  color:black;
+}
+
+option:disabled,
+::-webkit-inner-spin-button {
+  display: none;
 }
