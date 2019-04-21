@@ -64,6 +64,10 @@ function getCategories(transactionsJson) {
     return Array.from(categoriesSet);
 }
 
+function sortJsonByProperty(transactionsJson, property) {
+    return transactionsJson.sort((a, b) => (a[property] < b[property]) ? 1 : -1)
+}
+
 module.exports = {
     parseJson,
     getTransactionsInDateRange,
@@ -71,5 +75,6 @@ module.exports = {
     getTransactionsByType,
     getTotalSpent,
     getDailySpending,
-    getCategories
+    getCategories,
+    sortJsonByProperty
 };
