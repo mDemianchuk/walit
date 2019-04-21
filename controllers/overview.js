@@ -5,10 +5,10 @@ const doughnutChart = require('../models/doughnut-chart');
 const displayUtil = require('../utils/display-util');
 const jsonUtil = require('../utils/json-util');
 
-let lineChartButton = document.getElementById('line-chart-button');
-let lineChartContainer = document.getElementById('line-chart-container');
-let doughnutChartButton = document.getElementById('doughnut-chart-button');
-let doughnutChartContainer = document.getElementById('doughnut-chart-container');
+const lineChartButton = document.getElementById('line-chart-button');
+const lineChartContainer = document.getElementById('line-chart-container');
+const doughnutChartButton = document.getElementById('doughnut-chart-button');
+const doughnutChartContainer = document.getElementById('doughnut-chart-container');
 
 // hidden by default
 displayUtil.hideElement(doughnutChartContainer);
@@ -26,34 +26,52 @@ function toggleCharts(chart1, chart2) {
     displayUtil.displayElement(chart2);
 }
 
+const transactionsJson = jsonUtil.parseJson(localStorage.getItem('ls-transactions'));
+const spendingJson = jsonUtil.getTransactionsByType(transactionsJson, 'Expense');
+
 /* Line Chart */
-
-let storageStr = localStorage.getItem('ls-transactions');
-
-let lineChartElement = document.getElementById('line-chart');
-
-if (storageStr) {
-    let jsonStorage = jsonUtil.parseJson(storageStr);
-    let currentMonthData = arrayUtil.jsonFill(jsonStorage, dateUtil.getFirstDayInMonth(0), new Date());
-    let previousMonthData = arrayUtil.jsonFill(jsonStorage, dateUtil.getFirstDayInMonth(1), dateUtil.getLastDayInMonth(0));
-    let lineChartLabels = arrayUtil.incrementFill(1, 31);
+if (spendingJson) {
+    const lineChartElement = document.getElementById('line-chart');
 
     // Array to represent a straight line on the chart
-    let limit = new Array(31).fill(3000);
+    const limit = new Array(31).fill(3000);
 
-    lineChart.displayChart(lineChartElement, lineChartLabels, currentMonthData, previousMonthData, limit);
+    const lineChartLabels = arrayUtil.incrementFill(1, 31);
+
+    const firstDayOfCurrentMonth = dateUtil.getFirstDayInMonth(0);
+    const lastDayOfCurrentMonth = new Date();
+
+    const firstDayOfPreviousMonth = dateUtil.getFirstDayInMonth(1);
+    const lastDayOfPreviousMonth = dateUtil.getLastDayInMonth(1);
+
+    const currentMonthTransactions = jsonUtil.getTransactionsInDateRange(spendingJson, firstDayOfCurrentMonth, lastDayOfCurrentMonth);
+    const currentMonthDailySpendingArray = jsonUtil.getDailySpending(currentMonthTransactions, lastDayOfCurrentMonth.getDate());
+
+    const previousMonthTransactions = jsonUtil.getTransactionsInDateRange(spendingJson, firstDayOfPreviousMonth, lastDayOfPreviousMonth);
+    const previousMonthDailySpendingArray = jsonUtil.getDailySpending(previousMonthTransactions, lastDayOfPreviousMonth.getDate());
+
+    lineChart.displayChart(lineChartElement, lineChartLabels, currentMonthDailySpendingArray, previousMonthDailySpendingArray, limit);
 }
 /* End of Line Chart */
 
 
 /* Doughnut Chart */
+if (spendingJson) {
+    const doughnutChartElement = document.getElementById('doughnut-chart');
 
-let doughnutChartElement = document.getElementById('doughnut-chart');
+    const firstDayOfCurrentMonth = dateUtil.getFirstDayInMonth(0);
+    const lastDayOfCurrentMonth = new Date();
 
-let doughnutChartLabels = ['Rent', 'Tuition', 'Bills', 'Gas', 'Insurance'];
-let backgroundColors = ['#3e95cd', '#8e5ea2', '#3cba9f', '#e8c3b9', '#c45850'];
-let data = [600, 1000, 234, 112, 75];
+    const currentMonthSpending = jsonUtil.getTransactionsInDateRange(spendingJson, firstDayOfCurrentMonth, lastDayOfCurrentMonth);
+    const categories = jsonUtil.getCategories(currentMonthSpending);
 
-doughnutChart.displayChart(doughnutChartElement, doughnutChartLabels, backgroundColors, data);
+    let totalSpendingInCategories = [];
+    for (let category of categories) {
+        const spendingPerCategory = jsonUtil.getTransactionsByCategory(currentMonthSpending, category);
+        const totalSpendingPerCategory = jsonUtil.getTotalSpent(spendingPerCategory);
+        totalSpendingInCategories.push(totalSpendingPerCategory);
+    }
 
+    doughnutChart.displayChart(doughnutChartElement, categories, totalSpendingInCategories);
+}
 /* End of Doughnut Chart */
