@@ -116,6 +116,8 @@ const findTransactionsFormValidator = new CustomValidator('find-transactions-for
 
 // retrieving the list of transactions from local storage
 let transactionsJson = jsonUtil.parseJson(localStorage.getItem('ls-transactions'));
+transactionsJson = jsonUtil.sortJsonByProperty(transactionsJson, 'date');
+
 if (transactionsJson) {
     displayTable((transaction) => true);
 }
