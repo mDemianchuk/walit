@@ -155,11 +155,14 @@ for(let i = 0; i < deleteTransactionButtons.length; i++){
         }
     );
 }
+
 window.addEventListener('click', (event) => {
     if (event.target === addTransactionModal) {
         displayUtil.hideElement(addTransactionModal);
     } else if (event.target === findTransactionsModal) {
         displayUtil.hideElement(findTransactionsModal);
+    } else if (event.target === editTransactionModal) {
+        displayUtil.hideElement(editTransactionModal);
     }
 });
 

@@ -16,8 +16,24 @@ const buttonContainer = document.getElementById('button-container');
 function createAndDisplayLineChart(json) {
     const lineChartElement = document.getElementById('line-chart');
 
+
+    let currency = '$';
+    let userLimit = 3000;
+    const userSettings = localStorage.getItem('user-settings');
+    const userSettingsJson = JSON.parse(userSettings);
+    if (jsonUtil.isValidJson(userSettingsJson)) {
+
+        if (userSettingsJson.currency) {
+            currency = userSettingsJson.currency;
+        }
+        if(!isNaN(parseFloat(userSettingsJson.limit))) {
+            userLimit = userSettingsJson.limit;
+        }
+    }
+
+
     // Array to represent a straight line on the chart
-    const limit = new Array(31).fill(3000);
+    const limit = new Array(31).fill(userLimit);
 
     const lineChartLabels = arrayUtil.incrementFill(1, 31);
 
@@ -33,7 +49,7 @@ function createAndDisplayLineChart(json) {
     const previousMonthTransactions = jsonUtil.getTransactionsInDateRange(json, firstDayOfPreviousMonth, lastDayOfPreviousMonth);
     const previousMonthDailySpendingArray = jsonUtil.getDailySpending(previousMonthTransactions, lastDayOfPreviousMonth.getDate());
 
-    lineChart.createChart(lineChartElement, lineChartLabels, currentMonthDailySpendingArray, previousMonthDailySpendingArray, limit);
+    lineChart.createChart(lineChartElement, lineChartLabels, currentMonthDailySpendingArray, previousMonthDailySpendingArray, limit, currency);
 
     displayUtil.displayElement(lineChartContainer);
 }

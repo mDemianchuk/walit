@@ -1,6 +1,7 @@
 module.exports = {
   entry: {
     transactions: './controllers/transactions.js',
+    settings: './controllers/settings.js',
     overview: './controllers/overview.js',
     login_validate: './utils/validate/login-validate.js',
     signup_validate: './utils/validate/signup-validate.js',
