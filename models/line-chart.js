@@ -16,7 +16,7 @@ function displayChart(element, labels, currentMonthData, previousMonthData, limi
       }, {
         label: 'Spent previous month',
         data: previousMonthData,
-        pointRadius: 0,
+        pointRadius: 1,
         borderWidth: 1,
         borderDash: [3],
         borderColor: 'rgba(0,0,0,0.3)',

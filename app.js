@@ -6,7 +6,8 @@ const port = process.env.PORT || 3000;
 app.use(express.static('public'));
 
 app.route('/')
-	.get((req, res) => res.redirect('/login'));
+	.get((req, res) => res.redirect('/login'))
+	.post((req, res) => res.redirect('/login'));
 
 app.route('/login')
 	.get((req, res) => res.sendFile(path.join(__dirname + '/public/html/login.html')))

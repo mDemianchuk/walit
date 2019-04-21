@@ -1,4 +1,4 @@
-function jsonToList(jsonString) {
+function parseJson(jsonString) {
   let transactionList = JSON.parse(jsonString);
   for (let transaction of transactionList) {
     transaction.date = new Date(transaction.date);
@@ -7,5 +7,5 @@ function jsonToList(jsonString) {
 }
 
 module.exports = {
-  jsonToList
+  parseJson
 };

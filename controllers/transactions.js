@@ -172,7 +172,7 @@ let findTransactionsFormValidator = new CustomValidator('find-transactions-form'
 let jsonString = localStorage.getItem('ls-transactions');
 
 // if the list doesn't exist create a new one
-let transactionList = (jsonString === null) ? [] : jsonUtil.jsonToList(jsonString);
+let transactionList = (jsonString === null) ? [] : jsonUtil.parseJson(jsonString);
 if (transactionList.length > 0) {
   displayTable((transaction) => true);
 }
