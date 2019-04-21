@@ -1,11 +1,11 @@
-function getFirstDayInMonth(previous) {
+function getFirstDayInMonth(numberOfMonths) {
     let currentDate = new Date();
-    return new Date(currentDate.getFullYear(), currentDate.getMonth() - previous, 1);
+    return new Date(currentDate.getFullYear(), currentDate.getMonth() - numberOfMonths, 1);
 }
 
-function getLastDayInMonth(previous) {
+function getLastDayInMonth(numberOfMonths) {
     let currentDate = new Date();
-    return new Date(currentDate.getFullYear(), currentDate.getMonth() - previous, 0);
+    return new Date(currentDate.getFullYear(), currentDate.getMonth() + 1 - numberOfMonths, 0);
 }
 
 function getShortDate(date) {
