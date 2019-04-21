@@ -6,7 +6,6 @@ function displayChart(element, labels, backgroundColor, data) {
     data: {
       labels: labels,
       datasets: [{
-        label: '$',
         backgroundColor: backgroundColor,
         data: data
       }]

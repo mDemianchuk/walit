@@ -3,6 +3,7 @@ const arrayUtil = require('../utils/array-util');
 const lineChart = require('../models/line-chart');
 const doughnutChart = require('../models/doughnut-chart');
 const displayUtil = require('../utils/display-util');
+const jsonUtil = require('../utils/json-util');
 
 let lineChartButton = document.getElementById('line-chart-button');
 let lineChartContainer = document.getElementById('line-chart-container');
@@ -13,32 +14,35 @@ let doughnutChartContainer = document.getElementById('doughnut-chart-container')
 displayUtil.hideElement(doughnutChartContainer);
 
 doughnutChartButton.addEventListener('click', () => {
-  toggleCharts(lineChartContainer, doughnutChartContainer);
+    toggleCharts(lineChartContainer, doughnutChartContainer);
 });
 
 lineChartButton.addEventListener('click', () => {
-  toggleCharts(doughnutChartContainer, lineChartContainer);
+    toggleCharts(doughnutChartContainer, lineChartContainer);
 });
 
 function toggleCharts(chart1, chart2) {
-  displayUtil.hideElement(chart1);
-  displayUtil.displayElement(chart2);
+    displayUtil.hideElement(chart1);
+    displayUtil.displayElement(chart2);
 }
 
 /* Line Chart */
 
+let storageStr = localStorage.getItem('ls-transactions');
+
 let lineChartElement = document.getElementById('line-chart');
 
-// Randomly filled arrays
-let currentMonthData = arrayUtil.randomFill(dateUtil.getNumberOfDaysInCurrentMonth(), 15);
-let previousMonthData = arrayUtil.randomFill(dateUtil.getNumberOfDaysInPreviousMonth(), 15);
-let lineChartLabels = arrayUtil.incrementFill(1, 31);
+if (storageStr) {
+    let jsonStorage = jsonUtil.parseJson(storageStr);
+    let currentMonthData = arrayUtil.jsonFill(jsonStorage, dateUtil.getFirstDayInMonth(0), new Date());
+    let previousMonthData = arrayUtil.jsonFill(jsonStorage, dateUtil.getFirstDayInMonth(1), dateUtil.getLastDayInMonth(0));
+    let lineChartLabels = arrayUtil.incrementFill(1, 31);
 
-// Array to represent a straight line on the chart
-let limit = new Array(31).fill(3000);
+    // Array to represent a straight line on the chart
+    let limit = new Array(31).fill(3000);
 
-lineChart.displayChart(lineChartElement, lineChartLabels, currentMonthData, previousMonthData, limit);
-
+    lineChart.displayChart(lineChartElement, lineChartLabels, currentMonthData, previousMonthData, limit);
+}
 /* End of Line Chart */
 
 
