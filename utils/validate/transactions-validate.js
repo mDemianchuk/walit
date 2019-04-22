@@ -148,7 +148,71 @@ function FindTransactionsValidator(elementName) {
     this.validator.setMessage('required', '%s is required.');
 }
 
+function EditTransactionValidator(elementName) {
+    EditTransactionValidator.prototype.isValid = false;
+
+    function callback(errors, event) {
+        let errorsLength = errors.length;
+        if (errorsLength === 0) {
+            AddTransactionValidator.prototype.isValid = true;
+        } else if (errorsLength > 0) {
+            const errorMessage = errors[0].message;
+            const invalidElement = document.getElementsByName(errors[0].name)[0];
+            setInvalid(invalidElement, errorMessage);
+            setValidOnClick(invalidElement);
+        }
+    }
+
+    const validationRules = [{
+        name: 'edit-description',
+        display: 'Description',
+        rules: 'required|min_length[2]|max_length[30]'
+    }, {
+        name: 'edit-category',
+        display: 'Category',
+        rules: 'required|min_length[2]|max_length[20]'
+    }, {
+        name: 'edit-date',
+        display: 'Date',
+        rules: 'required|callback_valid_date|callback_after_date|callback_before_date'
+    }, {
+        name: 'edit-how-often',
+        display: 'How Often',
+        rules: 'required'
+    }, {
+        name: 'edit-amount',
+        display: 'Amount',
+        rules: 'required|decimal|less_than[9999]|greater_than[0]'
+    }, {
+        name: 'edit-type',
+        display: 'Type',
+        rules: 'required'
+    }];
+
+    this.validator = new FormValidator(elementName, validationRules, callback);
+
+    this.validator.registerCallback('valid_date', (value) => {
+        const date = new Date(value);
+        return (!isNaN(date.getDate()));
+    }).setMessage('valid_date', '%s should be a valid date.');
+
+    this.validator.registerCallback('after_date', (value) => {
+        const date = new Date(value);
+        let tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() - 1);
+        return (date < tomorrow);
+    }).setMessage('after_date', '%s should not be after tomorrow.');
+
+    this.validator.registerCallback('before_date', (value) => {
+        const date = new Date(value);
+        const yearFromToday = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
+        return (date > yearFromToday);
+    }).setMessage('before_date', '%s should not be earlier than a year from now.');
+    this.validator.setMessage('required', '%s is required.');
+}
+
 module.exports = {
     AddTransactionValidator,
-    FindTransactionsValidator
+    FindTransactionsValidator,
+    EditTransactionValidator
 };

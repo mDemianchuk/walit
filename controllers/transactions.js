@@ -12,15 +12,21 @@ const findTransactionsButton = document.getElementById('find-transactions-button
 
 const addTransactionModal = document.getElementById('add-transaction-modal');
 const findTransactionsModal = document.getElementById('find-transactions-modal');
+const editTransactionModal = document.getElementById('edit-transaction-modal');
 
 const addTransactionForm = document.getElementById('add-transaction-form');
 const findTransactionsForm = document.getElementById('find-transactions-form');
+const editTransactionForm = document.getElementById('edit-transaction-form');
 
 const headerTopContainer = document.getElementById('header-top');
 const noTransactionsContainer = document.getElementById('no-transactions');
 
+const editTransactionButtons = document.getElementsByClassName('edit-transaction-button');
+const deleteTransactionButtons = document.getElementsByClassName('delete-transaction-button');
+
 const addTransactionFormValidator = new transactionValidate.AddTransactionValidator('add-transaction-form');
 const findTransactionsFormValidator = new transactionValidate.FindTransactionsValidator('find-transactions-form');
+const editTransactionFormValidator = new transactionValidate.EditTransactionValidator('edit-transaction-form');
 
 function addAndDisplayTransactions(transactionsJson) {
     for (let transaction of transactionsJson) {
@@ -38,7 +44,68 @@ function addAndDisplayTransactions(transactionsJson) {
         let typeColumn = row.insertCell(4);
         typeColumn.innerHTML = transaction.type;
     }
+    displayUtil.displayElement(transactionContainer);
+}
 
+function addTransactionToTable(transaction) {
+    // creating a row in transactions table for a new transaction
+    let row = transactionTableBody.insertRow();
+    row.id = transaction.uuid;
+    let dateColumn = row.insertCell(0);
+    dateColumn.innerHTML = dateUtil.getShortDate(transaction.date);
+    dateColumn.className = "date";
+    let descriptionColumn = row.insertCell(1);
+    descriptionColumn.innerHTML = transaction.description;
+    descriptionColumn.className = "description";
+    let categoryColumn = row.insertCell(2);
+    categoryColumn.innerHTML = transaction.category;
+    categoryColumn.className = "category";
+    let amountColumn = row.insertCell(3);
+    amountColumn.innerHTML = transaction.amount;
+    amountColumn.className = "amount";
+    let typeColumn = row.insertCell(4);
+    typeColumn.innerHTML = transaction.type;
+    typeColumn.className = "type";
+
+    let actionsColumn = row.insertCell(5);
+
+    let editButton = document.createElement("button");
+
+    editButton.className = "edit-transaction-button";
+
+    let editButtonIcon = document.createElement("span");
+    editButtonIcon.className = "icon";
+
+    let editIClass = document.createElement("i");
+    editIClass.classList.add("fas", "fa-edit");
+    editButtonIcon.append(editIClass);
+    editButton.append(editButtonIcon);
+
+    let editButtonText = document.createElement("div");
+    editButtonText.innerText = "Edit";
+
+    editButton.append(editButtonText);
+
+    let deleteButton = document.createElement("button");
+
+    deleteButton.className = "delete-transaction-button";
+
+    let deleteButtonIcon = document.createElement("span");
+    deleteButtonIcon.className = "icon";
+
+    let deleteIClass = document.createElement("i");
+    deleteIClass.classList.add("fas", "fa-delete");
+    deleteButtonIcon.append(deleteIClass);
+    deleteButton.append(deleteButtonIcon);
+
+    let deleteButtonText = document.createElement("div");
+    deleteButtonText.innerText = "Delete";
+
+    deleteButton.append(deleteButtonText);
+
+    actionsColumn.append(editButton, deleteButton);
+
+    // displaying the container as it now contains at least one transaction
     displayUtil.displayElement(transactionContainer);
 }
 
@@ -67,6 +134,46 @@ findTransactionsButton.addEventListener('click', () => {
     displayUtil.displayElement(findTransactionsModal);
 });
 
+//add action listeners to edit buttons
+for(var i = 0; i < editTransactionButtons.length; i++){
+        let currentButton = editTransactionButtons[i];
+        let parentTr = currentButton.parentNode.parentNode;
+
+        currentButton.addEventListener('click', () => {
+            document.getElementById('edit-id').value = parentTr.id;
+            document.getElementById('edit-description').value = parentTr.querySelector(".description").innerHTML;
+            document.getElementById('edit-date').value = parentTr.querySelector(".date").innerHTML;
+            document.getElementById('edit-type').value = parentTr.querySelector(".type").innerHTML;
+            document.getElementById('edit-category').value = parentTr.querySelector(".category").innerHTML;
+            document.getElementById('edit-amount').value = parentTr.querySelector(".amount").innerHTML;
+            displayUtil.displayElement(editTransactionModal);
+        }
+    );
+}
+
+//add action listeners to delete buttons
+for(let i = 0; i < deleteTransactionButtons.length; i++){
+    let currentButton = deleteTransactionButtons[i];
+    let parentTr = currentButton.parentNode.parentNode;
+
+    currentButton.addEventListener('click', () => {
+            if (confirm('Are you sure you want to delete transaction: ' + parentTr.querySelector(".description").innerHTML + "?")) {
+                let xhttp = new XMLHttpRequest();
+                xhttp.open("DELETE", "http://localhost:3000/transactions/delete/" + parentTr.id, true);
+                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                xhttp.onload = function(){
+                    console.log(this.response);
+                    document.getElementById('transactions-table-body').removeChild(parentTr);
+                };
+
+                xhttp.send();
+            } else {
+
+            }
+
+        }
+    );
+}
 window.addEventListener('click', (event) => {
     if (event.target === addTransactionModal) {
         displayUtil.hideElement(addTransactionModal);
@@ -132,4 +239,28 @@ findTransactionsForm.addEventListener('submit', () => {
     }
 });
 
+editTransactionForm.addEventListener('submit', () => {
+    if (transactionValidate.EditTransactionValidator.prototype.isValid) {
+        // getting the values from the input form
+        let uuid = document.getElementById('edit-id').value;
+        let date = new Date(document.getElementById('edit-date').value);
+        let type = document.getElementById('edit-type').value;
+        let description = document.getElementById('edit-description').value;
+        let category = document.getElementById('edit-category').value;
+        let amount = document.getElementById('edit-amount').value;
+
+        // creating a new Transaction object
+        let oldTransaction = transactionsJson.filter((transaction) => transaction.uuid === uuid);
+        console.log("Old transaction " + oldTransaction);
+        let transaction = new Transaction(date, type, description, category, amount);
+        oldTransaction = transaction;
+        var xhttp = new XMLHttpRequest();
+        xhttp.open("PUT", "http://localhost:3000/transactions/update/" + uuid, true);
+        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp.onload = function(){
+            console.log(this.response);
+        };
+        xhttp.send();
+    }
+});
 // TODO: implement edit/delete/find a transaction
