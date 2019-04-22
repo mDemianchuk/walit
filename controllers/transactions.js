@@ -47,10 +47,6 @@ const addTransactionFormValidationRules = [{
 }];
 
 const findTransactionsFormValidationRules = [{
-    name: 'find-description',
-    display: 'Description',
-    rules: 'alpha_numeric'
-}, {
     name: 'find-category',
     display: 'Category',
     rules: 'alpha_numeric'
@@ -101,12 +97,19 @@ function addAndDisplayTransactions(transactionsJson) {
 }
 
 // retrieving the list of transactions from local storage
+const filteredJson = jsonUtil.parseJson(localStorage.getItem('filtered-transactions'));
 let transactionsJson = jsonUtil.parseJson(localStorage.getItem('ls-transactions'));
+
+if(jsonUtil.isValidJson(filteredJson)) {
+    transactionsJson = filteredJson;
+}
+
 if (jsonUtil.isValidJson(transactionsJson)) {
     transactionsJson = jsonUtil.sortJsonByProperty(transactionsJson, 'date');
     displayUtil.hideElement(noTransactionsContainer);
     displayUtil.displayElement(headerTopContainer);
     addAndDisplayTransactions(transactionsJson);
+    localStorage.setItem('filtered-transactions', '');
 }
 
 // adding event listeners
@@ -153,10 +156,33 @@ findTransactionsForm.addEventListener('submit', () => {
         let dateAfter = new Date(document.getElementById('find-date-after').value);
         let dateBefore = new Date(document.getElementById('find-date-before').value);
         let type = document.getElementById('find-type').value;
-        let description = document.getElementById('find-description').value;
         let category = document.getElementById('find-category').value;
-        let lessThan = document.getElementById('find-less-than').value;
-        let moreThan = document.getElementById('find-more-than').value;
+        let lessThan = parseInt(document.getElementById('find-less-than').value);
+        let moreThan = parseInt(document.getElementById('find-more-than').value);
+
+        let filteredTransactions = transactionsJson;
+
+        if (!isNaN(dateAfter.getDate())) {
+            filteredTransactions = jsonUtil.getTransactionsAfterDate(filteredTransactions, dateAfter);
+        }
+        if (!isNaN(dateBefore.getDate())) {
+            filteredTransactions = jsonUtil.getTransactionsBeforeDate(filteredTransactions, dateBefore);
+        }
+        if (type) {
+            filteredTransactions = jsonUtil.getTransactionsByType(filteredTransactions, type);
+        }
+        if (category) {
+            filteredTransactions = jsonUtil.getTransactionsByCategory(filteredTransactions, category);
+        }
+        if (lessThan) {
+            filteredTransactions = jsonUtil.getTransactionsLessThan(filteredTransactions, lessThan);
+        }
+        if (moreThan) {
+            filteredTransactions = jsonUtil.getTransactionsMoreThan(filteredTransactions, moreThan);
+        }
+
+        let filteredTransactionsStr = JSON.stringify(filteredTransactions);
+        localStorage.setItem('filtered-transactions', filteredTransactionsStr);
     }
 });
 
