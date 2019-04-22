@@ -107,7 +107,7 @@ function sortJsonByProperty(transactionsJson, property) {
 }
 
 function isValidJson(json) {
-    return !(json === undefined || json.length === 0);
+    return !(json === undefined || json === null || json.length === 0);
 }
 
 module.exports = {

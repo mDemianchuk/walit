@@ -1,4 +1,5 @@
 const SettingsFormValidator = require('../utils/validate/settings-validate');
+const jsonUtil = require('../utils/json-util');
 
 const settingsForm = document.getElementById('settings-form');
 const settingsFormValidator = new SettingsFormValidator('settings-form');
@@ -9,8 +10,10 @@ settingsForm.addEventListener('submit', () => {
         const currency = document.getElementById('currency').value;
 
         const userSettings = localStorage.getItem('user-settings');
-        const userSettingsJson = JSON.parse(userSettings);
-        
+        let userSettingsJson = JSON.parse(userSettings);
+        if (!jsonUtil.isValidJson(userSettingsJson)) {
+            userSettingsJson = {};
+        }
 
         if (!isNaN(limit)) {
             userSettingsJson.limit = limit;
