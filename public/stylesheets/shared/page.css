@@ -30,3 +30,8 @@ h3 {
   padding: var(--page-padding);
   display: inline-block;
 }
+
+.hidden {
+  /* hidden by default */
+  display: none;
+}

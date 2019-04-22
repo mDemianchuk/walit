@@ -4,54 +4,22 @@ const dateUtil = require('../utils/date-util');
 const displayUtil = require('../utils/display-util');
 const CustomValidator = require('../utils/validate/transactions-validate');
 
-function displayTable(condition) {
-    for (let transaction of transactionsJson) {
-        if (condition(transaction)) {
-            addTransactionToTable(transaction);
-        }
-    }
-}
+const transactionContainer = document.getElementById('transactions-container');
+const transactionTableBody = document.getElementById('transactions-table-body');
 
-function addTransactionToTable(transaction) {
-    // creating a row in transactions table for a new transaction
-    let row = transactionTableBody.insertRow();
+const addTransactionButton = document.getElementById('add-transaction-button');
+const findTransactionsButton = document.getElementById('find-transactions-button');
 
-    let dateColumn = row.insertCell(0);
-    dateColumn.innerHTML = dateUtil.getShortDate(transaction.date);
-    let descriptionColumn = row.insertCell(1);
-    descriptionColumn.innerHTML = transaction.description;
-    let categoryColumn = row.insertCell(2);
-    categoryColumn.innerHTML = transaction.category;
-    let amountColumn = row.insertCell(3);
-    amountColumn.innerHTML = transaction.amount;
-    let typeColumn = row.insertCell(4);
-    typeColumn.innerHTML = transaction.type;
+const addTransactionModal = document.getElementById('add-transaction-modal');
+const findTransactionsModal = document.getElementById('find-transactions-modal');
 
-    // displaying the container as it now contains at least one transaction
-    displayUtil.displayElement(transactionContainer);
-}
+const addTransactionForm = document.getElementById('add-transaction-form');
+const findTransactionsForm = document.getElementById('find-transactions-form');
 
-function clearTable() {
-    while (transactionTableBody.firstChild) {
-        transactionTableBody.removeChild(transactionTableBody.firstChild);
-    }
-}
-
-let transactionContainer = document.getElementById('transactions-container');
-let transactionTableBody = document.getElementById('transactions-table-body');
-
-let addTransactionButton = document.getElementById('add-transaction-button');
-let findTransactionsButton = document.getElementById('find-transactions-button');
-
-let addTransactionModal = document.getElementById('add-transaction-modal');
-let findTransactionsModal = document.getElementById('find-transactions-modal');
-
-// input buttons
-let addTransactionForm = document.getElementById('add-transaction-form');
-let findTransactionsForm = document.getElementById('find-transactions-form');
+const headerTopContainer = document.getElementById('header-top');
+const noTransactionsContainer = document.getElementById('no-transactions');
 
 
-// add transaction form validation
 const addTransactionFormValidationRules = [{
     name: 'add-description',
     display: 'Description',
@@ -78,9 +46,6 @@ const addTransactionFormValidationRules = [{
     rules: 'required'
 }];
 
-const addTransactionFormValidator = new CustomValidator('add-transaction-form', addTransactionFormValidationRules);
-
-// find transactions form validation
 const findTransactionsFormValidationRules = [{
     name: 'find-description',
     display: 'Description',
@@ -111,15 +76,37 @@ const findTransactionsFormValidationRules = [{
     rules: ''
 }];
 
+//form validators
+const addTransactionFormValidator = new CustomValidator('add-transaction-form', addTransactionFormValidationRules);
 const findTransactionsFormValidator = new CustomValidator('find-transactions-form', findTransactionsFormValidationRules);
 
+function addAndDisplayTransactions(transactionsJson) {
+    for (let transaction of transactionsJson) {
+        // creating a row in transactions table for a new transaction
+        let row = transactionTableBody.insertRow();
+
+        let dateColumn = row.insertCell(0);
+        dateColumn.innerHTML = dateUtil.getShortDate(transaction.date);
+        let descriptionColumn = row.insertCell(1);
+        descriptionColumn.innerHTML = transaction.description;
+        let categoryColumn = row.insertCell(2);
+        categoryColumn.innerHTML = transaction.category;
+        let amountColumn = row.insertCell(3);
+        amountColumn.innerHTML = transaction.amount;
+        let typeColumn = row.insertCell(4);
+        typeColumn.innerHTML = transaction.type;
+    }
+
+    displayUtil.displayElement(transactionContainer);
+}
 
 // retrieving the list of transactions from local storage
 let transactionsJson = jsonUtil.parseJson(localStorage.getItem('ls-transactions'));
-transactionsJson = jsonUtil.sortJsonByProperty(transactionsJson, 'date');
-
-if (transactionsJson) {
-    displayTable((transaction) => true);
+if (jsonUtil.isValidJson(transactionsJson)) {
+    transactionsJson = jsonUtil.sortJsonByProperty(transactionsJson, 'date');
+    displayUtil.hideElement(noTransactionsContainer);
+    displayUtil.displayElement(headerTopContainer);
+    addAndDisplayTransactions(transactionsJson);
 }
 
 // adding event listeners
@@ -157,16 +144,11 @@ addTransactionForm.addEventListener('submit', () => {
         // storing the list to local storage
         let jsonString = JSON.stringify(transactionsJson);
         localStorage.setItem('ls-transactions', jsonString);
-
-        // adding as a row in the transactions table
-        addTransactionToTable(transaction);
     }
 });
 
-
 findTransactionsForm.addEventListener('submit', () => {
     if (CustomValidator.prototype.isValid) {
-
         // getting the values from the input form
         let dateAfter = new Date(document.getElementById('find-date-after').value);
         let dateBefore = new Date(document.getElementById('find-date-before').value);
@@ -175,20 +157,6 @@ findTransactionsForm.addEventListener('submit', () => {
         let category = document.getElementById('find-category').value;
         let lessThan = document.getElementById('find-less-than').value;
         let moreThan = document.getElementById('find-more-than').value;
-
-        clearTable();
-
-        let condition = (transaction) => {
-            if (transaction.amount < lessThan) {
-                return true;
-            }
-        };
-
-        for (let transaction of transactionsJson) {
-            if (condition(transaction)) {
-                addTransactionToTable(transaction);
-            }
-        }
     }
 });
 

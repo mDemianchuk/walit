@@ -1,6 +1,6 @@
 const Chart = require('chart.js');
 
-function displayChart(element, labels, currentMonthData, previousMonthData, limit) {
+function createChart(element, labels, currentMonthData, previousMonthData, limit) {
   new Chart(element, {
     type: 'line',
     data: {
@@ -52,5 +52,5 @@ function displayChart(element, labels, currentMonthData, previousMonthData, limi
 }
 
 module.exports = {
-  displayChart
+  createChart
 };

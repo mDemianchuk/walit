@@ -6,16 +6,13 @@ function hideElement(element) {
   element.style.display = 'none';
 }
 
-function toggleElement(element) {
-  if (element.style.display === 'block') {
-    hideElement(element);
-  } else if (element.style.display === 'none') {
-    displayElement(element);
-  }
+function toggleElements(element1, element2) {
+  hideElement(element1);
+  displayElement(element2);
 }
 
 module.exports = {
   displayElement,
   hideElement,
-  toggleElement
+  toggleElements
 };

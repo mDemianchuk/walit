@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="../stylesheets/shared/large-button.css">
   <link rel="stylesheet" href="../stylesheets/shared/table.css">
   <link rel="stylesheet" href="../stylesheets/shared/modal-container.css">
-  <link rel="stylesheet" href="../stylesheets/transactions.css">
 </head>
 
 <body>
@@ -31,23 +30,27 @@
     </div>
   </nav>
   <main>
-    <div class="page-container">
+    <div id="header-top" class="hidden page-container">
       <h1>Your most recent transactions</h1>
       <h3>waLit made your finances easy</h3>
-      <div id="transactions-container" class="transactions-container">
-        <table id="transactions-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Description</th>
-              <th>Category</th>
-              <th>Amount</th>
-              <th>Type</th>
-            </tr>
-          </thead>
-          <tbody id="transactions-table-body"></tbody>
-        </table>
-      </div>
+    </div>
+    <div id="no-transactions" class="page-container">
+      <h1>Ooops! Looks like there are no transactions to display</h1>
+      <h3>Let's add some!</h3>
+    </div>
+    <div id="transactions-container" class="hidden transactions-container">
+      <table id="transactions-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Type</th>
+          </tr>
+        </thead>
+        <tbody id="transactions-table-body"></tbody>
+      </table>
     </div>
     <div class="page-container">
       <button id="add-transaction-button" class="large-button">
@@ -61,7 +64,7 @@
         <div class="subtitle">Looking for something? Let's find it</div>
       </button>
     </div>
-    <div id="add-transaction-modal" class="modal-container" >
+    <div id="add-transaction-modal" class="hidden modal-container">
       <div class="modal-content">
         <h1>Add a transaction</h1>
         <h3>waLit made your finances easy</h3>
@@ -93,7 +96,7 @@
         </form>
       </div>
     </div>
-    <div id="find-transactions-modal" class="modal-container">
+    <div id="find-transactions-modal" class="hidden modal-container">
       <div class="modal-content">
         <h1>Find transactions</h1>
         <h3>waLit made your finances easy</h3>
