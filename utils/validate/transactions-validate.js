@@ -154,7 +154,7 @@ function EditTransactionValidator(elementName) {
     function callback(errors, event) {
         let errorsLength = errors.length;
         if (errorsLength === 0) {
-            AddTransactionValidator.prototype.isValid = true;
+            EditTransactionValidator.prototype.isValid = true;
         } else if (errorsLength > 0) {
             const errorMessage = errors[0].message;
             const invalidElement = document.getElementsByName(errors[0].name)[0];
