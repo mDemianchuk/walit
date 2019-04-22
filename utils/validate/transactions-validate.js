@@ -1,17 +1,18 @@
 const FormValidator = require('validate-js');
 
-function setInvalid(element) {
+function setInvalid(element, errorMessage) {
     if (!element.className.includes('-invalid')) {
         element.className += '-invalid';
+        element.setAttribute('title', errorMessage);
     }
 }
 
 function setValidOnClick(element) {
     element.onclick = () => {
         element.className = element.className.replace('-invalid', '');
+        element.removeAttribute('title');
     }
 }
-
 function AddTransactionValidator(elementName) {
     AddTransactionValidator.prototype.isValid = false;
 
@@ -20,10 +21,10 @@ function AddTransactionValidator(elementName) {
         if (errorsLength === 0) {
             AddTransactionValidator.prototype.isValid = true;
         } else if (errorsLength > 0) {
-            let invalidElement = document.getElementsByName(errors[0].name)[0];
-            setInvalid(invalidElement);
+            const errorMessage = errors[0].message;
+            const invalidElement = document.getElementsByName(errors[0].name)[0];
+            setInvalid(invalidElement, errorMessage);
             setValidOnClick(invalidElement);
-            console.log(errors[0].message);
         }
     }
 
@@ -46,7 +47,7 @@ function AddTransactionValidator(elementName) {
     }, {
         name: 'add-amount',
         display: 'Amount',
-        rules: 'required|decimal|less_than[9999]|more_than[0]'
+        rules: 'required|decimal|less_than[9999]|greater_than[0]'
     }, {
         name: 'add-type',
         display: 'Type',
@@ -84,10 +85,10 @@ function FindTransactionsValidator(elementName) {
         if (errorsLength === 0) {
             FindTransactionsValidator.prototype.isValid = true;
         } else if (errorsLength > 0) {
-            let invalidElement = document.getElementsByName(errors[0].name)[0];
-            setInvalid(invalidElement);
+            const errorMessage = errors[0].message;
+            const invalidElement = document.getElementsByName(errors[0].name)[0];
+            setInvalid(invalidElement, errorMessage);
             setValidOnClick(invalidElement);
-            console.log(errors[0].message);
         }
     }
 
@@ -97,20 +98,20 @@ function FindTransactionsValidator(elementName) {
         rules: 'min_length[2]|max_length[20]'
     }, {
         name: 'find-date-after',
-        display: 'After the date',
+        display: 'Date',
         rules: 'callback_valid_date|callback_after_date'
     }, {
         name: 'find-date-before',
-        display: 'Before the date',
+        display: 'Date',
         rules: 'callback_valid_date|callback_before_date'
     }, {
         name: 'find-less-than',
-        display: 'Less than',
-        rules: 'decimal|less_than[9999]|more_than[0]|callback_get_less_than'
+        display: 'Amount',
+        rules: 'decimal|less_than[9999]|greater_than[0]|callback_get_less_than'
     }, {
         name: 'find-more-than',
-        display: 'More than',
-        rules: 'decimal|less_than[9999]|more_than[0]|callback_less_than_prev'
+        display: 'Amount',
+        rules: 'decimal|less_than[9999]|greater_than[0]|callback_less_than_prev'
     }];
 
     let dateAfter = null;
@@ -133,7 +134,7 @@ function FindTransactionsValidator(elementName) {
     this.validator.registerCallback('before_date', (value) => {
         const date = new Date(value);
         return (dateAfter < date);
-    }).setMessage('before_date', '%s should not be earlier than \'After the date\'.');
+    }).setMessage('before_date', '%s should not be earlier than or the same as \'After the date\'.');
 
     this.validator.registerCallback('get_less_than', (value) => {
         lessThen = parseFloat(value);
@@ -142,7 +143,7 @@ function FindTransactionsValidator(elementName) {
 
     this.validator.registerCallback('less_than_prev', (value) => {
         return lessThen < parseFloat(value);
-    }).setMessage('less_than_prev', '%s should be less than \'Less than\'');
+    }).setMessage('less_than_prev', '%s should not be more than or equal to \'Less than\'');
 
     this.validator.setMessage('required', '%s is required.');
 }

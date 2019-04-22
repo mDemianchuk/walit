@@ -12,10 +12,7 @@ body {
   padding: var(--login-form-padding);
 }
 
-form {
-
-}
-.valid,
+.single,
 input {
   font: inherit;
   color: var(--main-text-color-inverse);
@@ -33,7 +30,7 @@ input {
   border-bottom: solid var(--main-text-color-inverse) 1px;
 }
 
-.invalid {
+.single-invalid {
   border-bottom: solid var(--main-background-color) 2px;
   transition: all 0.5s ease-in-out;
 }
