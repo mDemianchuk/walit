@@ -12,8 +12,24 @@ function parseJson(jsonString) {
     return transactionsJson;
 }
 
-function getTransactionsInDateRange(transactionsJson, fromDate, toDate) {
-    return transactionsJson.filter((transaction) => fromDate < transaction['date'] && transaction['date'] < toDate);
+function getTransactionsInDateRange(transactionsJson, dateAfter, dateBefore) {
+    return transactionsJson.filter((transaction) => dateAfter < transaction.date && transaction.date < dateBefore);
+}
+
+function getTransactionsAfterDate(transactionsJson, dateAfter) {
+    return transactionsJson.filter((transaction) => dateAfter < transaction.date);
+}
+
+function getTransactionsBeforeDate(transactionsJson, dateBefore) {
+    return transactionsJson.filter((transaction) => transaction.date < dateBefore);
+}
+
+function getTransactionsLessThan(transactionsJson, lessThan) {
+    return transactionsJson.filter((transaction) => lessThan < transaction.amount);
+}
+
+function getTransactionsMoreThan(transactionsJson, moreThan) {
+    return transactionsJson.filter((transaction) => transaction.amount > moreThan);
 }
 
 function getTransactionsByCategory(transactionsJson, category) {
@@ -75,6 +91,10 @@ function isValidJson(json) {
 module.exports = {
     parseJson,
     getTransactionsInDateRange,
+    getTransactionsAfterDate,
+    getTransactionsBeforeDate,
+    getTransactionsLessThan,
+    getTransactionsMoreThan,
     getTransactionsByCategory,
     getTransactionsByType,
     getTotalSpent,
