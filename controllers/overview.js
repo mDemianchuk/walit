@@ -9,28 +9,11 @@ const lineChartButton = document.getElementById('line-chart-button');
 const lineChartContainer = document.getElementById('line-chart-container');
 const doughnutChartButton = document.getElementById('doughnut-chart-button');
 const doughnutChartContainer = document.getElementById('doughnut-chart-container');
+const headerTopContainer = document.getElementById('header-top');
+const noTransactionsContainer = document.getElementById('no-transactions');
+const buttonContainer = document.getElementById('button-container');
 
-// hidden by default
-displayUtil.hideElement(doughnutChartContainer);
-
-doughnutChartButton.addEventListener('click', () => {
-    toggleCharts(lineChartContainer, doughnutChartContainer);
-});
-
-lineChartButton.addEventListener('click', () => {
-    toggleCharts(doughnutChartContainer, lineChartContainer);
-});
-
-function toggleCharts(chart1, chart2) {
-    displayUtil.hideElement(chart1);
-    displayUtil.displayElement(chart2);
-}
-
-const transactionsJson = jsonUtil.parseJson(localStorage.getItem('ls-transactions'));
-const spendingJson = jsonUtil.getTransactionsByType(transactionsJson, 'Expense');
-
-/* Line Chart */
-if (spendingJson) {
+function createAndDisplayLineChart(json) {
     const lineChartElement = document.getElementById('line-chart');
 
     // Array to represent a straight line on the chart
@@ -44,25 +27,24 @@ if (spendingJson) {
     const firstDayOfPreviousMonth = dateUtil.getFirstDayInMonth(1);
     const lastDayOfPreviousMonth = dateUtil.getLastDayInMonth(1);
 
-    const currentMonthTransactions = jsonUtil.getTransactionsInDateRange(spendingJson, firstDayOfCurrentMonth, lastDayOfCurrentMonth);
+    const currentMonthTransactions = jsonUtil.getTransactionsInDateRange(json, firstDayOfCurrentMonth, lastDayOfCurrentMonth);
     const currentMonthDailySpendingArray = jsonUtil.getDailySpending(currentMonthTransactions, lastDayOfCurrentMonth.getDate());
 
-    const previousMonthTransactions = jsonUtil.getTransactionsInDateRange(spendingJson, firstDayOfPreviousMonth, lastDayOfPreviousMonth);
+    const previousMonthTransactions = jsonUtil.getTransactionsInDateRange(json, firstDayOfPreviousMonth, lastDayOfPreviousMonth);
     const previousMonthDailySpendingArray = jsonUtil.getDailySpending(previousMonthTransactions, lastDayOfPreviousMonth.getDate());
 
-    lineChart.displayChart(lineChartElement, lineChartLabels, currentMonthDailySpendingArray, previousMonthDailySpendingArray, limit);
+    lineChart.createChart(lineChartElement, lineChartLabels, currentMonthDailySpendingArray, previousMonthDailySpendingArray, limit);
+
+    displayUtil.displayElement(lineChartContainer);
 }
-/* End of Line Chart */
 
-
-/* Doughnut Chart */
-if (spendingJson) {
+function createDoughnutChart(json) {
     const doughnutChartElement = document.getElementById('doughnut-chart');
 
     const firstDayOfCurrentMonth = dateUtil.getFirstDayInMonth(0);
     const lastDayOfCurrentMonth = new Date();
 
-    const currentMonthSpending = jsonUtil.getTransactionsInDateRange(spendingJson, firstDayOfCurrentMonth, lastDayOfCurrentMonth);
+    const currentMonthSpending = jsonUtil.getTransactionsInDateRange(json, firstDayOfCurrentMonth, lastDayOfCurrentMonth);
     const categories = jsonUtil.getCategories(currentMonthSpending);
 
     let totalSpendingInCategories = [];
@@ -72,6 +54,28 @@ if (spendingJson) {
         totalSpendingInCategories.push(totalSpendingPerCategory);
     }
 
-    doughnutChart.displayChart(doughnutChartElement, categories, totalSpendingInCategories);
+    doughnutChart.createChart(doughnutChartElement, categories, totalSpendingInCategories);
 }
-/* End of Doughnut Chart */
+
+// retrieving the list of transactions from local storage
+const transactionsJson = jsonUtil.parseJson(localStorage.getItem('ls-transactions'));
+if (jsonUtil.isValidJson(transactionsJson)) {
+    const spendingJson = jsonUtil.getTransactionsByType(transactionsJson, 'Expense');
+
+    if (jsonUtil.isValidJson(spendingJson)) {
+        displayUtil.hideElement(noTransactionsContainer);
+        displayUtil.displayElement(headerTopContainer);
+        displayUtil.displayElement(buttonContainer);
+
+        createAndDisplayLineChart(spendingJson);
+        createDoughnutChart(spendingJson);
+
+        doughnutChartButton.addEventListener('click', () => {
+            displayUtil.toggleElements(lineChartContainer, doughnutChartContainer);
+        });
+
+        lineChartButton.addEventListener('click', () => {
+            displayUtil.toggleElements(doughnutChartContainer, lineChartContainer);
+        });
+    }
+}

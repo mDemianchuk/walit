@@ -1,6 +1,6 @@
 function parseJson(jsonString) {
     if (!jsonString) {
-        return {};
+        return [];
     }
 
     let transactionsJson = JSON.parse(jsonString);
@@ -68,6 +68,10 @@ function sortJsonByProperty(transactionsJson, property) {
     return transactionsJson.sort((a, b) => (a[property] < b[property]) ? 1 : -1)
 }
 
+function isValidJson(json) {
+    return !(json === undefined || json.length === 0);
+}
+
 module.exports = {
     parseJson,
     getTransactionsInDateRange,
@@ -76,5 +80,6 @@ module.exports = {
     getTotalSpent,
     getDailySpending,
     getCategories,
-    sortJsonByProperty
+    sortJsonByProperty,
+    isValidJson
 };

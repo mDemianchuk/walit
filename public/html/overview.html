@@ -29,27 +29,31 @@
     </div>
   </nav>
   <main id="main-content">
-    <div class="page-container">
+    <div id="header-top" class="hidden page-container">
       <h1>Where did you spend your money?</h1>
       <h3>waLit made your finances easy</h3>
-      <div id="line-chart-container" class="chart-container">
-        <canvas class="chart" id="line-chart"></canvas>
-      </div>
-      <div id="doughnut-chart-container" class="chart-container">
-        <canvas class="chart" id="doughnut-chart"></canvas>
-      </div>
-      <div class="button-container">
-        <button id="line-chart-button" class="large-button">
-          <span class="icon"><i class="fas fa-chart-line"></i></span>
-          <div class="title">View a line chart</div>
-          <div class="subtitle">blah blah blah blah blah</div>
-        </button>
-        <button id="doughnut-chart-button" class="large-button">
-          <span class="icon"><i class="fas fa-chart-pie"></i></span>
-          <div class="title">View a pie chart</div>
-          <div class="subtitle">blah blah blah blah blah blah</div>
-        </button>
-      </div>
+    </div>
+    <div id="no-transactions" class="page-container">
+      <h1>Ooops! Looks like there are no transactions to display</h1>
+      <h3>Let's add some!</h3>
+    </div>
+    <div id="line-chart-container" class="hidden chart-container">
+      <canvas class="chart" id="line-chart"></canvas>
+    </div>
+    <div id="doughnut-chart-container" class="hidden chart-container">
+      <canvas class="chart" id="doughnut-chart"></canvas>
+    </div>
+    <div id="button-container" class="hidden page-container">
+      <button id="line-chart-button" class="large-button">
+        <span class="icon"><i class="fas fa-chart-line"></i></span>
+        <div class="title">View a line chart</div>
+        <div class="subtitle">blah blah blah blah blah</div>
+      </button>
+      <button id="doughnut-chart-button" class="large-button">
+        <span class="icon"><i class="fas fa-chart-pie"></i></span>
+        <div class="title">View a pie chart</div>
+        <div class="subtitle">blah blah blah blah blah blah</div>
+      </button>
     </div>
   </main>
   <script src="../scriptBundles/overview.js"></script>
