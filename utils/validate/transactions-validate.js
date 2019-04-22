@@ -13,7 +13,6 @@ function setValidOnClick(element) {
         element.removeAttribute('title');
     }
 }
-
 function AddTransactionValidator(elementName) {
     AddTransactionValidator.prototype.isValid = false;
 
@@ -209,7 +208,6 @@ function EditTransactionValidator(elementName) {
         const yearFromToday = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
         return (date > yearFromToday);
     }).setMessage('before_date', '%s should not be earlier than a year from now.');
-
     this.validator.setMessage('required', '%s is required.');
 }
 
