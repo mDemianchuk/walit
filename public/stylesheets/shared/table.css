@@ -29,9 +29,23 @@ tbody tr {
 
 table td,
 table th {
-  width: 20%;
+  width: 15%;
   max-width: 0;
   overflow: hidden;
   text-overflow: ellipsis;
   padding: var(--table-padding);
+}
+
+.delete-transaction-button, .edit-transaction-button{
+  background: none;
+  border: none;
+  padding: 0;
+}
+
+.edit-transaction-button{
+  color: var(--edit-button-color);
+}
+
+.delete-transaction-button{
+  color: var(--main-background-color);
 }

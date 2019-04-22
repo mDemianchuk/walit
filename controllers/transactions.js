@@ -129,14 +129,6 @@ for(let i = 0; i < deleteTransactionButtons.length; i++){
 
     currentButton.addEventListener('click', () => {
             if (confirm('Are you sure you want to delete transaction: ' + parentTr.querySelector(".description").innerHTML + "?")) {
-                // let xhttp = new XMLHttpRequest();
-                // xhttp.open("DELETE", "http://localhost:3000/transactions/delete/" + parentTr.id, true);
-                // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                // xhttp.onload = function(){
-                //     console.log(this.response);
-                // };
-                //
-                // xhttp.send();
                 // storing the list to local storage
 
                 let newTransactions = jsonUtil.deleteTransactionByUuid(transactionsJson, parentTr.id);

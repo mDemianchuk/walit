@@ -39,6 +39,8 @@
     --large-button-margin: 1em;
     --large-button-title-size: 1.2em;
 
+    /*transactions edit/delete buttons*/
+    --edit-button-color: #594bc9;
     /* login form constants */
     --login-form-padding: 3em 0;
     --login-logo-size: 3em;

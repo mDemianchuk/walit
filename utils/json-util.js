@@ -59,9 +59,6 @@ function updateTransactionByUuid(transactionsJson, newTransaction) {
 }
 
 function deleteTransactionByUuid(transactionsJson, transactionUuid) {
-    // let filteredTransactions =  transactionsJson.filter(function(value, index, arr){
-    //     return value.uuid !== transactionUuid;
-    // });
     return transactionsJson.filter((transaction) => transaction.uuid !== transactionUuid);
 }
 
