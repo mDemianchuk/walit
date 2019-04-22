@@ -2,7 +2,7 @@ const Transaction = require('../models/transaction');
 const jsonUtil = require('../utils/json-util');
 const dateUtil = require('../utils/date-util');
 const displayUtil = require('../utils/display-util');
-const CustomValidator = require('../utils/validate/transactions-validate');
+const transactionValidate = require('../utils/validate/transactions-validate');
 
 const transactionContainer = document.getElementById('transactions-container');
 const transactionTableBody = document.getElementById('transactions-table-body');
@@ -19,62 +19,8 @@ const findTransactionsForm = document.getElementById('find-transactions-form');
 const headerTopContainer = document.getElementById('header-top');
 const noTransactionsContainer = document.getElementById('no-transactions');
 
-
-const addTransactionFormValidationRules = [{
-    name: 'add-description',
-    display: 'Description',
-    rules: 'required|alpha_numeric'
-}, {
-    name: 'add-category',
-    display: 'Category',
-    rules: 'required|alpha_numeric'
-}, {
-    name: 'add-date',
-    display: 'Date',
-    rules: 'required'
-}, {
-    name: 'add-how-often',
-    display: 'How Often',
-    rules: 'required'
-}, {
-    name: 'add-amount',
-    display: 'Amount',
-    rules: 'required'
-}, {
-    name: 'add-type',
-    display: 'Type',
-    rules: 'required'
-}];
-
-const findTransactionsFormValidationRules = [{
-    name: 'find-category',
-    display: 'Category',
-    rules: 'alpha_numeric'
-}, {
-    name: 'find-type',
-    display: 'Type',
-    rules: 'alpha_numeric'
-}, {
-    name: 'find-date-after',
-    display: 'After the date',
-    rules: ''
-}, {
-    name: 'find-date-before',
-    display: 'Before the date',
-    rules: ''
-}, {
-    name: 'find-less-than',
-    display: 'Less than',
-    rules: ''
-}, {
-    name: 'find-more-than',
-    display: 'More than',
-    rules: ''
-}];
-
-//form validators
-const addTransactionFormValidator = new CustomValidator('add-transaction-form', addTransactionFormValidationRules);
-const findTransactionsFormValidator = new CustomValidator('find-transactions-form', findTransactionsFormValidationRules);
+const addTransactionFormValidator = new transactionValidate.AddTransactionValidator('add-transaction-form');
+const findTransactionsFormValidator = new transactionValidate.FindTransactionsValidator('find-transactions-form');
 
 function addAndDisplayTransactions(transactionsJson) {
     for (let transaction of transactionsJson) {
@@ -130,7 +76,7 @@ window.addEventListener('click', (event) => {
 });
 
 addTransactionForm.addEventListener('submit', () => {
-    if (CustomValidator.prototype.isValid) {
+    if (transactionValidate.AddTransactionValidator.prototype.isValid) {
         // getting the values from the input form
         let date = new Date(document.getElementById('add-date').value);
         let type = document.getElementById('add-type').value;
@@ -151,14 +97,14 @@ addTransactionForm.addEventListener('submit', () => {
 });
 
 findTransactionsForm.addEventListener('submit', () => {
-    if (CustomValidator.prototype.isValid) {
+    if (transactionValidate.FindTransactionsValidator.prototype.isValid) {
         // getting the values from the input form
         let dateAfter = new Date(document.getElementById('find-date-after').value);
         let dateBefore = new Date(document.getElementById('find-date-before').value);
         let type = document.getElementById('find-type').value;
         let category = document.getElementById('find-category').value;
-        let lessThan = parseInt(document.getElementById('find-less-than').value);
-        let moreThan = parseInt(document.getElementById('find-more-than').value);
+        let lessThan = parseFloat(document.getElementById('find-less-than').value);
+        let moreThan = parseFloat(document.getElementById('find-more-than').value);
 
         let filteredTransactions = transactionsJson;
 
