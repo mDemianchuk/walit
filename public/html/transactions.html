@@ -33,6 +33,7 @@
     <div id="header-top" class="hidden page-container">
       <h1>Your most recent transactions</h1>
       <h3>waLit made your finances easy</h3>
+    </div>
     <div id="no-transactions" class="page-container">
       <h1>Ooops! Looks like there are no transactions to display</h1>
       <h3>Let's add some!</h3>
@@ -69,8 +70,8 @@
         <h1>Add a transaction</h1>
         <h3>waLit made your finances easy</h3>
         <form id="add-transaction-form" name="add-transaction-form" class="transaction-form" method="post">
-          <input id="add-description" name="add-description" class="double" type="text" placeholder="Description of transaction" autocomplete="off">
-          <input id="add-category" name="add-category" class="double" list="add-categories" placeholder="Category" autocomplete="off">
+          <input id="add-description" name="add_description" class="double" type="text" placeholder="Description of transaction" autocomplete="off">
+          <input id="add-category" name="add_category" class="double" list="add-categories" placeholder="Category" autocomplete="off">
           <datalist id="add-categories">
             <option value="Utilities">
             <option value="Rent">
@@ -78,7 +79,7 @@
             <option value="Education">
             <option value="Loans">
           </datalist>
-          <input id="add-date" name="add-date" class="single" placeholder="Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
+          <input id="add-date" name="add_date" class="single" placeholder="Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
           <select id="add-how-often" name="add-how-often" class="single">
             <option value="" disabled selected>How often?</option>
             <option value="onetime">One time</option>
@@ -86,8 +87,8 @@
             <option value="biweekly">Biweekly</option>
             <option value="monthly">Monthly</option>
           </select>
-          <input id="add-amount" name="add-amount" class="single" type="number" step="0.01" placeholder="Amount">
-          <select id="add-type" name="add-type" class="single">
+          <input id="add-amount" name="add_amount" class="single" type="number" step="0.01" placeholder="Amount">
+          <select id="add-type" name="add_type" class="single">
             <option value="" disabled selected>Type</option>
             <option value="Income">Income</option>
             <option value="Expense">Expense</option>
@@ -100,10 +101,10 @@
       <div class="modal-content">
         <h1>Edit a transaction</h1>
         <h3>waLit made your finances easy</h3>
-        <form id="edit-transaction-form" name="edit-transaction-form" class="transaction-form">
-          <data id="edit-id" value=""></data>
-          <input id="edit-description" name="edit-description" class="double" type="text" placeholder="Description of transaction" autocomplete="off">
-          <input id="edit-category" name="edit-category" class="double" list="edit-categories" placeholder="Category" autocomplete="off">
+        <form id="edit-transaction-form" name="edit-transaction-form" class="transaction-form" method="post" action="/transactions/update">
+          <input id="edit-id" name="editId" type="text" value="" hidden>
+          <input id="edit-description" name="edit_description" class="double" type="text" placeholder="Description of transaction" autocomplete="off">
+          <input id="edit-category" name="edit_category" class="double" list="edit-categories" placeholder="Category" autocomplete="off">
           <datalist id="edit-categories">
             <option value="Utilities">
             <option value="Rent">
@@ -111,16 +112,16 @@
             <option value="Education">
             <option value="Loans">
           </datalist>
-          <input id="edit-date" name="edit-date" class="single" placeholder="Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
-          <select id="edit-how-often" name="edit-how-often" class="single">
+          <input id="edit-date" name="edit_date" class="single" placeholder="Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
+          <select id="edit-how-often" name="edit_how_often" class="single">
             <option value="" disabled selected>How often?</option>
             <option value="onetime">One time</option>
             <option value="weekly">Weekly</option>
             <option value="biweekly">Biweekly</option>
             <option value="monthly">Monthly</option>
           </select>
-          <input id="edit-amount" name="edit-amount" class="single" type="number" step="0.01" placeholder="Amount">
-          <select id="edit-type" name="edit-type" class="single">
+          <input id="edit-amount" name="edit_amount" class="single" type="number" step="0.01" placeholder="Amount">
+          <select id="edit-type" name="edit_type" class="single">
             <option value="" disabled selected>Type</option>
             <option value="Income">Income</option>
             <option value="Expense">Expense</option>

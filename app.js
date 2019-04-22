@@ -1,3 +1,4 @@
+
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -6,6 +7,9 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static('public'));
+
+const mongo = require('mongodb').MongoClient;
+const url = 'mongodb://localhost:27017';
 
 app.route('/')
 	.get((req, res) => res.redirect('/login'))
@@ -26,10 +30,27 @@ app.route('/transactions')
 	.get((req, res) => res.sendFile(path.join(__dirname + '/public/html/transactions.html')))
 	.post((req, res) => res.redirect('/transactions'))
 
-app.route('/transactions/update/:id')
-	.put((req, res) => {
-		console.log(req.params.id);
-		res.send("updated " + req.params.id)
+app.route('/transactions/update/')
+	.post((req, res) => {
+		console.log(req.body);
+		// res.send("updated " + req.body.edit-description)
+		console.log(req.body.edit_description)
+		//Connect using MongoClient
+		mongo.connect(url,{ useNewUrlParser: true }, function(err, client) {
+			if(err) throw err;
+			let db = client.db('walit');
+			db.collection("transaction").findOne({"uuid": req.params.editId}, function(err, result) {
+				if (err) throw err;
+				if(result == null){
+					console.log("nothing found");
+				}
+				else{
+					console.log(result);
+				}
+				client.close();
+			});
+		});
+
 	});
 
 app.route('/transactions/delete/:id')

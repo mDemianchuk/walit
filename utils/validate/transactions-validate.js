@@ -29,27 +29,27 @@ function AddTransactionValidator(elementName) {
     }
 
     const validationRules = [{
-        name: 'add-description',
+        name: 'add_description',
         display: 'Description',
         rules: 'required|min_length[2]|max_length[30]'
     }, {
-        name: 'add-category',
+        name: 'add_category',
         display: 'Category',
         rules: 'required|min_length[2]|max_length[20]'
     }, {
-        name: 'add-date',
+        name: 'add_date',
         display: 'Date',
         rules: 'required|callback_valid_date|callback_after_date|callback_before_date'
     }, {
-        name: 'add-how-often',
+        name: 'add_how_often',
         display: 'How Often',
         rules: 'required'
     }, {
-        name: 'add-amount',
+        name: 'add_amount',
         display: 'Amount',
         rules: 'required|decimal|less_than[9999]|greater_than[0]'
     }, {
-        name: 'add-type',
+        name: 'add_type',
         display: 'Type',
         rules: 'required'
     }];
@@ -164,27 +164,27 @@ function EditTransactionValidator(elementName) {
     }
 
     const validationRules = [{
-        name: 'edit-description',
+        name: 'edit_description',
         display: 'Description',
         rules: 'required|min_length[2]|max_length[30]'
     }, {
-        name: 'edit-category',
+        name: 'edit_category',
         display: 'Category',
         rules: 'required|min_length[2]|max_length[20]'
     }, {
-        name: 'edit-date',
+        name: 'edit_date',
         display: 'Date',
         rules: 'required|callback_valid_date|callback_after_date|callback_before_date'
     }, {
-        name: 'edit-how-often',
+        name: 'edit_how_often',
         display: 'How Often',
         rules: 'required'
     }, {
-        name: 'edit-amount',
+        name: 'edit_amount',
         display: 'Amount',
         rules: 'required|decimal|less_than[9999]|greater_than[0]'
     }, {
-        name: 'edit-type',
+        name: 'edit_type',
         display: 'Type',
         rules: 'required'
     }];
