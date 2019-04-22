@@ -22,7 +22,6 @@ function createAndDisplayLineChart(json) {
     const userSettings = localStorage.getItem('user-settings');
     const userSettingsJson = JSON.parse(userSettings);
     if (jsonUtil.isValidJson(userSettingsJson)) {
-
         if (userSettingsJson.currency) {
             currency = userSettingsJson.currency;
         }
