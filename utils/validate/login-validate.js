@@ -1,9 +1,16 @@
 const FormValidator = require('validate-js');
 
-function setInvalid(element) {
-    element.className = 'invalid';
+function setInvalid(element, errorMessage) {
+    if (!element.className.includes('-invalid')) {
+        element.className += '-invalid';
+        element.setAttribute('title', errorMessage);
+    }
+}
+
+function setValidOnClick(element) {
     element.onclick = () => {
-        element.className = 'valid';
+        element.className = element.className.replace('-invalid', '');
+        element.removeAttribute('title');
     }
 }
 
@@ -20,8 +27,10 @@ let validationRules = [{
 let callback = function(errors, event) {
     let errorsLength = errors.length;
     if (errorsLength > 0) {
-        setInvalid(document.getElementsByName(errors[0].name)[0]);
-        console.log(errors[0].message);
+        const errorMessage = errors[0].message;
+        const invalidElement = document.getElementsByName(errors[0].name)[0];
+        setInvalid(invalidElement, errorMessage);
+        setValidOnClick(invalidElement);
     }
 };
 
