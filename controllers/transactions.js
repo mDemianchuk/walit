@@ -63,11 +63,6 @@ function addAndDisplayTransactions(transactionsJson) {
         editButtonIcon.append(editIClass);
         editButton.append(editButtonIcon);
 
-        let editButtonText = document.createElement("div");
-        editButtonText.innerText = "Edit";
-
-        editButton.append(editButtonText);
-
         let deleteButton = document.createElement("button");
 
         deleteButton.className = "delete-transaction-button";
@@ -76,14 +71,9 @@ function addAndDisplayTransactions(transactionsJson) {
         deleteButtonIcon.className = "icon";
 
         let deleteIClass = document.createElement("i");
-        deleteIClass.classList.add("fas", "fa-delete");
+        deleteIClass.classList.add("fas", "fa-trash-alt");
         deleteButtonIcon.append(deleteIClass);
         deleteButton.append(deleteButtonIcon);
-
-        let deleteButtonText = document.createElement("div");
-        deleteButtonText.innerText = "Delete";
-
-        deleteButton.append(deleteButtonText);
 
         actionsColumn.append(editButton, deleteButton);
     }
@@ -139,17 +129,24 @@ for(let i = 0; i < deleteTransactionButtons.length; i++){
 
     currentButton.addEventListener('click', () => {
             if (confirm('Are you sure you want to delete transaction: ' + parentTr.querySelector(".description").innerHTML + "?")) {
-                let xhttp = new XMLHttpRequest();
-                xhttp.open("DELETE", "http://localhost:3000/transactions/delete/" + parentTr.id, true);
-                xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                xhttp.onload = function(){
-                    console.log(this.response);
-                    document.getElementById('transactions-table-body').removeChild(parentTr);
-                };
+                // let xhttp = new XMLHttpRequest();
+                // xhttp.open("DELETE", "http://localhost:3000/transactions/delete/" + parentTr.id, true);
+                // xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                // xhttp.onload = function(){
+                //     console.log(this.response);
+                // };
+                //
+                // xhttp.send();
+                // storing the list to local storage
 
-                xhttp.send();
+                let newTransactions = jsonUtil.deleteTransactionByUuid(transactionsJson, parentTr.id);
+                let jsonString = JSON.stringify(newTransactions);
+                localStorage.setItem('ls-transactions', jsonString);
+                document.getElementById('transactions-table-body').removeChild(parentTr);
+                alert('Transaction ' + parentTr.querySelector('.description').innerHTML + ' was successfully deleted');
+
             } else {
-
+            //    do nothing
             }
 
         }
@@ -219,4 +216,30 @@ findTransactionsForm.addEventListener('submit', () => {
         localStorage.setItem('filtered-transactions', filteredTransactionsStr);
     }
 });
+
+editTransactionForm.addEventListener('submit', () => {
+    console.log("editTransactionForm.addEventListener is working 1");
+    if (transactionValidate.EditTransactionValidator.prototype.isValid) {
+        // getting the values from the input form
+        let uuid = document.getElementById('edit-id').value;
+        let date = new Date(document.getElementById('edit-date').value);
+        let type = document.getElementById('edit-type').value;
+        let description = document.getElementById('edit-description').value;
+        let category = document.getElementById('edit-category').value;
+        let amount = document.getElementById('edit-amount').value;
+
+        console.log("editTransactionForm.addEventListener is working");
+
+        // creating a new Transaction object
+        let transaction = new Transaction(date, type, description, category, amount);
+        transaction.uuid = uuid;
+        //update the list of transactions
+        jsonUtil.updateTransactionByUuid(transactionsJson, transaction);
+
+        // storing the list to local storage
+        let jsonString = JSON.stringify(transactionsJson);
+        localStorage.setItem('ls-transactions', jsonString);
+    }
+});
+
 // TODO: implement edit/delete/find a transaction

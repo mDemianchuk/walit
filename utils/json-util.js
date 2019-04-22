@@ -40,6 +40,31 @@ function getTransactionsByType(transactionsJson, type) {
     return transactionsJson.filter((transaction) => transaction.type === type);
 }
 
+function getTransactionByUuid(transactionsJson, transactionUuid) {
+    return transactionsJson.filter((transaction) => transaction.uuid === transactionUuid);
+}
+
+function updateTransactionByUuid(transactionsJson, newTransaction) {
+    transactionsJson.forEach(function(transaction) {
+        console.log("new transaction's uuid: " + newTransaction.uuid);
+        if(transaction.uuid === newTransaction.uuid) {
+            transaction.date = newTransaction.date;
+            transaction.type = newTransaction.type;
+            transaction.description= newTransaction.description;
+            transaction.category = newTransaction.category;
+            transaction.amount = newTransaction.amount;
+            console.log("updated transaction: " + transaction);
+        }
+    });
+}
+
+function deleteTransactionByUuid(transactionsJson, transactionUuid) {
+    // let filteredTransactions =  transactionsJson.filter(function(value, index, arr){
+    //     return value.uuid !== transactionUuid;
+    // });
+    return transactionsJson.filter((transaction) => transaction.uuid !== transactionUuid);
+}
+
 function getTotalSpent(transactionsJson) {
     let totalSpent = 0;
     for (let key in transactionsJson) {
@@ -101,5 +126,8 @@ module.exports = {
     getDailySpending,
     getCategories,
     sortJsonByProperty,
-    isValidJson
+    isValidJson,
+    getTransactionByUuid,
+    updateTransactionByUuid,
+    deleteTransactionByUuid
 };
