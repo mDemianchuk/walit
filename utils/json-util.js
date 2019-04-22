@@ -45,7 +45,7 @@ function getTotalSpent(transactionsJson) {
     for (let key in transactionsJson) {
         if (transactionsJson.hasOwnProperty(key)) {
             let transaction = transactionsJson[key];
-            totalSpent += parseInt(transaction.amount);
+            totalSpent += parseFloat(transaction.amount);
         }
     }
     return totalSpent;
@@ -61,8 +61,8 @@ function getDailySpending(transactionsJson, numberOfDays) {
             let transactionDate = transaction.date;
             let transactionDay = transactionDate.getDate();
             if (i === transactionDay) {
-                totalSpent += parseInt(transaction.amount);
-                dailySpending[i] += parseInt(transaction.amount);
+                totalSpent += parseFloat(transaction.amount);
+                dailySpending[i] += parseFloat(transaction.amount);
             }
         }
     }

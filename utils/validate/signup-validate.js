@@ -1,4 +1,4 @@
-const FormValidator = require('./validate.js');
+const FormValidator = require('validate-js');
 
 function setInvalid(element) {
   element.className = 'invalid';
@@ -10,19 +10,19 @@ function setInvalid(element) {
 let validationRules = [{
   name: 'first-name',
   display: 'First Name',
-  rules: 'required|alpha_numeric'
+  rules: 'required|alpha|min_length[2]|max_length[20]'
 }, {
   name: 'last-name',
   display: 'Last Name',
-  rules: 'required|alpha_numeric'
+  rules: 'required|alpha|min_length[2]|max_length[20]'
 }, {
   name: 'username',
   display: 'Username',
-  rules: 'required|alpha_numeric'
+  rules: 'required|alpha_numeric|min_length[6]|max_length[20]'
 }, {
   name: 'password',
   display: 'Password',
-  rules: 'required|min_length[8]'
+  rules: 'required|min_length[8]|max_length[20]'
 }, {
   name: 'password-confirm',
   display: 'Confirm Password',
