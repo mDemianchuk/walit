@@ -1,6 +1,6 @@
 function parseJson(jsonString) {
     if (!jsonString) {
-        return {};
+        return [];
     }
 
     let transactionsJson = JSON.parse(jsonString);
@@ -12,8 +12,24 @@ function parseJson(jsonString) {
     return transactionsJson;
 }
 
-function getTransactionsInDateRange(transactionsJson, fromDate, toDate) {
-    return transactionsJson.filter((transaction) => fromDate < transaction['date'] && transaction['date'] < toDate);
+function getTransactionsInDateRange(transactionsJson, dateAfter, dateBefore) {
+    return transactionsJson.filter((transaction) => dateAfter < transaction.date && transaction.date < dateBefore);
+}
+
+function getTransactionsAfterDate(transactionsJson, dateAfter) {
+    return transactionsJson.filter((transaction) => dateAfter < transaction.date);
+}
+
+function getTransactionsBeforeDate(transactionsJson, dateBefore) {
+    return transactionsJson.filter((transaction) => transaction.date < dateBefore);
+}
+
+function getTransactionsLessThan(transactionsJson, lessThan) {
+    return transactionsJson.filter((transaction) => lessThan < transaction.amount);
+}
+
+function getTransactionsMoreThan(transactionsJson, moreThan) {
+    return transactionsJson.filter((transaction) => transaction.amount > moreThan);
 }
 
 function getTransactionsByCategory(transactionsJson, category) {
@@ -29,7 +45,7 @@ function getTotalSpent(transactionsJson) {
     for (let key in transactionsJson) {
         if (transactionsJson.hasOwnProperty(key)) {
             let transaction = transactionsJson[key];
-            totalSpent += parseInt(transaction.amount);
+            totalSpent += parseFloat(transaction.amount);
         }
     }
     return totalSpent;
@@ -45,8 +61,8 @@ function getDailySpending(transactionsJson, numberOfDays) {
             let transactionDate = transaction.date;
             let transactionDay = transactionDate.getDate();
             if (i === transactionDay) {
-                totalSpent += parseInt(transaction.amount);
-                dailySpending[i] += parseInt(transaction.amount);
+                totalSpent += parseFloat(transaction.amount);
+                dailySpending[i] += parseFloat(transaction.amount);
             }
         }
     }
@@ -68,13 +84,22 @@ function sortJsonByProperty(transactionsJson, property) {
     return transactionsJson.sort((a, b) => (a[property] < b[property]) ? 1 : -1)
 }
 
+function isValidJson(json) {
+    return !(json === undefined || json.length === 0);
+}
+
 module.exports = {
     parseJson,
     getTransactionsInDateRange,
+    getTransactionsAfterDate,
+    getTransactionsBeforeDate,
+    getTransactionsLessThan,
+    getTransactionsMoreThan,
     getTransactionsByCategory,
     getTransactionsByType,
     getTotalSpent,
     getDailySpending,
     getCategories,
-    sortJsonByProperty
+    sortJsonByProperty,
+    isValidJson
 };

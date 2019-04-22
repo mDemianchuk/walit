@@ -13,7 +13,6 @@
   <link rel="stylesheet" href="../stylesheets/shared/large-button.css">
   <link rel="stylesheet" href="../stylesheets/shared/table.css">
   <link rel="stylesheet" href="../stylesheets/shared/modal-container.css">
-  <link rel="stylesheet" href="../stylesheets/transactions.css">
 </head>
 
 <body>
@@ -27,28 +26,31 @@
     </div>
     <div class="navbar-group">
       <a href="#"><i class="fa fa-cog" aria-hidden="true"></i>Settings</a>
-      <a href="login.html"><i class="fa fa-fw fa-user"></i>Log Out</a>
+      <a href="/login"><i class="fa fa-fw fa-user"></i>Log Out</a>
     </div>
   </nav>
   <main>
-    <div class="page-container">
+    <div id="header-top" class="hidden page-container">
       <h1>Your most recent transactions</h1>
       <h3>waLit made your finances easy</h3>
-      <div id="transactions-container" class="transactions-container">
-        <table id="transactions-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Description</th>
-              <th>Category</th>
-              <th>Amount</th>
-              <th>Type</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody id="transactions-table-body"></tbody>
-        </table>
-      </div>
+    <div id="no-transactions" class="page-container">
+      <h1>Ooops! Looks like there are no transactions to display</h1>
+      <h3>Let's add some!</h3>
+    </div>
+    <div id="transactions-container" class="hidden transactions-container">
+      <table id="transactions-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Type</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="transactions-table-body"></tbody>
+      </table>
     </div>
     <div class="page-container">
       <button id="add-transaction-button" class="large-button">
@@ -62,13 +64,13 @@
         <div class="subtitle">Looking for something? Let's find it</div>
       </button>
     </div>
-    <div id="add-transaction-modal" class="modal-container" >
+    <div id="add-transaction-modal" class="hidden modal-container">
       <div class="modal-content">
         <h1>Add a transaction</h1>
         <h3>waLit made your finances easy</h3>
         <form id="add-transaction-form" name="add-transaction-form" class="transaction-form" method="post">
-          <input id="add-description" name="add-description" class="double" type="text" maxlength="30" placeholder="Description of transaction" autocomplete="off">
-          <input id="add-category" name="add-category" class="double" list="add-categories" maxlength="20" placeholder="Category" autocomplete="off">
+          <input id="add-description" name="add-description" class="double" type="text" placeholder="Description of transaction" autocomplete="off">
+          <input id="add-category" name="add-category" class="double" list="add-categories" placeholder="Category" autocomplete="off">
           <datalist id="add-categories">
             <option value="Utilities">
             <option value="Rent">
@@ -84,7 +86,7 @@
             <option value="biweekly">Biweekly</option>
             <option value="monthly">Monthly</option>
           </select>
-          <input id="add-amount" name="add-amount" class="single" type="number" min="0" step="0.01" placeholder="Amount">
+          <input id="add-amount" name="add-amount" class="single" type="number" step="0.01" placeholder="Amount">
           <select id="add-type" name="add-type" class="single">
             <option value="" disabled selected>Type</option>
             <option value="Income">Income</option>
@@ -94,14 +96,14 @@
         </form>
       </div>
     </div>
-    <div id="edit-transaction-modal" class="modal-container" >
+    <div id="edit-transaction-modal" class="hidden modal-container" >
       <div class="modal-content">
-        <h1>Add a transaction</h1>
+        <h1>Edit a transaction</h1>
         <h3>waLit made your finances easy</h3>
         <form id="edit-transaction-form" name="edit-transaction-form" class="transaction-form">
           <data id="edit-id" value=""></data>
-          <input id="edit-description" name="edit-description" class="double" type="text" maxlength="30" placeholder="Description of transaction" autocomplete="off">
-          <input id="edit-category" name="edit-category" class="double" list="edit-categories" maxlength="20" placeholder="Category" autocomplete="off">
+          <input id="edit-description" name="edit-description" class="double" type="text" placeholder="Description of transaction" autocomplete="off">
+          <input id="edit-category" name="edit-category" class="double" list="edit-categories" placeholder="Category" autocomplete="off">
           <datalist id="edit-categories">
             <option value="Utilities">
             <option value="Rent">
@@ -117,7 +119,7 @@
             <option value="biweekly">Biweekly</option>
             <option value="monthly">Monthly</option>
           </select>
-          <input id="edit-amount" name="edit-amount" class="single" type="number" min="0" step="0.01" placeholder="Amount">
+          <input id="edit-amount" name="edit-amount" class="single" type="number" step="0.01" placeholder="Amount">
           <select id="edit-type" name="edit-type" class="single">
             <option value="" disabled selected>Type</option>
             <option value="Income">Income</option>
@@ -127,12 +129,11 @@
         </form>
       </div>
     </div>
-    <div id="find-transactions-modal" class="modal-container">
+    <div id="find-transactions-modal" class="hidden modal-container">
       <div class="modal-content">
         <h1>Find transactions</h1>
         <h3>waLit made your finances easy</h3>
         <form id="find-transactions-form" name="find-transactions-form" class="transaction-form" method="get">
-          <input id="find-description" name="find-description" class="double" type="text" maxlength="30" placeholder="Description of transaction" autocomplete="off">
           <input id="find-category" name="find-category" class="double" list="find-categories" maxlength="20" placeholder="Category" autocomplete="off">
           <datalist id="find-categories">
             <option value="Utilities">

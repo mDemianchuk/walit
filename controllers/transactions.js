@@ -2,14 +2,49 @@ const Transaction = require('../models/transaction');
 const jsonUtil = require('../utils/json-util');
 const dateUtil = require('../utils/date-util');
 const displayUtil = require('../utils/display-util');
-const CustomValidator = require('../utils/validate/transactions-validate');
+const transactionValidate = require('../utils/validate/transactions-validate');
 
-function displayTable(condition) {
+const transactionContainer = document.getElementById('transactions-container');
+const transactionTableBody = document.getElementById('transactions-table-body');
+
+const addTransactionButton = document.getElementById('add-transaction-button');
+const findTransactionsButton = document.getElementById('find-transactions-button');
+
+const addTransactionModal = document.getElementById('add-transaction-modal');
+const findTransactionsModal = document.getElementById('find-transactions-modal');
+const editTransactionModal = document.getElementById('edit-transaction-modal');
+
+const addTransactionForm = document.getElementById('add-transaction-form');
+const findTransactionsForm = document.getElementById('find-transactions-form');
+const editTransactionForm = document.getElementById('edit-transaction-form');
+
+const headerTopContainer = document.getElementById('header-top');
+const noTransactionsContainer = document.getElementById('no-transactions');
+
+const editTransactionButtons = document.getElementsByClassName('edit-transaction-button');
+const deleteTransactionButtons = document.getElementsByClassName('delete-transaction-button');
+
+const addTransactionFormValidator = new transactionValidate.AddTransactionValidator('add-transaction-form');
+const findTransactionsFormValidator = new transactionValidate.FindTransactionsValidator('find-transactions-form');
+const editTransactionFormValidator = new transactionValidate.EditTransactionValidator('edit-transaction-form');
+
+function addAndDisplayTransactions(transactionsJson) {
     for (let transaction of transactionsJson) {
-        if (condition(transaction)) {
-            addTransactionToTable(transaction);
-        }
+        // creating a row in transactions table for a new transaction
+        let row = transactionTableBody.insertRow();
+
+        let dateColumn = row.insertCell(0);
+        dateColumn.innerHTML = dateUtil.getShortDate(transaction.date);
+        let descriptionColumn = row.insertCell(1);
+        descriptionColumn.innerHTML = transaction.description;
+        let categoryColumn = row.insertCell(2);
+        categoryColumn.innerHTML = transaction.category;
+        let amountColumn = row.insertCell(3);
+        amountColumn.innerHTML = transaction.amount;
+        let typeColumn = row.insertCell(4);
+        typeColumn.innerHTML = transaction.type;
     }
+    displayUtil.displayElement(transactionContainer);
 }
 
 function addTransactionToTable(transaction) {
@@ -74,125 +109,20 @@ function addTransactionToTable(transaction) {
     displayUtil.displayElement(transactionContainer);
 }
 
-function clearTable() {
-    while (transactionTableBody.firstChild) {
-        transactionTableBody.removeChild(transactionTableBody.firstChild);
-    }
+// retrieving the list of transactions from local storage
+const filteredJson = jsonUtil.parseJson(localStorage.getItem('filtered-transactions'));
+let transactionsJson = jsonUtil.parseJson(localStorage.getItem('ls-transactions'));
+
+if(jsonUtil.isValidJson(filteredJson)) {
+    transactionsJson = filteredJson;
 }
 
-let transactionContainer = document.getElementById('transactions-container');
-let transactionTableBody = document.getElementById('transactions-table-body');
-
-let addTransactionButton = document.getElementById('add-transaction-button');
-let findTransactionsButton = document.getElementById('find-transactions-button');
-let editTransactionButtons = document.getElementsByClassName('edit-transaction-button');
-let deleteTransactionButtons = document.getElementsByClassName('delete-transaction-button');
-
-let addTransactionModal = document.getElementById('add-transaction-modal');
-let findTransactionsModal = document.getElementById('find-transactions-modal');
-let editTransactionModal = document.getElementById('edit-transaction-modal');
-
-// input buttons
-let addTransactionForm = document.getElementById('add-transaction-form');
-let findTransactionsForm = document.getElementById('find-transactions-form');
-let editTransactionForm = document.getElementById('edit-transaction-form');
-
-// add transaction form validation
-const addTransactionFormValidationRules = [{
-    name: 'add-description',
-    display: 'Description',
-    rules: 'required|alpha_numeric'
-}, {
-    name: 'add-category',
-    display: 'Category',
-    rules: 'required|alpha_numeric'
-}, {
-    name: 'add-date',
-    display: 'Date',
-    rules: 'required'
-}, {
-    name: 'add-how-often',
-    display: 'How Often',
-    rules: 'required'
-}, {
-    name: 'add-amount',
-    display: 'Amount',
-    rules: 'required'
-}, {
-    name: 'add-type',
-    display: 'Type',
-    rules: 'required'
-}];
-
-// edit transaction form validation
-const editTransactionFormValidationRules = [{
-    name: 'edit-description',
-    display: 'Description',
-    rules: 'required|alpha_numeric'
-}, {
-    name: 'edit-category',
-    display: 'Category',
-    rules: 'required|alpha_numeric'
-}, {
-    name: 'edit-date',
-    display: 'Date',
-    rules: 'required'
-}, {
-    name: 'edit-how-often',
-    display: 'How Often',
-    rules: 'required'
-}, {
-    name: 'edit-amount',
-    display: 'Amount',
-    rules: 'required'
-}, {
-    name: 'edit-type',
-    display: 'Type',
-    rules: 'required'
-}];
-
-const addTransactionFormValidator = new CustomValidator('add-transaction-form', addTransactionFormValidationRules);
-const editTransactionFormValidator = new CustomValidator('edit-transaction-form', addTransactionFormValidationRules);
-// find transactions form validation
-const findTransactionsFormValidationRules = [{
-    name: 'find-description',
-    display: 'Description',
-    rules: 'alpha_numeric'
-}, {
-    name: 'find-category',
-    display: 'Category',
-    rules: 'alpha_numeric'
-}, {
-    name: 'find-type',
-    display: 'Type',
-    rules: 'alpha_numeric'
-}, {
-    name: 'find-date-after',
-    display: 'After the date',
-    rules: ''
-}, {
-    name: 'find-date-before',
-    display: 'Before the date',
-    rules: ''
-}, {
-    name: 'find-less-than',
-    display: 'Less than',
-    rules: ''
-}, {
-    name: 'find-more-than',
-    display: 'More than',
-    rules: ''
-}];
-
-const findTransactionsFormValidator = new CustomValidator('find-transactions-form', findTransactionsFormValidationRules);
-
-
-// retrieving the list of transactions from local storage
-let transactionsJson = jsonUtil.parseJson(localStorage.getItem('ls-transactions'));
-transactionsJson = jsonUtil.sortJsonByProperty(transactionsJson, 'date');
-
-if (transactionsJson) {
-    displayTable((transaction) => true);
+if (jsonUtil.isValidJson(transactionsJson)) {
+    transactionsJson = jsonUtil.sortJsonByProperty(transactionsJson, 'date');
+    displayUtil.hideElement(noTransactionsContainer);
+    displayUtil.displayElement(headerTopContainer);
+    addAndDisplayTransactions(transactionsJson);
+    localStorage.setItem('filtered-transactions', '');
 }
 
 // adding event listeners
@@ -222,13 +152,13 @@ for(var i = 0; i < editTransactionButtons.length; i++){
 }
 
 //add action listeners to delete buttons
-for(var i = 0; i < deleteTransactionButtons.length; i++){
+for(let i = 0; i < deleteTransactionButtons.length; i++){
     let currentButton = deleteTransactionButtons[i];
     let parentTr = currentButton.parentNode.parentNode;
 
     currentButton.addEventListener('click', () => {
             if (confirm('Are you sure you want to delete transaction: ' + parentTr.querySelector(".description").innerHTML + "?")) {
-                var xhttp = new XMLHttpRequest();
+                let xhttp = new XMLHttpRequest();
                 xhttp.open("DELETE", "http://localhost:3000/transactions/delete/" + parentTr.id, true);
                 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
                 xhttp.onload = function(){
@@ -244,9 +174,6 @@ for(var i = 0; i < deleteTransactionButtons.length; i++){
         }
     );
 }
-
-
-
 window.addEventListener('click', (event) => {
     if (event.target === addTransactionModal) {
         displayUtil.hideElement(addTransactionModal);
@@ -255,9 +182,8 @@ window.addEventListener('click', (event) => {
     }
 });
 
-addTransactionForm.addEventListener('submit', (e) => {
-    if (CustomValidator.prototype.isValid) {
-        e.preventDefault();
+addTransactionForm.addEventListener('submit', () => {
+    if (transactionValidate.AddTransactionValidator.prototype.isValid) {
         // getting the values from the input form
         let date = new Date(document.getElementById('add-date').value);
         let type = document.getElementById('add-type').value;
@@ -274,44 +200,47 @@ addTransactionForm.addEventListener('submit', (e) => {
         // storing the list to local storage
         let jsonString = JSON.stringify(transactionsJson);
         localStorage.setItem('ls-transactions', jsonString);
-
-        // adding as a row in the transactions table
-        addTransactionToTable(transaction);
     }
 });
 
-
 findTransactionsForm.addEventListener('submit', () => {
-    if (CustomValidator.prototype.isValid) {
-
+    if (transactionValidate.FindTransactionsValidator.prototype.isValid) {
         // getting the values from the input form
         let dateAfter = new Date(document.getElementById('find-date-after').value);
         let dateBefore = new Date(document.getElementById('find-date-before').value);
         let type = document.getElementById('find-type').value;
-        let description = document.getElementById('find-description').value;
         let category = document.getElementById('find-category').value;
-        let lessThan = document.getElementById('find-less-than').value;
-        let moreThan = document.getElementById('find-more-than').value;
+        let lessThan = parseFloat(document.getElementById('find-less-than').value);
+        let moreThan = parseFloat(document.getElementById('find-more-than').value);
 
-        clearTable();
+        let filteredTransactions = transactionsJson;
 
-        let condition = (transaction) => {
-            if (transaction.amount < lessThan) {
-                return true;
-            }
-        };
-
-        for (let transaction of transactionsJson) {
-            if (condition(transaction)) {
-                addTransactionToTable(transaction);
-            }
+        if (!isNaN(dateAfter.getDate())) {
+            filteredTransactions = jsonUtil.getTransactionsAfterDate(filteredTransactions, dateAfter);
         }
+        if (!isNaN(dateBefore.getDate())) {
+            filteredTransactions = jsonUtil.getTransactionsBeforeDate(filteredTransactions, dateBefore);
+        }
+        if (type) {
+            filteredTransactions = jsonUtil.getTransactionsByType(filteredTransactions, type);
+        }
+        if (category) {
+            filteredTransactions = jsonUtil.getTransactionsByCategory(filteredTransactions, category);
+        }
+        if (lessThan) {
+            filteredTransactions = jsonUtil.getTransactionsLessThan(filteredTransactions, lessThan);
+        }
+        if (moreThan) {
+            filteredTransactions = jsonUtil.getTransactionsMoreThan(filteredTransactions, moreThan);
+        }
+
+        let filteredTransactionsStr = JSON.stringify(filteredTransactions);
+        localStorage.setItem('filtered-transactions', filteredTransactionsStr);
     }
 });
 
 editTransactionForm.addEventListener('submit', () => {
-    console.log("Edit is working");
-    if (CustomValidator.prototype.isValid) {
+    if (transactionValidate.EditTransactionValidator.prototype.isValid) {
         // getting the values from the input form
         let uuid = document.getElementById('edit-id').value;
         let date = new Date(document.getElementById('edit-date').value);
@@ -334,6 +263,4 @@ editTransactionForm.addEventListener('submit', () => {
         xhttp.send();
     }
 });
-
-
 // TODO: implement edit/delete/find a transaction
