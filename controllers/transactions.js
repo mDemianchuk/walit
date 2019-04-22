@@ -32,80 +32,61 @@ function addAndDisplayTransactions(transactionsJson) {
     for (let transaction of transactionsJson) {
         // creating a row in transactions table for a new transaction
         let row = transactionTableBody.insertRow();
-
+        row.id = transaction.uuid;
         let dateColumn = row.insertCell(0);
         dateColumn.innerHTML = dateUtil.getShortDate(transaction.date);
+        dateColumn.className = "date";
         let descriptionColumn = row.insertCell(1);
         descriptionColumn.innerHTML = transaction.description;
+        descriptionColumn.className = "description";
         let categoryColumn = row.insertCell(2);
         categoryColumn.innerHTML = transaction.category;
+        categoryColumn.className = "category";
         let amountColumn = row.insertCell(3);
         amountColumn.innerHTML = transaction.amount;
+        amountColumn.className = "amount";
         let typeColumn = row.insertCell(4);
         typeColumn.innerHTML = transaction.type;
+        typeColumn.className = "type";
+
+        let actionsColumn = row.insertCell(5);
+
+        let editButton = document.createElement("button");
+
+        editButton.className = "edit-transaction-button";
+
+        let editButtonIcon = document.createElement("span");
+        editButtonIcon.className = "icon";
+
+        let editIClass = document.createElement("i");
+        editIClass.classList.add("fas", "fa-edit");
+        editButtonIcon.append(editIClass);
+        editButton.append(editButtonIcon);
+
+        let editButtonText = document.createElement("div");
+        editButtonText.innerText = "Edit";
+
+        editButton.append(editButtonText);
+
+        let deleteButton = document.createElement("button");
+
+        deleteButton.className = "delete-transaction-button";
+
+        let deleteButtonIcon = document.createElement("span");
+        deleteButtonIcon.className = "icon";
+
+        let deleteIClass = document.createElement("i");
+        deleteIClass.classList.add("fas", "fa-delete");
+        deleteButtonIcon.append(deleteIClass);
+        deleteButton.append(deleteButtonIcon);
+
+        let deleteButtonText = document.createElement("div");
+        deleteButtonText.innerText = "Delete";
+
+        deleteButton.append(deleteButtonText);
+
+        actionsColumn.append(editButton, deleteButton);
     }
-    displayUtil.displayElement(transactionContainer);
-}
-
-function addTransactionToTable(transaction) {
-    // creating a row in transactions table for a new transaction
-    let row = transactionTableBody.insertRow();
-    row.id = transaction.uuid;
-    let dateColumn = row.insertCell(0);
-    dateColumn.innerHTML = dateUtil.getShortDate(transaction.date);
-    dateColumn.className = "date";
-    let descriptionColumn = row.insertCell(1);
-    descriptionColumn.innerHTML = transaction.description;
-    descriptionColumn.className = "description";
-    let categoryColumn = row.insertCell(2);
-    categoryColumn.innerHTML = transaction.category;
-    categoryColumn.className = "category";
-    let amountColumn = row.insertCell(3);
-    amountColumn.innerHTML = transaction.amount;
-    amountColumn.className = "amount";
-    let typeColumn = row.insertCell(4);
-    typeColumn.innerHTML = transaction.type;
-    typeColumn.className = "type";
-
-    let actionsColumn = row.insertCell(5);
-
-    let editButton = document.createElement("button");
-
-    editButton.className = "edit-transaction-button";
-
-    let editButtonIcon = document.createElement("span");
-    editButtonIcon.className = "icon";
-
-    let editIClass = document.createElement("i");
-    editIClass.classList.add("fas", "fa-edit");
-    editButtonIcon.append(editIClass);
-    editButton.append(editButtonIcon);
-
-    let editButtonText = document.createElement("div");
-    editButtonText.innerText = "Edit";
-
-    editButton.append(editButtonText);
-
-    let deleteButton = document.createElement("button");
-
-    deleteButton.className = "delete-transaction-button";
-
-    let deleteButtonIcon = document.createElement("span");
-    deleteButtonIcon.className = "icon";
-
-    let deleteIClass = document.createElement("i");
-    deleteIClass.classList.add("fas", "fa-delete");
-    deleteButtonIcon.append(deleteIClass);
-    deleteButton.append(deleteButtonIcon);
-
-    let deleteButtonText = document.createElement("div");
-    deleteButtonText.innerText = "Delete";
-
-    deleteButton.append(deleteButtonText);
-
-    actionsColumn.append(editButton, deleteButton);
-
-    // displaying the container as it now contains at least one transaction
     displayUtil.displayElement(transactionContainer);
 }
 
@@ -236,31 +217,6 @@ findTransactionsForm.addEventListener('submit', () => {
 
         let filteredTransactionsStr = JSON.stringify(filteredTransactions);
         localStorage.setItem('filtered-transactions', filteredTransactionsStr);
-    }
-});
-
-editTransactionForm.addEventListener('submit', () => {
-    if (transactionValidate.EditTransactionValidator.prototype.isValid) {
-        // getting the values from the input form
-        let uuid = document.getElementById('edit-id').value;
-        let date = new Date(document.getElementById('edit-date').value);
-        let type = document.getElementById('edit-type').value;
-        let description = document.getElementById('edit-description').value;
-        let category = document.getElementById('edit-category').value;
-        let amount = document.getElementById('edit-amount').value;
-
-        // creating a new Transaction object
-        let oldTransaction = transactionsJson.filter((transaction) => transaction.uuid === uuid);
-        console.log("Old transaction " + oldTransaction);
-        let transaction = new Transaction(date, type, description, category, amount);
-        oldTransaction = transaction;
-        var xhttp = new XMLHttpRequest();
-        xhttp.open("PUT", "http://localhost:3000/transactions/update/" + uuid, true);
-        xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        xhttp.onload = function(){
-            console.log(this.response);
-        };
-        xhttp.send();
     }
 });
 // TODO: implement edit/delete/find a transaction
