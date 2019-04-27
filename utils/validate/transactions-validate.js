@@ -42,10 +42,6 @@ function AddTransactionValidator(elementName) {
         display: 'Date',
         rules: 'required|callback_valid_date|callback_after_date|callback_before_date'
     }, {
-        name: 'add_how_often',
-        display: 'How Often',
-        rules: 'required'
-    }, {
         name: 'add_amount',
         display: 'Amount',
         rules: 'required|decimal|less_than[9999]|greater_than[0]'
@@ -78,13 +74,13 @@ function AddTransactionValidator(elementName) {
     this.validator.setMessage('required', '%s is required.');
 }
 
-function FindTransactionsValidator(elementName) {
-    FindTransactionsValidator.prototype.isValid = false;
+function FilterTransactionsValidator(elementName) {
+    FilterTransactionsValidator.prototype.isValid = false;
 
     function callback(errors, event) {
         let errorsLength = errors.length;
         if (errorsLength === 0) {
-            FindTransactionsValidator.prototype.isValid = true;
+            FilterTransactionsValidator.prototype.isValid = true;
         } else if (errorsLength > 0) {
             const errorMessage = errors[0].message;
             const invalidElement = document.getElementsByName(errors[0].name)[0];
@@ -94,23 +90,23 @@ function FindTransactionsValidator(elementName) {
     }
 
     const validationRules = [{
-        name: 'find-category',
+        name: 'filter-category',
         display: 'Category',
         rules: 'min_length[2]|max_length[20]'
     }, {
-        name: 'find-date-after',
+        name: 'filter-date-after',
         display: 'Date',
         rules: 'callback_valid_date|callback_after_date'
     }, {
-        name: 'find-date-before',
+        name: 'filter-date-before',
         display: 'Date',
         rules: 'callback_valid_date|callback_before_date'
     }, {
-        name: 'find-less-than',
+        name: 'filter-less-than',
         display: 'Amount',
         rules: 'decimal|less_than[9999]|greater_than[0]|callback_get_less_than'
     }, {
-        name: 'find-more-than',
+        name: 'filter-more-than',
         display: 'Amount',
         rules: 'decimal|less_than[9999]|greater_than[0]|callback_less_than_prev'
     }];
@@ -177,10 +173,6 @@ function EditTransactionValidator(elementName) {
         display: 'Date',
         rules: 'required|callback_valid_date|callback_after_date|callback_before_date'
     }, {
-        name: 'edit_how_often',
-        display: 'How Often',
-        rules: 'required'
-    }, {
         name: 'edit_amount',
         display: 'Amount',
         rules: 'required|decimal|less_than[9999]|greater_than[0]'
@@ -214,6 +206,6 @@ function EditTransactionValidator(elementName) {
 
 module.exports = {
     AddTransactionValidator,
-    FindTransactionsValidator,
+    FilterTransactionsValidator,
     EditTransactionValidator
 };
