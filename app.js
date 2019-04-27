@@ -57,7 +57,7 @@ app.route('/transactions/delete/:id')
 
 app.route('/settings')
     .get((req, res) => res.sendFile(path.join(__dirname + '/public/html/settings.html')))
-    .post((req, res) => res.redirect('/transactions'));
+    .post((req, res) => res.redirect('/overview'));
 
 app.listen(port, () => {
     console.log(`App listening on port ${port}!`)

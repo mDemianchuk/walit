@@ -135,7 +135,7 @@ for(let i = 0; i < deleteTransactionButtons.length; i++){
                 let jsonString = JSON.stringify(newTransactions);
                 localStorage.setItem('ls-transactions', jsonString);
                 document.getElementById('transactions-table-body').removeChild(parentTr);
-                alert('Transaction ' + parentTr.querySelector('.description').innerHTML + ' was successfully deleted');
+                // alert('Transaction ' + parentTr.querySelector('.description').innerHTML + ' was successfully deleted');
 
             } else {
             //    do nothing

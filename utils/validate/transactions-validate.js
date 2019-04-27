@@ -13,6 +13,7 @@ function setValidOnClick(element) {
         element.removeAttribute('title');
     }
 }
+
 function AddTransactionValidator(elementName) {
     AddTransactionValidator.prototype.isValid = false;
 
@@ -64,7 +65,7 @@ function AddTransactionValidator(elementName) {
     this.validator.registerCallback('after_date', (value) => {
         const date = new Date(value);
         let tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() - 1);
+        tomorrow.setDate(tomorrow.getDate());
         return (date < tomorrow);
     }).setMessage('after_date', '%s should not be after tomorrow.');
 
@@ -127,7 +128,7 @@ function FindTransactionsValidator(elementName) {
     this.validator.registerCallback('after_date', (value) => {
         dateAfter = new Date(value);
         let tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() - 1);
+        tomorrow.setDate(tomorrow.getDate());
         return (dateAfter < tomorrow);
     }).setMessage('before_date', '%s should not be after tomorrow.');
 
@@ -199,7 +200,7 @@ function EditTransactionValidator(elementName) {
     this.validator.registerCallback('after_date', (value) => {
         const date = new Date(value);
         let tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate() - 1);
+        tomorrow.setDate(tomorrow.getDate());
         return (date < tomorrow);
     }).setMessage('after_date', '%s should not be after tomorrow.');
 
