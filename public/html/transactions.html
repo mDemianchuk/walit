@@ -38,6 +38,16 @@
       <h1>Ooops! Looks like there are no transactions to display</h1>
       <h3>Let's add some!</h3>
     </div>
+    <div class="page-container">
+      <button id="add-transaction-button" class="large-button">
+        <span class="icon"><i class="fas fa-plus"></i></span>
+        <div class="title">Add a transaction</div>
+      </button>
+      <button id="filter-transactions-button" class="large-button">
+        <span class="icon"><i class="fas fa-search"></i></span>
+        <div class="title">Filter transactions</div>
+      </button>
+    </div>
     <div id="transactions-container" class="hidden transactions-container">
       <table id="transactions-table">
         <thead>
@@ -53,25 +63,13 @@
         <tbody id="transactions-table-body"></tbody>
       </table>
     </div>
-    <div class="page-container">
-      <button id="add-transaction-button" class="large-button">
-        <span class="icon"><i class="fas fa-plus"></i></span>
-        <div class="title">Add a transaction</div>
-        <div class="subtitle">Spent or made some $? Let's add it</div>
-      </button>
-      <button id="find-transactions-button" class="large-button">
-        <span class="icon"><i class="fas fa-search"></i></span>
-        <div class="title">Find transactions</div>
-        <div class="subtitle">Looking for something? Let's find it</div>
-      </button>
-    </div>
     <div id="add-transaction-modal" class="hidden modal-container">
       <div class="modal-content">
         <h1>Add a transaction</h1>
         <h3>waLit made your finances easy</h3>
         <form id="add-transaction-form" name="add-transaction-form" class="transaction-form" method="post">
           <input id="add-description" name="add_description" class="double" type="text" placeholder="Description of transaction" autocomplete="off">
-          <input id="add-category" name="add_category" class="double" list="add-categories" placeholder="Category" autocomplete="off">
+          <input id="add-category" name="add_category" class="single" list="add-categories" placeholder="Category" autocomplete="off">
           <datalist id="add-categories">
             <option value="Utilities">
             <option value="Rent">
@@ -80,13 +78,6 @@
             <option value="Loans">
           </datalist>
           <input id="add-date" name="add_date" class="single" placeholder="Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
-          <select id="add-how-often" name="add-how-often" class="single">
-            <option value="" disabled selected>How often?</option>
-            <option value="onetime">One time</option>
-            <option value="weekly">Weekly</option>
-            <option value="biweekly">Biweekly</option>
-            <option value="monthly">Monthly</option>
-          </select>
           <input id="add-amount" name="add_amount" class="single" type="number" step="0.01" placeholder="Amount">
           <select id="add-type" name="add_type" class="single">
             <option value="" disabled selected>Type</option>
@@ -104,7 +95,7 @@
         <form id="edit-transaction-form" name="edit-transaction-form" class="transaction-form" method="post">
           <input id="edit-id" name="editId" type="text" value="" hidden>
           <input id="edit-description" name="edit_description" class="double" type="text" placeholder="Description of transaction" autocomplete="off">
-          <input id="edit-category" name="edit_category" class="double" list="edit-categories" placeholder="Category" autocomplete="off">
+          <input id="edit-category" name="edit_category" class="single" list="edit-categories" placeholder="Category" autocomplete="off">
           <datalist id="edit-categories">
             <option value="Utilities">
             <option value="Rent">
@@ -113,13 +104,6 @@
             <option value="Loans">
           </datalist>
           <input id="edit-date" name="edit_date" class="single" placeholder="Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
-          <select id="edit-how-often" name="edit_how_often" class="single">
-            <option value="" disabled selected>How often?</option>
-            <option value="onetime">One time</option>
-            <option value="weekly">Weekly</option>
-            <option value="biweekly">Biweekly</option>
-            <option value="monthly">Monthly</option>
-          </select>
           <input id="edit-amount" name="edit_amount" class="single" type="number" step="0.01" placeholder="Amount">
           <select id="edit-type" name="edit_type" class="single">
             <option value="" disabled selected>Type</option>
@@ -130,29 +114,29 @@
         </form>
       </div>
     </div>
-    <div id="find-transactions-modal" class="hidden modal-container">
+    <div id="filter-transactions-modal" class="hidden modal-container">
       <div class="modal-content">
-        <h1>Find transactions</h1>
+        <h1>Filter transactions</h1>
         <h3>waLit made your finances easy</h3>
-        <form id="find-transactions-form" name="find-transactions-form" class="transaction-form" method="get">
-          <input id="find-category" name="find-category" class="double" list="find-categories" maxlength="20" placeholder="Category" autocomplete="off">
-          <datalist id="find-categories">
+        <form id="filter-transactions-form" name="filter-transactions-form" class="transaction-form" method="get">
+          <input id="filter-category" name="filter-category" class="double" list="filter-categories" maxlength="20" placeholder="Category" autocomplete="off">
+          <datalist id="filter-categories">
             <option value="Utilities">
             <option value="Rent">
             <option value="Medical">
             <option value="Education">
             <option value="Loans">
           </datalist>
-          <select id="find-type" name="find-type" class="double">
+          <select id="filter-type" name="filter-type" class="double">
             <option value="" disabled selected>Type</option>
             <option value="Income">Income</option>
             <option value="Expense">Expense</option>
           </select>
-          <input id="find-date-after" name="find-date-after" class="single" placeholder="After the date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
-          <input id="find-date-before" name="find-date-before" class="single" placeholder="Before the date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
-          <input id="find-less-than" name="find-less-than" class="single" type="number" min="0" step="0.01" placeholder="Less than">
-          <input id="find-more-than" name="find-more-than" class="single" type="number" min="0" step="0.01" placeholder="More than">
-          <input id="find-transactions-submit" class="single" type="submit" value="Find">
+          <input id="filter-date-after" name="filter-date-after" class="single" placeholder="After the date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
+          <input id="filter-date-before" name="filter-date-before" class="single" placeholder="Before the date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')">
+          <input id="filter-less-than" name="filter-less-than" class="single" type="number" min="0" step="0.01" placeholder="Less than">
+          <input id="filter-more-than" name="filter-more-than" class="single" type="number" min="0" step="0.01" placeholder="More than">
+          <input id="filter-transactions-submit" class="single" type="submit" value="Filter">
         </form>
       </div>
     </div>

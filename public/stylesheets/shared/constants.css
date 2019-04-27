@@ -24,7 +24,7 @@
     --main-background-color: #c94b4b;
     --active-background-color: rgba(255, 255, 255, 0.2);
     --inactive-background-color: rgba(0, 0, 0, 0.4);
-    --background-gradient: linear-gradient(45deg, var(--main-background-color), #4b134f);
+    --background-gradient: linear-gradient(45deg, #4b134f, var(--main-background-color));
 
     /* input constants */
     --input-height: 3em;
@@ -34,8 +34,8 @@
     --calendar-picker-size: 0.7em;
 
     /* large button constants */
-    --large-button-height: 7em;
-    --large-button-width: 20em;
+    --large-button-height: 5em;
+    --large-button-width: 15em;
     --large-button-margin: 1em;
     --large-button-title-size: 1.2em;
 
