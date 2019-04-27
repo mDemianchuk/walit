@@ -8,6 +8,7 @@ settingsForm.addEventListener('submit', () => {
     if (SettingsFormValidator.prototype.isValid) {
         const limit = parseFloat(document.getElementById('limit').value);
         const currency = document.getElementById('currency').value;
+        const goal = document.getElementById('goal').value;
 
         const userSettings = localStorage.getItem('user-settings');
         let userSettingsJson = JSON.parse(userSettings);
@@ -15,7 +16,11 @@ settingsForm.addEventListener('submit', () => {
             userSettingsJson = {};
         }
 
-        if (!isNaN(limit)) {
+        if (goal && !isNaN(goal)) {
+            userSettingsJson.goal = goal;
+        }
+
+        if (limit && !isNaN(limit)) {
             userSettingsJson.limit = limit;
         }
 

@@ -30,29 +30,32 @@ function SettingsFormValidator(elementName) {
     }
 
     const validationRules = [{
-            name: 'password_old',
-            display: 'Password',
-            rules: 'min_length[8]|max_length[20]|callback_present'
-        }, {
-            name: 'password',
-            display: 'New Password',
-            rules: 'required|min_length[8]|max_length[20]',
-            depends: () => {
-                return present;
-            }
-        }, {
-            name: 'password_confirm',
-            display: 'Confirm Password',
-            rules: 'required|matches[password]',
-            depends: () => {
-                return present;
-            }
-        }, {
-            name: 'limit',
-            display: 'Limit',
-            rules: 'decimal|less_than[9999]|greater_than[0]'
-        }]
-    ;
+        name: 'password_old',
+        display: 'Password',
+        rules: 'min_length[8]|max_length[20]|callback_present'
+    }, {
+        name: 'password',
+        display: 'New Password',
+        rules: 'required|min_length[8]|max_length[20]',
+        depends: () => {
+            return present;
+        }
+    }, {
+        name: 'password_confirm',
+        display: 'Confirm Password',
+        rules: 'required|matches[password]',
+        depends: () => {
+            return present;
+        }
+    }, {
+        name: 'limit',
+        display: 'Limit',
+        rules: 'decimal|less_than[9999]|greater_than[0]'
+    }, {
+        name: 'goal',
+        display: 'Goal',
+        rules: 'decimal|less_than[9999]|greater_than[0]'
+    }];
 
     let present = false;
 

@@ -1,5 +1,70 @@
 .chart-container {
   padding: 2em;
   margin: auto;
-  width: 50%;
+  width: 60%;
+}
+
+.switch-container {
+  margin: 0 10%;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 18px;
+  margin: 0 10px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider-type,
+.slider-chart {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 10px;
+  background-color: rgba(46, 204, 113, 0.4);
+}
+
+.slider-type:before,
+.slider-chart:before {
+  position: absolute;
+  content: "";
+  height: 14px;
+  width: 14px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked+.slider-type {
+  background-color: rgba(255, 0, 0, 0.4);
+}
+
+input:checked+.slider-chart {
+  background-color: rgba(46, 204, 113, 0.4);
+}
+
+input:checked+.slider-type:before,
+input:checked+.slider-chart:before {
+  -webkit-transform: translateX(22px);
+  -ms-transform: translateX(22px);
+  transform: translateX(22px);
+}
+
+.slider-type:before,
+.slider-chart:before {
+  border-radius: 50%;
 }

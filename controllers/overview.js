@@ -5,34 +5,21 @@ const doughnutChart = require('../models/doughnut-chart');
 const displayUtil = require('../utils/display-util');
 const jsonUtil = require('../utils/json-util');
 
-const lineChartButton = document.getElementById('line-chart-button');
-const lineChartContainer = document.getElementById('line-chart-container');
-const doughnutChartButton = document.getElementById('doughnut-chart-button');
-const doughnutChartContainer = document.getElementById('doughnut-chart-container');
+const transactionTypeSwitch = document.getElementById('transaction-type-switch');
+const chartTypeSwitch = document.getElementById('chart-type-switch');
+const toggleContainer = document.getElementById('toggle-container');
+const expenseLineChartContainer = document.getElementById('expense-line-chart-container');
+const expenseDoughnutChartContainer = document.getElementById('expense-doughnut-chart-container');
+const incomeLineChartContainer = document.getElementById('income-line-chart-container');
+const incomeDoughnutChartContainer = document.getElementById('income-doughnut-chart-container');
 const headerTopContainer = document.getElementById('header-top');
 const noTransactionsContainer = document.getElementById('no-transactions');
-const buttonContainer = document.getElementById('button-container');
 
-function createAndDisplayLineChart(json) {
-    const lineChartElement = document.getElementById('line-chart');
-
-
-    let currency = '$';
-    let userLimit = 3000;
-    const userSettings = localStorage.getItem('user-settings');
-    const userSettingsJson = JSON.parse(userSettings);
-    if (jsonUtil.isValidJson(userSettingsJson)) {
-        if (userSettingsJson.currency) {
-            currency = userSettingsJson.currency;
-        }
-        if(!isNaN(parseFloat(userSettingsJson.limit))) {
-            userLimit = userSettingsJson.limit;
-        }
-    }
-
+function createLineChart(chartElementId, json, labels, userMax, userCurrency) {
+    const lineChartElement = document.getElementById(chartElementId);
 
     // Array to represent a straight line on the chart
-    const limit = new Array(31).fill(userLimit);
+    const borderLine = new Array(31).fill(userMax);
 
     const lineChartLabels = arrayUtil.incrementFill(1, 31);
 
@@ -43,18 +30,26 @@ function createAndDisplayLineChart(json) {
     const lastDayOfPreviousMonth = dateUtil.getLastDayInMonth(1);
 
     const currentMonthTransactions = jsonUtil.getTransactionsInDateRange(json, firstDayOfCurrentMonth, lastDayOfCurrentMonth);
-    const currentMonthDailySpendingArray = jsonUtil.getDailySpending(currentMonthTransactions, lastDayOfCurrentMonth.getDate());
+    const currentMonthTransactionsArray = jsonUtil.getTransactionsByDay(currentMonthTransactions, lastDayOfCurrentMonth.getDate());
 
     const previousMonthTransactions = jsonUtil.getTransactionsInDateRange(json, firstDayOfPreviousMonth, lastDayOfPreviousMonth);
-    const previousMonthDailySpendingArray = jsonUtil.getDailySpending(previousMonthTransactions, lastDayOfPreviousMonth.getDate());
+    const previousMonthTransactionsArray = jsonUtil.getTransactionsByDay(previousMonthTransactions, lastDayOfPreviousMonth.getDate());
 
-    lineChart.createChart(lineChartElement, lineChartLabels, currentMonthDailySpendingArray, previousMonthDailySpendingArray, limit, currency);
+    let currentMonthData = {
+        label: `${labels.labels[0]} this month`,
+        data: currentMonthTransactionsArray,
+    };
 
-    displayUtil.displayElement(lineChartContainer);
+    let previousMonthData = {
+        label: `${labels.labels[0]} previous month`,
+        data: previousMonthTransactionsArray,
+    };
+
+    lineChart.createChart(lineChartElement, lineChartLabels, currentMonthData, previousMonthData, labels, borderLine, userCurrency);
 }
 
-function createDoughnutChart(json) {
-    const doughnutChartElement = document.getElementById('doughnut-chart');
+function createDoughnutChart(chartElementId, json) {
+    const doughnutChartElement = document.getElementById(chartElementId);
 
     const firstDayOfCurrentMonth = dateUtil.getFirstDayInMonth(0);
     const lastDayOfCurrentMonth = new Date();
@@ -65,7 +60,7 @@ function createDoughnutChart(json) {
     let totalSpendingInCategories = [];
     for (let category of categories) {
         const spendingPerCategory = jsonUtil.getTransactionsByCategory(currentMonthSpending, category);
-        const totalSpendingPerCategory = jsonUtil.getTotalSpent(spendingPerCategory);
+        const totalSpendingPerCategory = jsonUtil.getTotal(spendingPerCategory);
         totalSpendingInCategories.push(totalSpendingPerCategory);
     }
 
@@ -75,22 +70,77 @@ function createDoughnutChart(json) {
 // retrieving the list of transactions from local storage
 const transactionsJson = jsonUtil.parseJson(localStorage.getItem('ls-transactions'));
 if (jsonUtil.isValidJson(transactionsJson)) {
-    const spendingJson = jsonUtil.getTransactionsByType(transactionsJson, 'Expense');
+    const incomeJson = jsonUtil.getTransactionsByType(transactionsJson, 'Income');
+    const expenseJson = jsonUtil.getTransactionsByType(transactionsJson, 'Expense');
 
-    if (jsonUtil.isValidJson(spendingJson)) {
-        displayUtil.hideElement(noTransactionsContainer);
-        displayUtil.displayElement(headerTopContainer);
-        displayUtil.displayElement(buttonContainer);
-
-        createAndDisplayLineChart(spendingJson);
-        createDoughnutChart(spendingJson);
-
-        doughnutChartButton.addEventListener('click', () => {
-            displayUtil.toggleElements(lineChartContainer, doughnutChartContainer);
-        });
-
-        lineChartButton.addEventListener('click', () => {
-            displayUtil.toggleElements(doughnutChartContainer, lineChartContainer);
-        });
+    let userCurrency = '$';
+    let userLimit = 3000;
+    let userGoal = 4000;
+    const userSettings = localStorage.getItem('user-settings');
+    const userSettingsJson = JSON.parse(userSettings);
+    if (jsonUtil.isValidJson(userSettingsJson)) {
+        if (userSettingsJson.currency) {
+            userCurrency = userSettingsJson.currency;
+        }
+        if (userSettingsJson.limit && !isNaN(parseFloat(userSettingsJson.limit))) {
+            userLimit = userSettingsJson.limit;
+        }
+        if (userSettingsJson.goal && !isNaN(parseFloat(userSettingsJson.goal))) {
+            userGoal = userSettingsJson.goal;
+        }
     }
+
+    const expenseLabels = {
+        labels: ['Spent', 'Monthly limit'],
+        borderColor: '#FF0000',
+        backgroundColor: 'rgba(255,0,0,0.1)',
+    };
+
+    const incomeLabels = {
+        labels: ['Made', 'Monthly goal'],
+        borderColor: '#rgba(46, 204, 113, 1)',
+        backgroundColor: 'rgba(46, 204, 113, 0.1)'
+    };
+
+    createLineChart('income-line-chart', incomeJson, incomeLabels, userGoal, userCurrency);
+    createDoughnutChart('income-doughnut-chart', incomeJson);
+    createLineChart('expense-line-chart', expenseJson, expenseLabels, userLimit, userCurrency);
+    createDoughnutChart('expense-doughnut-chart', expenseJson);
+
+    displayUtil.hideElement(noTransactionsContainer);
+    displayUtil.displayElement(toggleContainer);
+    displayUtil.displayElement(incomeLineChartContainer);
+    displayUtil.displayElement(headerTopContainer);
+
+    transactionTypeSwitch.addEventListener('change', () => {
+        if (transactionTypeSwitch.checked) {
+            if (incomeLineChartContainer.style.display === 'block') {
+                displayUtil.toggleElements(incomeLineChartContainer, expenseLineChartContainer);
+            } else if (incomeDoughnutChartContainer.style.display === 'block') {
+                displayUtil.toggleElements(incomeDoughnutChartContainer, expenseDoughnutChartContainer);
+            }
+        } else {
+            if (expenseLineChartContainer.style.display === 'block') {
+                displayUtil.toggleElements(expenseLineChartContainer, incomeLineChartContainer);
+            } else if (expenseDoughnutChartContainer.style.display === 'block') {
+                displayUtil.toggleElements(expenseDoughnutChartContainer, incomeDoughnutChartContainer);
+            }
+        }
+    });
+
+    chartTypeSwitch.addEventListener('change', () => {
+        if (chartTypeSwitch.checked) {
+            if (expenseLineChartContainer.style.display === 'block') {
+                displayUtil.toggleElements(expenseLineChartContainer, expenseDoughnutChartContainer);
+            } else if (incomeLineChartContainer.style.display === 'block') {
+                displayUtil.toggleElements(incomeLineChartContainer, incomeDoughnutChartContainer);
+            }
+        } else {
+            if (incomeDoughnutChartContainer.style.display === 'block') {
+                displayUtil.toggleElements(incomeDoughnutChartContainer, incomeLineChartContainer);
+            } else if (expenseDoughnutChartContainer.style.display === 'block') {
+                displayUtil.toggleElements(expenseDoughnutChartContainer, expenseLineChartContainer);
+            }
+        }
+    });
 }

@@ -45,12 +45,12 @@ function getTransactionByUuid(transactionsJson, transactionUuid) {
 }
 
 function updateTransactionByUuid(transactionsJson, newTransaction) {
-    transactionsJson.forEach(function(transaction) {
+    transactionsJson.forEach(function (transaction) {
         console.log("new transaction's uuid: " + newTransaction.uuid);
-        if(transaction.uuid === newTransaction.uuid) {
+        if (transaction.uuid === newTransaction.uuid) {
             transaction.date = newTransaction.date;
             transaction.type = newTransaction.type;
-            transaction.description= newTransaction.description;
+            transaction.description = newTransaction.description;
             transaction.category = newTransaction.category;
             transaction.amount = newTransaction.amount;
             console.log("updated transaction: " + transaction);
@@ -62,34 +62,34 @@ function deleteTransactionByUuid(transactionsJson, transactionUuid) {
     return transactionsJson.filter((transaction) => transaction.uuid !== transactionUuid);
 }
 
-function getTotalSpent(transactionsJson) {
-    let totalSpent = 0;
+function getTotal(transactionsJson) {
+    let total = 0;
     for (let key in transactionsJson) {
         if (transactionsJson.hasOwnProperty(key)) {
             let transaction = transactionsJson[key];
-            totalSpent += parseFloat(transaction.amount);
+            total += parseFloat(transaction.amount);
         }
     }
-    return totalSpent;
+    return total;
 }
 
-function getDailySpending(transactionsJson, numberOfDays) {
-    let dailySpending = new Array(numberOfDays).fill(0);
-    let totalSpent = 0;
+function getTransactionsByDay(transactionsJson, numberOfDays) {
+    let transactionsByDay = new Array(numberOfDays).fill(0);
+    let total = 0;
 
     for (let i = 0; i < numberOfDays; i++) {
-        dailySpending[i] += totalSpent;
+        transactionsByDay[i] += total;
         for (let transaction of transactionsJson) {
             let transactionDate = transaction.date;
             let transactionDay = transactionDate.getDate();
             if (i === transactionDay) {
-                totalSpent += parseFloat(transaction.amount);
-                dailySpending[i] += parseFloat(transaction.amount);
+                total += parseFloat(transaction.amount);
+                transactionsByDay[i] += parseFloat(transaction.amount);
             }
         }
     }
 
-    return dailySpending;
+    return transactionsByDay;
 }
 
 function getCategories(transactionsJson) {
@@ -119,8 +119,8 @@ module.exports = {
     getTransactionsMoreThan,
     getTransactionsByCategory,
     getTransactionsByType,
-    getTotalSpent,
-    getDailySpending,
+    getTotal,
+    getTransactionsByDay,
     getCategories,
     sortJsonByProperty,
     isValidJson,

@@ -37,24 +37,56 @@
       <h1>Ooops! Looks like there are no transactions to display</h1>
       <h3>Let's add some!</h3>
     </div>
-    <div id="line-chart-container" class="hidden chart-container">
-      <canvas class="chart" id="line-chart"></canvas>
+    <div id="toggle-container" class="hidden toggle-container">
+      <span class="switch-container">
+        <span>Income</span>
+        <label class="switch">
+          <input id="transaction-type-switch" type="checkbox">
+          <span class="slider-type"></span>
+        </label>
+        <span>Expense</span>
+      </span>
+      <span class="switch-container">
+        <span>Line Chart</span>
+        <label class="switch">
+          <input id="chart-type-switch" type="checkbox">
+          <span class="slider-chart"></span>
+        </label>
+        <span>Doughnut Chart</span>
+      </span>
     </div>
-    <div id="doughnut-chart-container" class="hidden chart-container">
-      <canvas class="chart" id="doughnut-chart"></canvas>
+    <div id="expense-line-chart-container" class="hidden chart-container">
+      <canvas class="chart" id="expense-line-chart"></canvas>
     </div>
-    <div id="button-container" class="hidden page-container">
-      <button id="line-chart-button" class="large-button">
-        <span class="icon"><i class="fas fa-chart-line"></i></span>
-        <div class="title">View a line chart</div>
-        <div class="subtitle">Your budget in one line</div>
-      </button>
-      <button id="doughnut-chart-button" class="large-button">
-        <span class="icon"><i class="fas fa-chart-pie"></i></span>
-        <div class="title">View a doughnut chart</div>
-        <div class="subtitle">Your budget in one doughnut</div>
-      </button>
+    <div id="expense-doughnut-chart-container" class="hidden chart-container">
+      <canvas class="chart" id="expense-doughnut-chart"></canvas>
     </div>
+    <div id="income-line-chart-container" class="hidden chart-container">
+      <canvas class="chart" id="income-line-chart"></canvas>
+    </div>
+    <div id="income-doughnut-chart-container" class="hidden chart-container">
+      <canvas class="chart" id="income-doughnut-chart"></canvas>
+    </div>
+
+
+
+
+
+
+
+
+    <!--    <div id="button-container" class="hidden page-container">-->
+    <!--      <button id="line-chart-button" class="large-button">-->
+    <!--        <span class="icon"><i class="fas fa-chart-line"></i></span>-->
+    <!--        <div class="title">View a line chart</div>-->
+    <!--        <div class="subtitle">Your budget in one line</div>-->
+    <!--      </button>-->
+    <!--      <button id="doughnut-chart-button" class="large-button">-->
+    <!--        <span class="icon"><i class="fas fa-chart-pie"></i></span>-->
+    <!--        <div class="title">View a doughnut chart</div>-->
+    <!--        <div class="subtitle">Your budget in one doughnut</div>-->
+    <!--      </button>-->
+    <!--    </div>-->
   </main>
   <script src="../scriptBundles/overview.js"></script>
 </body>
