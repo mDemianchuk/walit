@@ -4,6 +4,7 @@
 ### Custom ###
 package-lock.json
 **/scriptBundles
+.firebase
 
 ### Node ###
 # Logs

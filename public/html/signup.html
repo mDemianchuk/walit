@@ -14,18 +14,29 @@
   <main>
     <div class="central-container">
       <p class="logo">waLit</p>
-      <form name="signup-form" method="post">
-        <input name="first-name" class="single" type="text" placeholder="First Name" autocomplete="off">
-        <input name="last-name" class="single" type="text" placeholder="Last Name" autocomplete="off">
-        <input name="username" class="single" type="text" placeholder="Username" autocomplete="off">
-        <input name="password" class="single" type="password" placeholder="Password" autocomplete="off">
-        <input name="password-confirm" class="single" type="password" placeholder="Confirm Password" autocomplete="off">
-        <input name="email" class="single" type="text" placeholder="E-mail Address" autocomplete="off">
+      <form id="signup-form" name="signup-form" method="post">
+        <input id="email" name="email" class="single" type="text" placeholder="E-mail Address" autocomplete="off">
+        <input id="password" name="password" class="single" type="password" placeholder="Password" autocomplete="off">
+        <input id="password-confirm" name="password-confirm" class="single" type="password" placeholder="Confirm Password" autocomplete="off">
         <input type="submit" value="Sign Up">
         <span>Already have an account? <a href="/login">Log In</a></span>
       </form>
     </div>
   </main>
+  <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase.js"></script>
+  <script>
+    // Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDYZEY_AVfgdayz0fy5-XruR6L6PN07uow",
+      authDomain: "mdemianchuk-walit.firebaseapp.com",
+      databaseURL: "https://mdemianchuk-walit.firebaseio.com",
+      projectId: "mdemianchuk-walit",
+      storageBucket: "mdemianchuk-walit.appspot.com",
+      messagingSenderId: "28154671558"
+    };
+    firebase.initializeApp(config);
+  </script>
+  <script type="text/javascript" src="../scriptBundles/signup.js"></script>
   <script type="text/javascript" src="../scriptBundles/signup_validate.js"></script>
 </body>
 
