@@ -48,26 +48,24 @@ document.addEventListener('DOMContentLoaded', event => {
 
     settingsForm.addEventListener('submit', (form) => {
         form.preventDefault();
+        const user = firebase.auth().currentUser;
+        if (!user) {
+            window.location.replace('/login');
+        }
 
         if (SettingsFormValidator.prototype.isValid) {
             const currency = document.getElementById('currency').value;
             const goal = parseFloat(document.getElementById('goal').value);
             const limit = parseFloat(document.getElementById('limit').value);
-            const user = firebase.auth().currentUser;
-            if (user) {
-                const userSettings = firebase.firestore().collection(user.uid).doc('settings');
+            const userSettings = firebase.firestore().collection(user.uid).doc('settings');
 
-                updateCurrency(currency, userSettings)
-                    .then(() => updateGoal(goal, userSettings))
-                    .then(() => updateLimit(limit, userSettings))
-                    .then(() => {
-                        alert('User settings are successfully updated');
-                        settingsForm.submit();
-                    });
-
-            } else {
-                alert('You\'re not signed in')
-            }
+            updateCurrency(currency, userSettings)
+                .then(() => updateGoal(goal, userSettings))
+                .then(() => updateLimit(limit, userSettings))
+                .then(() => {
+                    alert('User settings are successfully updated');
+                    settingsForm.submit();
+                });
         }
     });
 });
