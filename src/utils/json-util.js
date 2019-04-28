@@ -46,14 +46,12 @@ function getTransactionByUuid(transactionsJson, transactionUuid) {
 
 function updateTransactionByUuid(transactionsJson, newTransaction) {
     transactionsJson.forEach(function (transaction) {
-        console.log("new transaction's uuid: " + newTransaction.uuid);
         if (transaction.uuid === newTransaction.uuid) {
             transaction.date = newTransaction.date;
             transaction.type = newTransaction.type;
             transaction.description = newTransaction.description;
             transaction.category = newTransaction.category;
             transaction.amount = newTransaction.amount;
-            console.log("updated transaction: " + transaction);
         }
     });
 }
