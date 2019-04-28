@@ -14,8 +14,17 @@ document.addEventListener('DOMContentLoaded', event => {
 
             firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then(() => {
-                    alert('Account successfully created');
-                    signupForm.submit();
+                    const user = firebase.auth().currentUser;
+                    if (user) {
+                        firebase.firestore().collection(user.uid).doc('settings').set({
+                            currency: '$',
+                            limit: 2000,
+                            goal: 2000
+                        }).then(() => {
+                            alert('Account successfully created');
+                            signupForm.submit();
+                        });
+                    }
                 })
         }
     });

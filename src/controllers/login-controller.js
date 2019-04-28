@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', event => {
                     loginForm.submit();
                 }, () => {
                     alert('Invalid login or password');
+                }, (error) => {
+                    alert(error)
                 });
         }
     });
