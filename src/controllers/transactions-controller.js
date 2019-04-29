@@ -1,107 +1,128 @@
-const Transaction = require('../models/transaction');
+const uuid = require('uuid/v1');
 const jsonUtil = require('../utils/json-util');
 const dateUtil = require('../utils/date-util');
 const displayUtil = require('../utils/display-util');
 const transactionValidate = require('../utils/validate/transactions-validate');
 
-function addAndDisplayTransactions(transactionsJson) {
-    for (let transaction of transactionsJson) {
-        // creating a row in transactions table for a new transaction
-        let row = transactionTableBody.insertRow();
-        row.id = transaction.uuid;
+const transactionContainer = document.getElementById('transactions-container');
+const editTransactionModal = document.getElementById('edit-transaction-modal');
+const addTransactionButton = document.getElementById('add-transaction-button');
+const filterTransactionsButton = document.getElementById('filter-transactions-button');
 
-        let dateColumn = row.insertCell(0);
-        dateColumn.innerHTML = dateUtil.getShortDate(transaction.date);
-        dateColumn.className = 'date';
+const addTransactionModal = document.getElementById('add-transaction-modal');
+const filterTransactionsModal = document.getElementById('filter-transactions-modal');
 
-        let descriptionColumn = row.insertCell(1);
-        descriptionColumn.innerHTML = transaction.description;
-        descriptionColumn.className = 'description';
+const addTransactionForm = document.getElementById('add-transaction-form');
+const filterTransactionsForm = document.getElementById('filter-transactions-form');
+const editTransactionForm = document.getElementById('edit-transaction-form');
 
-        let categoryColumn = row.insertCell(2);
-        categoryColumn.innerHTML = transaction.category;
-        categoryColumn.className = 'category';
+const headerTopContainer = document.getElementById('header-top');
+const noTransactionsContainer = document.getElementById('no-transactions');
 
-        let amountColumn = row.insertCell(3);
-        amountColumn.innerHTML = transaction.amount;
-        amountColumn.className = 'amount';
+const addTransactionFormValidator = new transactionValidate.AddTransactionValidator('add-transaction-form');
+const filterTransactionsFormValidator = new transactionValidate.FilterTransactionsValidator('filter-transactions-form');
+const editTransactionFormValidator = new transactionValidate.EditTransactionValidator('edit-transaction-form');
 
-        let typeColumn = row.insertCell(4);
-        typeColumn.innerHTML = transaction.type;
-        typeColumn.className = 'type';
-
-        let actionsColumn = row.insertCell(5);
-
-        let editButton = document.createElement('button');
-        editButton.className = 'edit-transaction-button';
-
-        let editButtonIcon = document.createElement('span');
-        editButtonIcon.className = 'icon';
-
-        let editIClass = document.createElement('i');
-        editIClass.classList.add('fas', 'fa-edit');
-
-        editButtonIcon.append(editIClass);
-        editButton.append(editButtonIcon);
-
-        let deleteButton = document.createElement('button');
-        deleteButton.className = 'delete-transaction-button';
-
-        let deleteButtonIcon = document.createElement('span');
-        deleteButtonIcon.className = 'icon';
-
-        let deleteIClass = document.createElement('i');
-        deleteIClass.classList.add('fas', 'fa-trash-alt');
-        deleteButtonIcon.append(deleteIClass);
-        deleteButton.append(deleteButtonIcon);
-
-        actionsColumn.append(editButton, deleteButton);
-    }
-    displayUtil.displayElement(transactionContainer);
-}
-
-document.addEventListener('DOMContentLoaded', event => {
-
-    const transactionContainer = document.getElementById('transactions-container');
+function addAndDisplayTransactions(userId, userTransactions, transaction) {
     const transactionTableBody = document.getElementById('transactions-table-body');
 
-    const addTransactionButton = document.getElementById('add-transaction-button');
-    const filterTransactionsButton = document.getElementById('filter-transactions-button');
+    let row = transactionTableBody.insertRow();
+    row.id = transaction.uuid;
 
-    const addTransactionModal = document.getElementById('add-transaction-modal');
-    const filterTransactionsModal = document.getElementById('filter-transactions-modal');
-    const editTransactionModal = document.getElementById('edit-transaction-modal');
+    const transactionDate = dateUtil.getShortDate(transaction.date.toDate());
+    let dateColumn = row.insertCell(0);
+    dateColumn.innerHTML = transactionDate;
+    dateColumn.className = 'date';
 
-    const addTransactionForm = document.getElementById('add-transaction-form');
-    const filterTransactionsForm = document.getElementById('filter-transactions-form');
-    const editTransactionForm = document.getElementById('edit-transaction-form');
+    let descriptionColumn = row.insertCell(1);
+    descriptionColumn.innerHTML = transaction.description;
+    descriptionColumn.className = 'description';
 
-    const headerTopContainer = document.getElementById('header-top');
-    const noTransactionsContainer = document.getElementById('no-transactions');
+    let categoryColumn = row.insertCell(2);
+    categoryColumn.innerHTML = transaction.category;
+    categoryColumn.className = 'category';
 
-    const editTransactionButtons = document.getElementsByClassName('edit-transaction-button');
-    const deleteTransactionButtons = document.getElementsByClassName('delete-transaction-button');
+    let amountColumn = row.insertCell(3);
+    amountColumn.innerHTML = transaction.amount;
+    amountColumn.className = 'amount';
 
-    const addTransactionFormValidator = new transactionValidate.AddTransactionValidator('add-transaction-form');
-    const filterTransactionsFormValidator = new transactionValidate.FilterTransactionsValidator('filter-transactions-form');
-    const editTransactionFormValidator = new transactionValidate.EditTransactionValidator('edit-transaction-form');
+    let typeColumn = row.insertCell(4);
+    typeColumn.innerHTML = transaction.type;
+    typeColumn.className = 'type';
 
+    let actionsColumn = row.insertCell(5);
 
-    // retrieving the list of transactions from local storage
-    const filteredJson = jsonUtil.parseJson(localStorage.getItem('filtered-transactions'));
-    let transactionsJson = jsonUtil.parseJson(localStorage.getItem('ls-transactions'));
+    let editButton = document.createElement('button');
+    editButton.className = 'edit-transaction-button';
 
-    if (jsonUtil.isValidJson(filteredJson)) {
-        transactionsJson = filteredJson;
-    }
+    let editButtonIcon = document.createElement('span');
+    editButtonIcon.className = 'icon';
 
-    if (jsonUtil.isValidJson(transactionsJson)) {
-        transactionsJson = jsonUtil.sortJsonByProperty(transactionsJson, 'date');
-        displayUtil.hideElement(noTransactionsContainer);
-        displayUtil.displayElement(headerTopContainer);
-        addAndDisplayTransactions(transactionsJson);
-        localStorage.setItem('filtered-transactions', '');
-    }
+    let editIClass = document.createElement('i');
+    editIClass.classList.add('fas', 'fa-edit');
+
+    editButtonIcon.append(editIClass);
+    editButton.append(editButtonIcon);
+
+    editButton.addEventListener('click', () => {
+            document.getElementById('edit-id').value = transaction.uuid;
+            document.getElementById('edit-description').value = transaction.description;
+            document.getElementById('edit-date').value = transactionDate;
+            document.getElementById('edit-type').value = transaction.type;
+            document.getElementById('edit-category').value = transaction.category;
+            document.getElementById('edit-amount').value = transaction.amount;
+            displayUtil.displayElement(editTransactionModal);
+        }
+    );
+
+    let deleteButton = document.createElement('button');
+    deleteButton.className = 'delete-transaction-button';
+
+    let deleteButtonIcon = document.createElement('span');
+    deleteButtonIcon.className = 'icon';
+
+    let deleteIClass = document.createElement('i');
+    deleteIClass.classList.add('fas', 'fa-trash-alt');
+    deleteButtonIcon.append(deleteIClass);
+    deleteButton.append(deleteButtonIcon);
+
+    deleteButton.addEventListener('click', () => {
+            if (confirm(`Are you sure you want to delete transaction: ${transaction.description} ?`)) {
+                userTransactions.doc(`${userId}/transactions/${transaction.uuid}`)
+                    .delete()
+                    .then(() => {
+                        alert('deleted')
+                    })
+            }
+        }
+    );
+
+    actionsColumn.append(editButton, deleteButton);
+}
+
+function clearTable() {
+    const transactionTableBody = document.getElementById('transactions-table-body');
+    const emptyTableBody = document.createElement('tbody');
+    emptyTableBody.setAttribute('id', 'transactions-table-body');
+    transactionTableBody.parentNode.replaceChild(emptyTableBody, transactionTableBody);
+}
+
+function loadThePage(userId, userTransactions) {
+
+    displayUtil.hideElement(noTransactionsContainer);
+    displayUtil.displayElement(headerTopContainer);
+
+    const transactions = userTransactions.doc(userId)
+        .collection('transactions')
+        .orderBy('date', 'desc')
+        .get()
+        .then(snap => {
+            snap.forEach((doc) => {
+                addAndDisplayTransactions(userId, userTransactions, doc.data())
+            });
+            displayUtil.displayElement(transactionContainer);
+        });
+
 
     // adding event listeners
     addTransactionButton.addEventListener('click', () => {
@@ -111,39 +132,6 @@ document.addEventListener('DOMContentLoaded', event => {
     filterTransactionsButton.addEventListener('click', () => {
         displayUtil.displayElement(filterTransactionsModal);
     });
-
-    //add action listeners to edit buttons
-    for (let i = 0; i < editTransactionButtons.length; i++) {
-        let currentButton = editTransactionButtons[i];
-        let parentTr = currentButton.parentNode.parentNode;
-
-        currentButton.addEventListener('click', () => {
-                document.getElementById('edit-id').value = parentTr.id;
-                document.getElementById('edit-description').value = parentTr.querySelector('.description').innerHTML;
-                document.getElementById('edit-date').value = parentTr.querySelector('.date').innerHTML;
-                document.getElementById('edit-type').value = parentTr.querySelector('.type').innerHTML;
-                document.getElementById('edit-category').value = parentTr.querySelector('.category').innerHTML;
-                document.getElementById('edit-amount').value = parentTr.querySelector('.amount').innerHTML;
-                displayUtil.displayElement(editTransactionModal);
-            }
-        );
-    }
-
-    //add action listeners to delete buttons
-    for (let i = 0; i < deleteTransactionButtons.length; i++) {
-        let currentButton = deleteTransactionButtons[i];
-        let parentTr = currentButton.parentNode.parentNode;
-
-        currentButton.addEventListener('click', () => {
-                if (confirm(`Are you sure you want to delete transaction: ${parentTr.querySelector('.description').innerHTML} + ?`)) {
-                    let newTransactions = jsonUtil.deleteTransactionByUuid(transactionsJson, parentTr.id);
-                    let jsonString = JSON.stringify(newTransactions);
-                    localStorage.setItem('ls-transactions', jsonString);
-                    document.getElementById('transactions-table-body').removeChild(parentTr);
-                }
-            }
-        );
-    }
 
     window.addEventListener('click', (event) => {
         if (event.target === addTransactionModal) {
@@ -155,28 +143,38 @@ document.addEventListener('DOMContentLoaded', event => {
         }
     });
 
-    addTransactionForm.addEventListener('submit', () => {
+    addTransactionForm.addEventListener('submit', (form) => {
+        form.preventDefault();
+
         if (transactionValidate.AddTransactionValidator.prototype.isValid) {
             // getting the values from the input form
-            let date = new Date(document.getElementById('add-date').value);
-            let type = document.getElementById('add-type').value;
             let description = document.getElementById('add-description').value;
             let category = document.getElementById('add-category').value;
-            let amount = document.getElementById('add-amount').value;
+            let date = new Date(document.getElementById('add-date').value);
+            let amount = parseFloat(document.getElementById('add-amount').value);
+            let type = document.getElementById('add-type').value;
+            let newUuid = uuid();
 
-            // creating a new Transaction object
-            let transaction = new Transaction(date, type, description, category, amount);
+            const newTransactionRef = userTransactions.doc(`${userId}/transactions/${newUuid}`);
 
-            // adding to the list of transactions
-            transactionsJson.push(transaction);
+            const newTransaction = {
+                description: description,
+                category: category,
+                date: date,
+                amount: amount,
+                type: type,
+                uuid: newUuid
+            };
 
-            // storing the list to local storage
-            let jsonString = JSON.stringify(transactionsJson);
-            localStorage.setItem('ls-transactions', jsonString);
+            newTransactionRef.set(newTransaction)
+                .then(() => addTransactionForm.submit())
         }
     });
 
-    filterTransactionsForm.addEventListener('submit', () => {
+
+    filterTransactionsForm.addEventListener('submit', (form) => {
+        form.preventDefault();
+
         if (transactionValidate.FilterTransactionsValidator.prototype.isValid) {
             // getting the values from the input form
             let dateAfter = new Date(document.getElementById('filter-date-after').value);
@@ -186,52 +184,81 @@ document.addEventListener('DOMContentLoaded', event => {
             let lessThan = parseFloat(document.getElementById('filter-less-than').value);
             let moreThan = parseFloat(document.getElementById('filter-more-than').value);
 
-            let filteredTransactions = transactionsJson;
+            let filteredTransactions = [];
 
-            if (!isNaN(dateAfter.getDate())) {
-                filteredTransactions = jsonUtil.getTransactionsAfterDate(filteredTransactions, dateAfter);
-            }
-            if (!isNaN(dateBefore.getDate())) {
-                filteredTransactions = jsonUtil.getTransactionsBeforeDate(filteredTransactions, dateBefore);
-            }
-            if (type) {
-                filteredTransactions = jsonUtil.getTransactionsByType(filteredTransactions, type);
-            }
-            if (category) {
-                filteredTransactions = jsonUtil.getTransactionsByCategory(filteredTransactions, category);
-            }
-            if (lessThan) {
-                filteredTransactions = jsonUtil.getTransactionsLessThan(filteredTransactions, lessThan);
-            }
-            if (moreThan) {
-                filteredTransactions = jsonUtil.getTransactionsMoreThan(filteredTransactions, moreThan);
-            }
+            userTransactions.doc(userId)
+                .collection('transactions')
+                .get()
+                .then(snap => {
+                    snap.forEach(doc => filteredTransactions.push(doc.data()))
+                })
+                .then(() => {
+                    if (!isNaN(dateAfter.getDate())) {
+                        filteredTransactions = jsonUtil.getTransactionsAfterDate(filteredTransactions, dateAfter);
+                    }
+                    if (!isNaN(dateBefore.getDate())) {
+                        filteredTransactions = jsonUtil.getTransactionsBeforeDate(filteredTransactions, dateBefore);
+                    }
+                    if (type) {
+                        filteredTransactions = jsonUtil.getTransactionsByType(filteredTransactions, type);
+                    }
+                    if (category) {
+                        filteredTransactions = jsonUtil.getTransactionsByCategory(filteredTransactions, category);
+                    }
+                    if (!isNaN(lessThan)) {
+                        filteredTransactions = jsonUtil.getTransactionsLessThan(filteredTransactions, lessThan);
+                    }
+                    if (!isNaN(moreThan)) {
+                        filteredTransactions = jsonUtil.getTransactionsMoreThan(filteredTransactions, moreThan);
+                    }
+                    if (filteredTransactions) {
+                        clearTable();
+                        filteredTransactions.forEach((transaction) => {
+                            addAndDisplayTransactions(userId, userTransactions, transaction)
+                        });
+                    }
+                    filterTransactionsModal.click();
+                })
 
-            let filteredTransactionsStr = JSON.stringify(filteredTransactions);
-            localStorage.setItem('filtered-transactions', filteredTransactionsStr);
         }
     });
 
-    editTransactionForm.addEventListener('submit', () => {
-        editTransactionForm.setAttribute('method', 'put');
+    editTransactionForm.addEventListener('submit', (form) => {
+        form.preventDefault();
+
         if (transactionValidate.EditTransactionValidator.prototype.isValid) {
             // getting the values from the input form
             let uuid = document.getElementById('edit-id').value;
-            let date = new Date(document.getElementById('edit-date').value);
+            let date = document.getElementById('edit-date').value;
             let type = document.getElementById('edit-type').value;
             let description = document.getElementById('edit-description').value;
             let category = document.getElementById('edit-category').value;
-            let amount = document.getElementById('edit-amount').value;
+            let amount = parseFloat(document.getElementById('edit-amount').value);
 
-            // creating a new Transaction object
-            let transaction = new Transaction(date, type, description, category, amount);
-            transaction.uuid = uuid;
-            //update the list of transactions
-            jsonUtil.updateTransactionByUuid(transactionsJson, transaction);
+            const newTransactionRef = userTransactions.doc(`${userId}/transactions/${uuid}`);
 
-            // storing the list to local storage
-            let jsonString = JSON.stringify(transactionsJson);
-            localStorage.setItem('ls-transactions', jsonString);
+            const newTransaction = {
+                description: description,
+                category: category,
+                date: date,
+                amount: amount,
+                type: type,
+            };
+
+            newTransactionRef.update(newTransaction)
+                .then(() => editTransactionForm.submit())
+        }
+    });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            const userTransactions = firebase.firestore()
+                .collection('walit-transactions');
+            loadThePage(user.uid, userTransactions)
+        } else {
+            window.location.replace('/login');
         }
     });
 });

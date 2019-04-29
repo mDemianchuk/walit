@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', event => {
                 .then(() => {
                     const user = firebase.auth().currentUser;
                     if (user) {
-                        firebase.firestore().collection(user.uid).doc('settings').set({
+                        firebase.firestore().collection('walit-settings').doc(user.uid).set({
                             currency: '$',
                             limit: 2000,
                             goal: 2000

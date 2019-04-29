@@ -1,7 +1,7 @@
 const SettingsFormValidator = require('../utils/validate/settings-validate');
 
 function updateCurrency(currency, userSettings) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         if (currency) {
             console.log('updating currency');
             await userSettings.update({
@@ -15,7 +15,7 @@ function updateCurrency(currency, userSettings) {
 }
 
 function updateGoal(goal, userSettings) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         if (goal && !isNaN(goal)) {
             console.log('updating goal');
             await userSettings.update({
@@ -29,7 +29,7 @@ function updateGoal(goal, userSettings) {
 }
 
 function updateLimit(limit, userSettings) {
-    return new Promise(async (resolve, reject) => {
+    return new Promise(async (resolve) => {
         if (limit && !isNaN(limit)) {
             console.log('updating limit');
             await userSettings.update({
@@ -42,30 +42,36 @@ function updateLimit(limit, userSettings) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', event => {
+function loadThePage(userSettings) {
     const settingsForm = document.getElementById('settings-form');
     const settingsFormValidator = new SettingsFormValidator('settings-form');
 
     settingsForm.addEventListener('submit', (form) => {
         form.preventDefault();
-        const user = firebase.auth().currentUser;
-        if (!user) {
-            window.location.replace('/login');
-        }
 
         if (SettingsFormValidator.prototype.isValid) {
             const currency = document.getElementById('currency').value;
             const goal = parseFloat(document.getElementById('goal').value);
             const limit = parseFloat(document.getElementById('limit').value);
-            const userSettings = firebase.firestore().collection(user.uid).doc('settings');
 
             updateCurrency(currency, userSettings)
                 .then(() => updateGoal(goal, userSettings))
                 .then(() => updateLimit(limit, userSettings))
-                .then(() => {
-                    alert('User settings are successfully updated');
-                    settingsForm.submit();
-                });
+                .then(() => settingsForm.submit());
+        }
+    });
+
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            const userSettings = firebase.firestore()
+                .collection('walit-settings')
+                .doc(user.uid);
+            loadThePage(userSettings);
+        } else {
+            window.location.replace('/login');
         }
     });
 });

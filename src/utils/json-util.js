@@ -1,31 +1,19 @@
-function parseJson(jsonString) {
-    if (!jsonString) {
-        return [];
-    }
-
-    let transactionsJson = JSON.parse(jsonString);
-
-    for (let transaction of transactionsJson) {
-        transaction.date = new Date(transaction.date);
-    }
-
-    return transactionsJson;
-}
-
 function getTransactionsInDateRange(transactionsJson, dateAfter, dateBefore) {
-    return transactionsJson.filter((transaction) => dateAfter < transaction.date && transaction.date < dateBefore);
+    return transactionsJson.filter((transaction) => {
+        return dateAfter < transaction.date.toDate() && transaction.date.toDate() < dateBefore;
+    });
 }
 
 function getTransactionsAfterDate(transactionsJson, dateAfter) {
-    return transactionsJson.filter((transaction) => dateAfter < transaction.date);
+    return transactionsJson.filter((transaction) => dateAfter < transaction.date.toDate());
 }
 
 function getTransactionsBeforeDate(transactionsJson, dateBefore) {
-    return transactionsJson.filter((transaction) => transaction.date < dateBefore);
+    return transactionsJson.filter((transaction) => transaction.date.toDate() < dateBefore);
 }
 
 function getTransactionsLessThan(transactionsJson, lessThan) {
-    return transactionsJson.filter((transaction) => lessThan < transaction.amount);
+    return transactionsJson.filter((transaction) => transaction.amount < lessThan);
 }
 
 function getTransactionsMoreThan(transactionsJson, moreThan) {
@@ -78,7 +66,7 @@ function getTransactionsByDay(transactionsJson, numberOfDays) {
     for (let i = 0; i < numberOfDays; i++) {
         transactionsByDay[i] += total;
         for (let transaction of transactionsJson) {
-            let transactionDate = transaction.date;
+            let transactionDate = transaction.date.toDate();
             let transactionDay = transactionDate.getDate();
             if (i === transactionDay) {
                 total += parseFloat(transaction.amount);
@@ -109,7 +97,6 @@ function isValidJson(json) {
 }
 
 module.exports = {
-    parseJson,
     getTransactionsInDateRange,
     getTransactionsAfterDate,
     getTransactionsBeforeDate,
