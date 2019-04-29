@@ -3,7 +3,6 @@ const SettingsFormValidator = require('../utils/validate/settings-validate');
 function updateCurrency(currency, userSettings) {
     return new Promise(async (resolve) => {
         if (currency) {
-            console.log('updating currency');
             await userSettings.update({
                 currency: currency
             }).then(() => {
@@ -17,7 +16,6 @@ function updateCurrency(currency, userSettings) {
 function updateGoal(goal, userSettings) {
     return new Promise(async (resolve) => {
         if (goal && !isNaN(goal)) {
-            console.log('updating goal');
             await userSettings.update({
                 goal: goal
             }).then(() => {
@@ -31,7 +29,6 @@ function updateGoal(goal, userSettings) {
 function updateLimit(limit, userSettings) {
     return new Promise(async (resolve) => {
         if (limit && !isNaN(limit)) {
-            console.log('updating limit');
             await userSettings.update({
                 limit: limit
             }).then(() => {
@@ -60,7 +57,6 @@ function loadThePage(userSettings) {
                 .then(() => settingsForm.submit());
         }
     });
-
 }
 
 document.addEventListener('DOMContentLoaded', () => {
