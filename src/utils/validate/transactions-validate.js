@@ -44,7 +44,7 @@ function AddTransactionValidator(elementName) {
     }, {
         name: 'add_amount',
         display: 'Amount',
-        rules: 'required|decimal|less_than[9999]|greater_than[0]'
+        rules: 'required|decimal|less_than[999999]|greater_than[0]'
     }, {
         name: 'add_type',
         display: 'Type',
@@ -104,11 +104,11 @@ function FilterTransactionsValidator(elementName) {
     }, {
         name: 'filter-less-than',
         display: 'Amount',
-        rules: 'decimal|less_than[9999]|greater_than[0]|callback_get_less_than'
+        rules: 'decimal|less_than[999999]|greater_than[0]|callback_get_less_than'
     }, {
         name: 'filter-more-than',
         display: 'Amount',
-        rules: 'decimal|less_than[9999]|greater_than[0]|callback_less_than_prev'
+        rules: 'decimal|less_than[999999]|greater_than[0]|callback_less_than_prev'
     }];
 
     let dateAfter = null;
@@ -178,7 +178,7 @@ function EditTransactionValidator(elementName) {
     }, {
         name: 'edit_amount',
         display: 'Amount',
-        rules: 'required|decimal|less_than[9999]|greater_than[0]'
+        rules: 'required|decimal|less_than[999999]|greater_than[0]'
     }, {
         name: 'edit_type',
         display: 'Type',
