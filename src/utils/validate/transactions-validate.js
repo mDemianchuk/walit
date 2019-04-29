@@ -139,8 +139,11 @@ function FilterTransactionsValidator(elementName) {
     });
 
     this.validator.registerCallback('less_than_prev', (value) => {
-        return lessThen < parseFloat(value);
-    }).setMessage('less_than_prev', '%s should not be more than or equal to \'Less than\'');
+        if (lessThen) {
+            return lessThen > parseFloat(value);
+        }
+        return true;
+    }).setMessage('less_than_prev', '%s should not be less than or equal to \'Less than\'');
 
     this.validator.setMessage('required', '%s is required.');
 }

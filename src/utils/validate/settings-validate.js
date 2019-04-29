@@ -30,24 +30,6 @@ function SettingsFormValidator(elementName) {
     }
 
     const validationRules = [{
-        name: 'password_old',
-        display: 'Password',
-        rules: 'min_length[8]|max_length[20]|callback_present'
-    }, {
-        name: 'password',
-        display: 'New Password',
-        rules: 'required|min_length[8]|max_length[20]',
-        depends: () => {
-            return present;
-        }
-    }, {
-        name: 'password_confirm',
-        display: 'Confirm Password',
-        rules: 'required|matches[password]',
-        depends: () => {
-            return present;
-        }
-    }, {
         name: 'limit',
         display: 'Limit',
         rules: 'decimal|less_than[9999]|greater_than[0]'
@@ -57,15 +39,8 @@ function SettingsFormValidator(elementName) {
         rules: 'decimal|less_than[9999]|greater_than[0]'
     }];
 
-    let present = false;
 
     this.validator = new FormValidator(elementName, validationRules, callback);
-
-    this.validator.registerCallback('present', (value) => {
-        present = true;
-        return true;
-    });
-
     this.validator.setMessage('required', '%s is required.');
 }
 

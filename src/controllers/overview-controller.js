@@ -5,17 +5,7 @@ const doughnutChart = require('../models/doughnut-chart');
 const displayUtil = require('../utils/display-util');
 const jsonUtil = require('../utils/json-util');
 
-const transactionTypeSwitch = document.getElementById('transaction-type-switch');
-const chartTypeSwitch = document.getElementById('chart-type-switch');
-const toggleContainer = document.getElementById('toggle-container');
-const expenseLineChartContainer = document.getElementById('expense-line-chart-container');
-const expenseDoughnutChartContainer = document.getElementById('expense-doughnut-chart-container');
-const incomeLineChartContainer = document.getElementById('income-line-chart-container');
-const incomeDoughnutChartContainer = document.getElementById('income-doughnut-chart-container');
-const headerTopContainer = document.getElementById('header-top');
-const noTransactionsContainer = document.getElementById('no-transactions');
-
-function createLineChart(chartElementId, json, labels, userMax, userCurrency) {
+function createLineChart(chartElementId, transactions, labels, userMax, userCurrency) {
     const lineChartElement = document.getElementById(chartElementId);
 
     // Array to represent a straight line on the chart
@@ -29,10 +19,10 @@ function createLineChart(chartElementId, json, labels, userMax, userCurrency) {
     const firstDayOfPreviousMonth = dateUtil.getFirstDayInMonth(1);
     const lastDayOfPreviousMonth = dateUtil.getLastDayInMonth(1);
 
-    const currentMonthTransactions = jsonUtil.getTransactionsInDateRange(json, firstDayOfCurrentMonth, lastDayOfCurrentMonth);
+    const currentMonthTransactions = jsonUtil.getTransactionsInDateRange(transactions, firstDayOfCurrentMonth, lastDayOfCurrentMonth);
     const currentMonthTransactionsArray = jsonUtil.getTransactionsByDay(currentMonthTransactions, lastDayOfCurrentMonth.getDate());
 
-    const previousMonthTransactions = jsonUtil.getTransactionsInDateRange(json, firstDayOfPreviousMonth, lastDayOfPreviousMonth);
+    const previousMonthTransactions = jsonUtil.getTransactionsInDateRange(transactions, firstDayOfPreviousMonth, lastDayOfPreviousMonth);
     const previousMonthTransactionsArray = jsonUtil.getTransactionsByDay(previousMonthTransactions, lastDayOfPreviousMonth.getDate());
 
     let currentMonthData = {
@@ -48,13 +38,13 @@ function createLineChart(chartElementId, json, labels, userMax, userCurrency) {
     lineChart.createChart(lineChartElement, lineChartLabels, currentMonthData, previousMonthData, labels, borderLine, userCurrency);
 }
 
-function createDoughnutChart(chartElementId, json) {
+function createDoughnutChart(chartElementId, transactions) {
     const doughnutChartElement = document.getElementById(chartElementId);
 
     const firstDayOfCurrentMonth = dateUtil.getFirstDayInMonth(0);
     const lastDayOfCurrentMonth = new Date();
 
-    const currentMonthSpending = jsonUtil.getTransactionsInDateRange(json, firstDayOfCurrentMonth, lastDayOfCurrentMonth);
+    const currentMonthSpending = jsonUtil.getTransactionsInDateRange(transactions, firstDayOfCurrentMonth, lastDayOfCurrentMonth);
     const categories = jsonUtil.getCategories(currentMonthSpending);
 
     let totalSpendingInCategories = [];
@@ -67,45 +57,64 @@ function createDoughnutChart(chartElementId, json) {
     doughnutChart.createChart(doughnutChartElement, categories, totalSpendingInCategories);
 }
 
-// retrieving the list of transactions from local storage
-const transactionsJson = jsonUtil.parseJson(localStorage.getItem('ls-transactions'));
-if (jsonUtil.isValidJson(transactionsJson)) {
-    const incomeJson = jsonUtil.getTransactionsByType(transactionsJson, 'Income');
-    const expenseJson = jsonUtil.getTransactionsByType(transactionsJson, 'Expense');
+function loadThePage(userId, userSettings, userTransactions) {
+    const transactionTypeSwitch = document.getElementById('transaction-type-switch');
+    const chartTypeSwitch = document.getElementById('chart-type-switch');
+    const toggleContainer = document.getElementById('toggle-container');
+    const expenseLineChartContainer = document.getElementById('expense-line-chart-container');
+    const expenseDoughnutChartContainer = document.getElementById('expense-doughnut-chart-container');
+    const incomeLineChartContainer = document.getElementById('income-line-chart-container');
+    const incomeDoughnutChartContainer = document.getElementById('income-doughnut-chart-container');
+    const headerTopContainer = document.getElementById('header-top');
+    const noTransactionsContainer = document.getElementById('no-transactions');
 
-    let userCurrency = '$';
-    let userLimit = 3000;
-    let userGoal = 4000;
-    const userSettings = localStorage.getItem('user-settings');
-    const userSettingsJson = JSON.parse(userSettings);
-    if (jsonUtil.isValidJson(userSettingsJson)) {
-        if (userSettingsJson.currency) {
-            userCurrency = userSettingsJson.currency;
-        }
-        if (userSettingsJson.limit && !isNaN(parseFloat(userSettingsJson.limit))) {
-            userLimit = userSettingsJson.limit;
-        }
-        if (userSettingsJson.goal && !isNaN(parseFloat(userSettingsJson.goal))) {
-            userGoal = userSettingsJson.goal;
-        }
-    }
+    const userCurrency = userSettings.currency;
+    const userGoal = userSettings.goal;
+    const userLimit = userSettings.limit;
 
-    const expenseLabels = {
-        labels: ['Spent', 'Monthly limit'],
-        borderColor: '#FF0000',
-        backgroundColor: 'rgba(255,0,0,0.1)',
-    };
+    const incomeJson = [];
+    const expenseJson = [];
 
-    const incomeLabels = {
-        labels: ['Made', 'Monthly goal'],
-        borderColor: '#rgba(46, 204, 113, 1)',
-        backgroundColor: 'rgba(46, 204, 113, 0.1)'
-    };
+    userTransactions.doc(userId)
+        .collection('transactions')
+        .where('type', '==', 'Income')
+        .get()
+        .then(snap => {
+            snap.forEach((doc) => {
+                incomeJson.push(doc.data());
+            });
+        })
+        .then(() => {
+            const incomeLabels = {
+                labels: ['Made', 'Monthly goal'],
+                borderColor: '#rgba(46, 204, 113, 1)',
+                backgroundColor: 'rgba(46, 204, 113, 0.1)'
+            };
 
-    createLineChart('income-line-chart', incomeJson, incomeLabels, userGoal, userCurrency);
-    createDoughnutChart('income-doughnut-chart', incomeJson);
-    createLineChart('expense-line-chart', expenseJson, expenseLabels, userLimit, userCurrency);
-    createDoughnutChart('expense-doughnut-chart', expenseJson);
+            createLineChart('income-line-chart', incomeJson, incomeLabels, userGoal, userCurrency);
+            createDoughnutChart('income-doughnut-chart', incomeJson);
+        });
+
+    userTransactions.doc(userId)
+        .collection('transactions')
+        .where('type', '==', 'Expense')
+        .get()
+        .then(snap => {
+            snap.forEach((doc) => {
+                expenseJson.push(doc.data());
+            });
+        })
+        .then(() => {
+            const expenseLabels = {
+                labels: ['Spent', 'Monthly limit'],
+                borderColor: '#FF0000',
+                backgroundColor: 'rgba(255,0,0,0.1)',
+            };
+
+            createLineChart('expense-line-chart', expenseJson, expenseLabels, userLimit, userCurrency);
+            createDoughnutChart('expense-doughnut-chart', expenseJson);
+        });
+
 
     displayUtil.hideElement(noTransactionsContainer);
     displayUtil.displayElement(toggleContainer);
@@ -144,3 +153,25 @@ if (jsonUtil.isValidJson(transactionsJson)) {
         }
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            let userSettings = null;
+            firebase.firestore()
+                .collection('walit-settings')
+                .doc(user.uid)
+                .get()
+                .then(settings => {
+                    userSettings = settings.data();
+                })
+                .then(() => {
+                    const userTransactions = firebase.firestore()
+                        .collection('walit-transactions');
+                    loadThePage(user.uid, userSettings, userTransactions)
+                });
+        } else {
+            window.location.replace('/login');
+        }
+    });
+});
