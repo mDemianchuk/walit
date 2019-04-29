@@ -32,11 +32,11 @@ function SettingsFormValidator(elementName) {
     const validationRules = [{
         name: 'limit',
         display: 'Limit',
-        rules: 'decimal|less_than[9999]|greater_than[0]'
+        rules: 'decimal|less_than[999999]|greater_than[0]'
     }, {
         name: 'goal',
         display: 'Goal',
-        rules: 'decimal|less_than[9999]|greater_than[0]'
+        rules: 'decimal|less_than[999999]|greater_than[0]'
     }];
 
 
