@@ -67,6 +67,7 @@ function loadThePage(userId, userSettings, userTransactions) {
     const incomeDoughnutChartContainer = document.getElementById('income-doughnut-chart-container');
     const headerTopContainer = document.getElementById('header-top');
     const noTransactionsContainer = document.getElementById('no-transactions');
+    const signOutButton = document.getElementById('sign-out');
 
     const userCurrency = userSettings.currency;
     const userGoal = userSettings.goal;
@@ -120,6 +121,10 @@ function loadThePage(userId, userSettings, userTransactions) {
     displayUtil.displayElement(toggleContainer);
     displayUtil.displayElement(incomeLineChartContainer);
     displayUtil.displayElement(headerTopContainer);
+
+    signOutButton.addEventListener('click', () => {
+        firebase.auth().signOut();
+    });
 
     transactionTypeSwitch.addEventListener('change', () => {
         if (transactionTypeSwitch.checked) {
