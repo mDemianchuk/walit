@@ -35,3 +35,7 @@ h3 {
   /* hidden by default */
   display: none;
 }
+
+#no-transactions {
+  margin-top: 150px;
+}
