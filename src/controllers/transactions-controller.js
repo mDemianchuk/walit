@@ -18,6 +18,7 @@ const editTransactionForm = document.getElementById('edit-transaction-form');
 
 const headerTopContainer = document.getElementById('header-top');
 const noTransactionsContainer = document.getElementById('no-transactions');
+const signOutButton = document.getElementById('sign-out');
 
 const addTransactionFormValidator = new transactionValidate.AddTransactionValidator('add-transaction-form');
 const filterTransactionsFormValidator = new transactionValidate.FilterTransactionsValidator('filter-transactions-form');
@@ -131,6 +132,10 @@ function loadThePage(userId, userTransactions) {
 
     filterTransactionsButton.addEventListener('click', () => {
         displayUtil.displayElement(filterTransactionsModal);
+    });
+
+    signOutButton.addEventListener('click', () => {
+        firebase.auth().signOut();
     });
 
     window.addEventListener('click', (event) => {
