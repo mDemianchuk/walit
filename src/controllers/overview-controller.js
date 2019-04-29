@@ -5,6 +5,18 @@ const doughnutChart = require('../models/doughnut-chart');
 const displayUtil = require('../utils/display-util');
 const jsonUtil = require('../utils/json-util');
 
+const transactionTypeSwitch = document.getElementById('transaction-type-switch');
+const chartTypeSwitch = document.getElementById('chart-type-switch');
+const toggleContainer = document.getElementById('toggle-container');
+const expenseLineChartContainer = document.getElementById('expense-line-chart-container');
+const expenseDoughnutChartContainer = document.getElementById('expense-doughnut-chart-container');
+const incomeLineChartContainer = document.getElementById('income-line-chart-container');
+const incomeDoughnutChartContainer = document.getElementById('income-doughnut-chart-container');
+const headerTopContainer = document.getElementById('header-top');
+const noTransactionsContainer = document.getElementById('no-transactions');
+const signOutButton = document.getElementById('sign-out');
+const loader = document.getElementById('loader');
+
 function createLineChart(chartElementId, transactions, labels, userMax, userCurrency) {
     const lineChartElement = document.getElementById(chartElementId);
 
@@ -57,17 +69,10 @@ function createDoughnutChart(chartElementId, transactions) {
     doughnutChart.createChart(doughnutChartElement, categories, totalSpendingInCategories);
 }
 
-function loadThePage(userId, userSettings, userTransactions) {
-    const transactionTypeSwitch = document.getElementById('transaction-type-switch');
-    const chartTypeSwitch = document.getElementById('chart-type-switch');
-    const toggleContainer = document.getElementById('toggle-container');
-    const expenseLineChartContainer = document.getElementById('expense-line-chart-container');
-    const expenseDoughnutChartContainer = document.getElementById('expense-doughnut-chart-container');
-    const incomeLineChartContainer = document.getElementById('income-line-chart-container');
-    const incomeDoughnutChartContainer = document.getElementById('income-doughnut-chart-container');
-    const headerTopContainer = document.getElementById('header-top');
-    const noTransactionsContainer = document.getElementById('no-transactions');
-    const signOutButton = document.getElementById('sign-out');
+async function loadThePage(userId, userSettings, userTransactions) {
+    signOutButton.addEventListener('click', () => {
+        firebase.auth().signOut();
+    });
 
     const userCurrency = userSettings.currency;
     const userGoal = userSettings.goal;
@@ -96,7 +101,7 @@ function loadThePage(userId, userSettings, userTransactions) {
             createDoughnutChart('income-doughnut-chart', incomeJson);
         });
 
-    userTransactions.doc(userId)
+    await userTransactions.doc(userId)
         .collection('transactions')
         .where('type', '==', 'Expense')
         .get()
@@ -116,47 +121,47 @@ function loadThePage(userId, userSettings, userTransactions) {
             createDoughnutChart('expense-doughnut-chart', expenseJson);
         });
 
+    displayUtil.hideElement(loader);
 
-    displayUtil.hideElement(noTransactionsContainer);
-    displayUtil.displayElement(toggleContainer);
-    displayUtil.displayElement(incomeLineChartContainer);
-    displayUtil.displayElement(headerTopContainer);
+    if (expenseJson.length === 0 || incomeJson.length === 0) {
+        displayUtil.displayElement(noTransactionsContainer);
+    } else {
+        displayUtil.displayElement(toggleContainer);
+        displayUtil.displayElement(incomeLineChartContainer);
+        displayUtil.displayElement(headerTopContainer);
 
-    signOutButton.addEventListener('click', () => {
-        firebase.auth().signOut();
-    });
+        transactionTypeSwitch.addEventListener('change', () => {
+            if (transactionTypeSwitch.checked) {
+                if (incomeLineChartContainer.style.display === 'block') {
+                    displayUtil.toggleElements(incomeLineChartContainer, expenseLineChartContainer);
+                } else if (incomeDoughnutChartContainer.style.display === 'block') {
+                    displayUtil.toggleElements(incomeDoughnutChartContainer, expenseDoughnutChartContainer);
+                }
+            } else {
+                if (expenseLineChartContainer.style.display === 'block') {
+                    displayUtil.toggleElements(expenseLineChartContainer, incomeLineChartContainer);
+                } else if (expenseDoughnutChartContainer.style.display === 'block') {
+                    displayUtil.toggleElements(expenseDoughnutChartContainer, incomeDoughnutChartContainer);
+                }
+            }
+        });
 
-    transactionTypeSwitch.addEventListener('change', () => {
-        if (transactionTypeSwitch.checked) {
-            if (incomeLineChartContainer.style.display === 'block') {
-                displayUtil.toggleElements(incomeLineChartContainer, expenseLineChartContainer);
-            } else if (incomeDoughnutChartContainer.style.display === 'block') {
-                displayUtil.toggleElements(incomeDoughnutChartContainer, expenseDoughnutChartContainer);
+        chartTypeSwitch.addEventListener('change', () => {
+            if (chartTypeSwitch.checked) {
+                if (expenseLineChartContainer.style.display === 'block') {
+                    displayUtil.toggleElements(expenseLineChartContainer, expenseDoughnutChartContainer);
+                } else if (incomeLineChartContainer.style.display === 'block') {
+                    displayUtil.toggleElements(incomeLineChartContainer, incomeDoughnutChartContainer);
+                }
+            } else {
+                if (incomeDoughnutChartContainer.style.display === 'block') {
+                    displayUtil.toggleElements(incomeDoughnutChartContainer, incomeLineChartContainer);
+                } else if (expenseDoughnutChartContainer.style.display === 'block') {
+                    displayUtil.toggleElements(expenseDoughnutChartContainer, expenseLineChartContainer);
+                }
             }
-        } else {
-            if (expenseLineChartContainer.style.display === 'block') {
-                displayUtil.toggleElements(expenseLineChartContainer, incomeLineChartContainer);
-            } else if (expenseDoughnutChartContainer.style.display === 'block') {
-                displayUtil.toggleElements(expenseDoughnutChartContainer, incomeDoughnutChartContainer);
-            }
-        }
-    });
-
-    chartTypeSwitch.addEventListener('change', () => {
-        if (chartTypeSwitch.checked) {
-            if (expenseLineChartContainer.style.display === 'block') {
-                displayUtil.toggleElements(expenseLineChartContainer, expenseDoughnutChartContainer);
-            } else if (incomeLineChartContainer.style.display === 'block') {
-                displayUtil.toggleElements(incomeLineChartContainer, incomeDoughnutChartContainer);
-            }
-        } else {
-            if (incomeDoughnutChartContainer.style.display === 'block') {
-                displayUtil.toggleElements(incomeDoughnutChartContainer, incomeLineChartContainer);
-            } else if (expenseDoughnutChartContainer.style.display === 'block') {
-                displayUtil.toggleElements(expenseDoughnutChartContainer, expenseLineChartContainer);
-            }
-        }
-    });
+        });
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

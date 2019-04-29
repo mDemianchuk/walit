@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="../stylesheets/shared/large-button.css">
   <link rel="stylesheet" href="../stylesheets/shared/table.css">
   <link rel="stylesheet" href="../stylesheets/shared/modal-container.css">
+  <link rel="stylesheet" href="../stylesheets/shared/loader.css">
 </head>
 
 <body>
@@ -30,23 +31,14 @@
     </div>
   </nav>
   <main>
+    <div id="loader" class="loader"></div>
     <div id="header-top" class="hidden page-container">
       <h1>Your most recent transactions</h1>
       <h3>waLit made your finances easy</h3>
     </div>
-    <div id="no-transactions" class="page-container">
-      <h1>Ooops! Looks like there are no transactions to display</h1>
-      <h3>Let's add some!</h3>
-    </div>
-    <div class="page-container">
-      <button id="add-transaction-button" class="large-button">
-        <span class="icon"><i class="fas fa-plus"></i></span>
-        <div class="title">Add a transaction</div>
-      </button>
-      <button id="filter-transactions-button" class="large-button">
-        <span class="icon"><i class="fas fa-search"></i></span>
-        <div class="title">Filter transactions</div>
-      </button>
+    <div id="no-transactions" class="hidden page-container">
+      <h1>Looks like there are no transactions to display</h1>
+      <h3>Add at least one transaction</h3>
     </div>
     <div id="transactions-container" class="hidden transactions-container">
       <table id="transactions-table">
@@ -62,6 +54,16 @@
         </thead>
         <tbody id="transactions-table-body"></tbody>
       </table>
+    </div>
+    <div id="button-container" class="hidden page-container">
+      <button id="add-transaction-button" class="large-button">
+        <span class="icon"><i class="fas fa-plus"></i></span>
+        <div class="title">Add a transaction</div>
+      </button>
+      <button id="filter-transactions-button" class="large-button">
+        <span class="icon"><i class="fas fa-search"></i></span>
+        <div class="title">Filter transactions</div>
+      </button>
     </div>
     <div id="add-transaction-modal" class="hidden modal-container">
       <div class="modal-content">
