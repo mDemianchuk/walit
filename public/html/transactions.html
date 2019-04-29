@@ -70,7 +70,7 @@
         <h1>Add a transaction</h1>
         <h3>waLit made your finances easy</h3>
         <form id="add-transaction-form" name="add-transaction-form" class="transaction-form" method="post">
-          <input id="add-description" name="add_description" class="double" type="text" placeholder="Description of transaction" autocomplete="off">
+          <input id="add-description" name="add_description" class="single" type="text" placeholder="Description of transaction" autocomplete="off">
           <input id="add-category" name="add_category" class="single" list="add-categories" placeholder="Category" autocomplete="off">
           <datalist id="add-categories">
             <option value="Utilities">
@@ -96,7 +96,7 @@
         <h3>waLit made your finances easy</h3>
         <form id="edit-transaction-form" name="edit-transaction-form" class="transaction-form" method="post">
           <input id="edit-id" name="editId" type="text" value="" hidden>
-          <input id="edit-description" name="edit_description" class="double" type="text" placeholder="Description of transaction" autocomplete="off">
+          <input id="edit-description" name="edit_description" class="single" type="text" placeholder="Description of transaction" autocomplete="off">
           <input id="edit-category" name="edit_category" class="single" list="edit-categories" placeholder="Category" autocomplete="off">
           <datalist id="edit-categories">
             <option value="Utilities">
@@ -121,7 +121,7 @@
         <h1>Filter transactions</h1>
         <h3>waLit made your finances easy</h3>
         <form id="filter-transactions-form" name="filter-transactions-form" class="transaction-form" method="get">
-          <input id="filter-category" name="filter-category" class="double" list="filter-categories" maxlength="20" placeholder="Category" autocomplete="off">
+          <input id="filter-category" name="filter-category" class="single" list="filter-categories" maxlength="20" placeholder="Category" autocomplete="off">
           <datalist id="filter-categories">
             <option value="Utilities">
             <option value="Rent">
@@ -129,7 +129,7 @@
             <option value="Education">
             <option value="Loans">
           </datalist>
-          <select id="filter-type" name="filter-type" class="double">
+          <select id="filter-type" name="filter-type" class="single">
             <option value="" disabled selected>Type</option>
             <option value="Income">Income</option>
             <option value="Expense">Expense</option>

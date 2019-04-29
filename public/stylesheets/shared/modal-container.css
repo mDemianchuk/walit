@@ -9,11 +9,11 @@
 }
 
 .modal-content {
-  width: 50%;
+  width: 450px;
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: var(--main-text-color-inverse);
-  padding: var(--page-padding);
+  padding: 40px 0;
 }
