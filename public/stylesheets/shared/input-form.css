@@ -8,9 +8,7 @@ input {
 }
 
 .single,
-.single-invalid,
-.double,
-.double-invalid {
+.single-invalid {
   font: inherit;
   height: var(--input-height);
   -webkit-box-sizing: border-box;
@@ -21,28 +19,16 @@ input {
   background: none;
   outline: none;
   border: none;
-}
-
-.single,
-.double {
-  border-bottom: solid grey 1px;
-}
-
-.single-invalid,
-.double-invalid {
-  border-bottom: solid var(--main-background-color) 2px;
-}
-
-.single,
-.single-invalid {
   width: var(--input-width);
   margin: var(--input-margin);
 }
 
-.double,
-.double-invalid {
-  width: calc(2 * var(--input-width) + 2 * var(--input-margin));
-  margin: var(--input-margin);
+.single {
+  border-bottom: solid grey 1px;
+}
+
+.single-invalid {
+  border-bottom: solid var(--main-background-color) 2px;
 }
 
 .single[type="submit"] {
@@ -52,7 +38,6 @@ input {
   color: var(--main-text-color-inverse);
   background: var(--background-gradient);
 }
-
 
 ::placeholder {
   color: var(--main-text-color);

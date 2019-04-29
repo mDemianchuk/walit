@@ -1,51 +1,59 @@
 
 table {
-  width: 100%;
-  margin: var(--transactions-table-margin);
-  table-layout: fixed;
-  overflow: hidden;
+    width: 100%;
+    margin: var(--transactions-table-margin);
+    table-layout: fixed;
+    overflow: hidden;
 }
 
 thead {
-  width: 100%;
-  display: table;
-  border-bottom: solid var(--main-background-color) 3px;
+    width: 100%;
+    display: table;
+    border-bottom: solid var(--main-background-color) 3px;
 }
 
 tbody {
-  height: 100%;
-  max-height: var(--transactions-table-tbody-height);
-  width: calc(100% + var(--scrollbar-width));
-  padding-right: var(--scrollbar-width);
-  display: block;
-  overflow-y: scroll;
+    height: 100%;
+    max-height: var(--transactions-table-tbody-height);
+    width: calc(100% + var(--scrollbar-width));
+    padding-right: var(--scrollbar-width);
+    display: block;
+    overflow-y: scroll;
 }
 
 tbody tr {
-  width: 100%;
-  border-bottom: solid grey 1px;
-  display: table;
+    width: 100%;
+    border-bottom: solid grey 1px;
+    display: table;
 }
 
 table td,
 table th {
-  width: 15%;
-  max-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: var(--table-padding);
+    width: 15%;
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: var(--table-padding);
 }
 
-.delete-transaction-button, .edit-transaction-button{
-  background: none;
-  border: none;
-  padding: 0;
+.delete-transaction-button, .edit-transaction-button {
+    background: none;
+    border: none;
+    padding: 0 2px;
 }
 
-.edit-transaction-button{
-  color: var(--edit-button-color);
+.edit-transaction-button {
+    color: rgba(0, 0, 0, 0.3);
 }
 
-.delete-transaction-button{
-  color: var(--main-background-color);
+.edit-transaction-button:hover {
+    color: rgba(0, 0, 0, 0.6);
+}
+
+.delete-transaction-button {
+    color: rgba(255, 0, 0, 0.3);
+}
+
+.delete-transaction-button:hover {
+    color: rgba(255, 0, 0, 0.6);
 }

@@ -33,7 +33,7 @@
   -webkit-transition: .4s;
   transition: .4s;
   border-radius: 10px;
-  background-color: rgba(46, 204, 113, 0.4);
+  background-color: rgba(218, 223, 225, 1);
 }
 
 .slider-type:before,
@@ -47,14 +47,6 @@
   background-color: white;
   -webkit-transition: .4s;
   transition: .4s;
-}
-
-input:checked+.slider-type {
-  background-color: rgba(255, 0, 0, 0.4);
-}
-
-input:checked+.slider-chart {
-  background-color: rgba(46, 204, 113, 0.4);
 }
 
 input:checked+.slider-type:before,
