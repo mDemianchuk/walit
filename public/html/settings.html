@@ -14,7 +14,7 @@
   <main>
     <div class="central-container">
       <p class="logo">Settings</p>
-      <form id="settings-form" name="settings-form" method="post">
+      <form id="settings-form" name="settings-form">
         <input id="goal" name="goal" class="single" type="number" step="0.01" placeholder="Monthly Income Goal" autocomplete="off">
         <input id="limit" name="limit" class="single" type="number" step="0.01" placeholder="Monthly Expense Limit" autocomplete="off">
         <select id="currency" name="settings-currency" class="single">
@@ -29,6 +29,7 @@
       </form>
     </div>
   </main>
+
   <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>

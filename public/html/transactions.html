@@ -69,7 +69,7 @@
       <div class="modal-content">
         <h1>Add a transaction</h1>
         <h3>waLit made your finances easy</h3>
-        <form id="add-transaction-form" name="add-transaction-form" class="transaction-form" method="post">
+        <form id="add-transaction-form" name="add-transaction-form" class="transaction-form">
           <input id="add-description" name="add_description" class="single" type="text" placeholder="Description of transaction" autocomplete="off">
           <input id="add-category" name="add_category" class="single" list="add-categories" placeholder="Category" autocomplete="off">
           <datalist id="add-categories">
@@ -94,7 +94,7 @@
       <div class="modal-content">
         <h1>Edit a transaction</h1>
         <h3>waLit made your finances easy</h3>
-        <form id="edit-transaction-form" name="edit-transaction-form" class="transaction-form" method="post">
+        <form id="edit-transaction-form" name="edit-transaction-form" class="transaction-form">
           <input id="edit-id" name="editId" type="text" value="" hidden>
           <input id="edit-description" name="edit_description" class="single" type="text" placeholder="Description of transaction" autocomplete="off">
           <input id="edit-category" name="edit_category" class="single" list="edit-categories" placeholder="Category" autocomplete="off">
@@ -120,7 +120,7 @@
       <div class="modal-content">
         <h1>Filter transactions</h1>
         <h3>waLit made your finances easy</h3>
-        <form id="filter-transactions-form" name="filter-transactions-form" class="transaction-form" method="get">
+        <form id="filter-transactions-form" name="filter-transactions-form" class="transaction-form">
           <input id="filter-category" name="filter-category" class="single" list="filter-categories" maxlength="20" placeholder="Category" autocomplete="off">
           <datalist id="filter-categories">
             <option value="Utilities">
@@ -143,6 +143,7 @@
       </div>
     </div>
   </main>
+  
   <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js"></script>
