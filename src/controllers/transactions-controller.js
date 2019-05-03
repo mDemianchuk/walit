@@ -148,6 +148,7 @@ async function loadThePage(userId, userTransactions) {
             let description = document.getElementById('add-description').value;
             let category = document.getElementById('add-category').value;
             let date = new Date(document.getElementById('add-date').value);
+                date.setDate(date.getDate() + 1);
             let amount = parseFloat(document.getElementById('add-amount').value);
             let type = document.getElementById('add-type').value;
             let newUuid = uuid();
@@ -195,7 +196,9 @@ async function loadThePage(userId, userTransactions) {
             if (transactionValidate.FilterTransactionsValidator.prototype.isValid) {
                 // getting the values from the input form
                 let dateAfter = new Date(document.getElementById('filter-date-after').value);
+                    dateAfter.setDate(dateAfter.getDate() + 1);
                 let dateBefore = new Date(document.getElementById('filter-date-before').value);
+                    dateBefore.setDate(dateBefore.getDate() + 1);
                 let type = document.getElementById('filter-type').value;
                 let category = document.getElementById('filter-category').value;
                 let lessThan = parseFloat(document.getElementById('filter-less-than').value);
@@ -230,6 +233,7 @@ async function loadThePage(userId, userTransactions) {
                         }
                         if (filteredTransactions.length > 0) {
                             clearTable();
+                            filteredTransactions = jsonUtil.sortJsonByProperty(filteredTransactions, 'date');
                             addAndDisplayTransactions(userId, userTransactions, filteredTransactions);
                             filterTransactionsModal.click();
                         } else {
@@ -246,6 +250,7 @@ async function loadThePage(userId, userTransactions) {
                 // getting the values from the input form
                 let uuid = document.getElementById('edit-id').value;
                 let date = new Date(document.getElementById('edit-date').value);
+                    date.setDate(date.getDate() + 1);
                 let type = document.getElementById('edit-type').value;
                 let description = document.getElementById('edit-description').value;
                 let category = document.getElementById('edit-category').value;

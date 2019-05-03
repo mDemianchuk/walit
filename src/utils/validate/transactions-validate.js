@@ -60,13 +60,14 @@ function AddTransactionValidator(elementName) {
 
     this.validator.registerCallback('after_date', (value) => {
         const date = new Date(value);
-        let tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate());
-        return (date < tomorrow);
-    }).setMessage('after_date', '%s should not be after tomorrow.');
+        date.setDate(date.getDate() + 1);
+        let today = new Date();
+        return (date < today);
+    }).setMessage('after_date', '%s should not be after today.');
 
     this.validator.registerCallback('before_date', (value) => {
         const date = new Date(value);
+        date.setDate(date.getDate() + 1);
         const yearFromToday = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
         return (date > yearFromToday);
     }).setMessage('before_date', '%s should not be earlier than a year from now.');
@@ -123,14 +124,18 @@ function FilterTransactionsValidator(elementName) {
 
     this.validator.registerCallback('after_date', (value) => {
         dateAfter = new Date(value);
-        let tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate());
-        return (dateAfter < tomorrow);
-    }).setMessage('before_date', '%s should not be after tomorrow.');
+        dateAfter.setDate(dateAfter.getDate() + 1);
+        let today = new Date();
+        return (dateAfter < today);
+    }).setMessage('before_date', '%s should not be after today.');
 
     this.validator.registerCallback('before_date', (value) => {
-        const date = new Date(value);
-        return (dateAfter < date);
+        if(dateAfter) {
+            const dateBefore = new Date(value);
+            dateBefore.setDate(dateBefore.getDate() + 1);
+            return (dateAfter < dateBefore);
+        }
+        return true;
     }).setMessage('before_date', '%s should not be earlier than or the same as \'After the date\'.');
 
     this.validator.registerCallback('get_less_than', (value) => {
@@ -194,10 +199,10 @@ function EditTransactionValidator(elementName) {
 
     this.validator.registerCallback('after_date', (value) => {
         const date = new Date(value);
-        let tomorrow = new Date();
-        tomorrow.setDate(tomorrow.getDate());
-        return (date < tomorrow);
-    }).setMessage('after_date', '%s should not be after tomorrow.');
+        date.setDate(date.getDate() + 1);
+        let today = new Date();
+        return (date < today);
+    }).setMessage('after_date', '%s should not be after today.');
 
     this.validator.registerCallback('before_date', (value) => {
         const date = new Date(value);

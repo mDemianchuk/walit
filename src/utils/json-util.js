@@ -64,15 +64,15 @@ function getTransactionsByDay(transactionsJson, numberOfDays) {
     let total = 0;
 
     for (let i = 0; i < numberOfDays; i++) {
-        transactionsByDay[i] += total;
         for (let transaction of transactionsJson) {
             let transactionDate = transaction.date.toDate();
             let transactionDay = transactionDate.getDate();
-            if (i === transactionDay) {
+            if (i + 1 === transactionDay) {
                 total += parseFloat(transaction.amount);
-                transactionsByDay[i] += parseFloat(transaction.amount);
             }
         }
+
+        transactionsByDay[i] += total;
     }
 
     return transactionsByDay;
