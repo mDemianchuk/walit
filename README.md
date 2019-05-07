@@ -1,6 +1,6 @@
 # waLit
 
-Walit is a personal budget manager which lets you track your spending and income as well as helps you organize your budget.
+[waLit](https://mdemianchuk.github.io/walit/) is a personal budget manager which lets you track your spending and income as well as helps you organize your budget.
 
 ## Getting Started
 
@@ -38,4 +38,4 @@ nodemon app
 
 ## Authors
 
-Asbel Assefa, Vihar Doshi, Shend Vishi, and Mykola Demianchuk
+Mykola Demianchuk and Shend Vishi 
