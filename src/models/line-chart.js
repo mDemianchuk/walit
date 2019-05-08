@@ -1,4 +1,4 @@
-const Chart = require('chart.js');
+const Chart = require('chart.js/dist/Chart.bundle.min');
 
 function createChart(element, lineChartLabels, currentMonthData, previousMonthData, labels, limit, currency) {
     new Chart(element, {
