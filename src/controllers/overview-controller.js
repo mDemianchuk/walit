@@ -15,7 +15,7 @@ const incomeDoughnutChartContainer = document.getElementById('income-doughnut-ch
 const headerTopContainer = document.getElementById('header-top');
 const noTransactionsContainer = document.getElementById('no-transactions');
 const signOutButton = document.getElementById('sign-out');
-const loader = document.getElementById('loader');
+const loaderAnimation = document.getElementById('loader');
 
 function createLineChart(chartElementId, transactions, labels, userMax, userCurrency) {
     const lineChartElement = document.getElementById(chartElementId);
@@ -121,7 +121,7 @@ async function loadThePage(userId, userSettings, userTransactions) {
             createDoughnutChart('expense-doughnut-chart', expenseJson);
         });
 
-    displayUtil.hideElement(loader);
+    displayUtil.hideElement(loaderAnimation);
 
     if (expenseJson.length === 0 || incomeJson.length === 0) {
         displayUtil.displayElement(noTransactionsContainer);
@@ -132,15 +132,15 @@ async function loadThePage(userId, userSettings, userTransactions) {
 
         transactionTypeSwitch.addEventListener('change', () => {
             if (transactionTypeSwitch.checked) {
-                if (incomeLineChartContainer.style.display === 'block') {
+                if (displayUtil.isVisible(incomeLineChartContainer)) {
                     displayUtil.toggleElements(incomeLineChartContainer, expenseLineChartContainer);
-                } else if (incomeDoughnutChartContainer.style.display === 'block') {
+                } else if (displayUtil.isVisible(incomeDoughnutChartContainer)) {
                     displayUtil.toggleElements(incomeDoughnutChartContainer, expenseDoughnutChartContainer);
                 }
             } else {
-                if (expenseLineChartContainer.style.display === 'block') {
+                if (displayUtil.isVisible(expenseLineChartContainer)) {
                     displayUtil.toggleElements(expenseLineChartContainer, incomeLineChartContainer);
-                } else if (expenseDoughnutChartContainer.style.display === 'block') {
+                } else if (displayUtil.isVisible(expenseDoughnutChartContainer)) {
                     displayUtil.toggleElements(expenseDoughnutChartContainer, incomeDoughnutChartContainer);
                 }
             }
@@ -148,15 +148,15 @@ async function loadThePage(userId, userSettings, userTransactions) {
 
         chartTypeSwitch.addEventListener('change', () => {
             if (chartTypeSwitch.checked) {
-                if (expenseLineChartContainer.style.display === 'block') {
+                if (displayUtil.isVisible(expenseLineChartContainer)) {
                     displayUtil.toggleElements(expenseLineChartContainer, expenseDoughnutChartContainer);
-                } else if (incomeLineChartContainer.style.display === 'block') {
+                } else if (displayUtil.isVisible(incomeLineChartContainer)) {
                     displayUtil.toggleElements(incomeLineChartContainer, incomeDoughnutChartContainer);
                 }
             } else {
-                if (incomeDoughnutChartContainer.style.display === 'block') {
+                if (displayUtil.isVisible(incomeDoughnutChartContainer)) {
                     displayUtil.toggleElements(incomeDoughnutChartContainer, incomeLineChartContainer);
-                } else if (expenseDoughnutChartContainer.style.display === 'block') {
+                } else if (displayUtil.isVisible(expenseDoughnutChartContainer)) {
                     displayUtil.toggleElements(expenseDoughnutChartContainer, expenseLineChartContainer);
                 }
             }
