@@ -1,14 +1,14 @@
-const SignupFormValidator = require('../utils/validate/signup-validate');
+const signUpValidator = require('../utils/validate/signup-validator');
 
 document.addEventListener('DOMContentLoaded', event => {
 
-    const signupForm = document.getElementById('signup-form');
-    const signupFormValidator = new SignupFormValidator('signup-form');
+    const signUpForm = document.getElementById('signup-form');
+    const signUpFormValidator = signUpValidator.getSignUpValidator('signup-form');
 
-    signupForm.addEventListener('submit', (form) => {
+    signUpForm.addEventListener('submit', (form) => {
         form.preventDefault();
 
-        if (SignupFormValidator.prototype.isValid) {
+        if (signUpFormValidator.isValid) {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', event => {
                             goal: 2000
                         }).then(() => {
                             alert('Account successfully created');
-                            signupForm.submit();
+                            signUpForm.submit();
                         });
                     }
                 })

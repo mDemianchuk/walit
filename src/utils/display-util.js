@@ -1,18 +1,22 @@
+function setElementDisplayStyle(element, style) {
+    element.style.display = style;
+}
+
 function displayElement(element) {
-  element.style.display = 'block';
+    setElementDisplayStyle(element, 'block');
 }
 
 function hideElement(element) {
-  element.style.display = 'none';
+    setElementDisplayStyle(element, 'none');
 }
 
 function toggleElements(element1, element2) {
-  hideElement(element1);
-  displayElement(element2);
+    hideElement(element1);
+    displayElement(element2);
 }
 
 module.exports = {
-  displayElement,
-  hideElement,
-  toggleElements
+    displayElement,
+    hideElement,
+    toggleElements
 };

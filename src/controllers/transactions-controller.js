@@ -2,7 +2,7 @@ const uuid = require('uuid/v1');
 const jsonUtil = require('../utils/json-util');
 const dateUtil = require('../utils/date-util');
 const displayUtil = require('../utils/display-util');
-const transactionValidate = require('../utils/validate/transactions-validate');
+const transactionValidator = require('../utils/validate/transactions-validator');
 
 const transactionContainer = document.getElementById('transactions-container');
 const editTransactionModal = document.getElementById('edit-transaction-modal');
@@ -21,10 +21,6 @@ const headerTopContainer = document.getElementById('header-top');
 const noTransactionsContainer = document.getElementById('no-transactions');
 const signOutButton = document.getElementById('sign-out');
 const loader = document.getElementById('loader');
-
-const addTransactionFormValidator = new transactionValidate.AddTransactionValidator('add-transaction-form');
-const filterTransactionsFormValidator = new transactionValidate.FilterTransactionsValidator('filter-transactions-form');
-const editTransactionFormValidator = new transactionValidate.EditTransactionValidator('edit-transaction-form');
 
 function addAndDisplayTransactions(userId, userTransactions, transactionsJson) {
     const transactionTableBody = document.getElementById('transactions-table-body');
@@ -115,6 +111,9 @@ function clearTable() {
 }
 
 async function loadThePage(userId, userTransactions) {
+    const addTransactionFormValidator = transactionValidator.getAddTransactionValidator('add-transaction-form');
+    const filterTransactionsFormValidator = transactionValidator.getFilterTransactionsValidator('filter-transactions-form');
+    const editTransactionFormValidator = transactionValidator.getEditTransactionValidator('edit-transaction-form');
 
     signOutButton.addEventListener('click', () => {
         firebase.auth().signOut();
@@ -143,7 +142,7 @@ async function loadThePage(userId, userTransactions) {
     addTransactionForm.addEventListener('submit', (form) => {
         form.preventDefault();
 
-        if (transactionValidate.AddTransactionValidator.prototype.isValid) {
+        if (addTransactionFormValidator.isValid) {
             // getting the values from the input form
             let description = document.getElementById('add-description').value;
             let category = document.getElementById('add-category').value;
@@ -193,7 +192,7 @@ async function loadThePage(userId, userTransactions) {
         filterTransactionsForm.addEventListener('submit', (form) => {
             form.preventDefault();
 
-            if (transactionValidate.FilterTransactionsValidator.prototype.isValid) {
+            if (filterTransactionsFormValidator.isValid) {
                 // getting the values from the input form
                 let dateAfter = new Date(document.getElementById('filter-date-after').value);
                     dateAfter.setDate(dateAfter.getDate() + 1);
@@ -246,7 +245,7 @@ async function loadThePage(userId, userTransactions) {
         editTransactionForm.addEventListener('submit', (form) => {
             form.preventDefault();
 
-            if (transactionValidate.EditTransactionValidator.prototype.isValid) {
+            if (editTransactionFormValidator.isValid) {
                 // getting the values from the input form
                 let uuid = document.getElementById('edit-id').value;
                 let date = new Date(document.getElementById('edit-date').value);
