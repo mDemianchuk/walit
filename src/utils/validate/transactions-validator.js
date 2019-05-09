@@ -1,34 +1,6 @@
-const FormValidator = require('validate-js');
+const AbstractFormValidator = require('./abstract-validator');
 
-function setInvalid(element, errorMessage) {
-    if (!element.className.includes('-invalid')) {
-        element.className += '-invalid';
-        element.setAttribute('title', errorMessage);
-    }
-}
-
-function setValidOnClick(element) {
-    element.onclick = () => {
-        element.className = element.className.replace('-invalid', '');
-        element.removeAttribute('title');
-    }
-}
-
-function AddTransactionValidator(elementName) {
-    AddTransactionValidator.prototype.isValid = false;
-
-    function callback(errors, event) {
-        let errorsLength = errors.length;
-        if (errorsLength === 0) {
-            AddTransactionValidator.prototype.isValid = true;
-        } else if (errorsLength > 0) {
-            const errorMessage = errors[0].message;
-            const invalidElement = document.getElementsByName(errors[0].name)[0];
-            setInvalid(invalidElement, errorMessage);
-            setValidOnClick(invalidElement);
-        }
-    }
-
+function getAddTransactionValidator(elementName) {
     const validationRules = [{
         name: 'add_description',
         display: 'Description',
@@ -51,45 +23,31 @@ function AddTransactionValidator(elementName) {
         rules: 'required'
     }];
 
-    this.validator = new FormValidator(elementName, validationRules, callback);
+    const addTransactionValidator = new AbstractFormValidator(elementName, validationRules);
 
-    this.validator.registerCallback('valid_date', (value) => {
+    addTransactionValidator.validator.registerCallback('valid_date', (value) => {
         const date = new Date(value);
         return (!isNaN(date.getDate()));
     }).setMessage('valid_date', '%s should be a valid date.');
 
-    this.validator.registerCallback('after_date', (value) => {
+    addTransactionValidator.validator.registerCallback('after_date', (value) => {
         const date = new Date(value);
         date.setDate(date.getDate() + 1);
         let today = new Date();
         return (date < today);
     }).setMessage('after_date', '%s should not be after today.');
 
-    this.validator.registerCallback('before_date', (value) => {
+    addTransactionValidator.validator.registerCallback('before_date', (value) => {
         const date = new Date(value);
         date.setDate(date.getDate() + 1);
         const yearFromToday = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
         return (date > yearFromToday);
     }).setMessage('before_date', '%s should not be earlier than a year from now.');
 
-    this.validator.setMessage('required', '%s is required.');
+    return addTransactionValidator;
 }
 
-function FilterTransactionsValidator(elementName) {
-    FilterTransactionsValidator.prototype.isValid = false;
-
-    function callback(errors, event) {
-        let errorsLength = errors.length;
-        if (errorsLength === 0) {
-            FilterTransactionsValidator.prototype.isValid = true;
-        } else if (errorsLength > 0) {
-            const errorMessage = errors[0].message;
-            const invalidElement = document.getElementsByName(errors[0].name)[0];
-            setInvalid(invalidElement, errorMessage);
-            setValidOnClick(invalidElement);
-        }
-    }
-
+function getFilterTransactionsValidator(elementName) {
     const validationRules = [{
         name: 'filter-category',
         display: 'Category',
@@ -112,24 +70,24 @@ function FilterTransactionsValidator(elementName) {
         rules: 'decimal|less_than[999999]|greater_than[0]|callback_less_than_prev'
     }];
 
+    const filterTransactionsValidator = new AbstractFormValidator(elementName, validationRules);
+
     let dateAfter = null;
     let lessThen = null;
 
-    this.validator = new FormValidator(elementName, validationRules, callback);
-
-    this.validator.registerCallback('valid_date', (value) => {
+    filterTransactionsValidator.validator.registerCallback('valid_date', (value) => {
         const date = new Date(value);
         return (!isNaN(date.getDate()));
     }).setMessage('valid_date', '%s should be a valid date.');
 
-    this.validator.registerCallback('after_date', (value) => {
+    filterTransactionsValidator.validator.registerCallback('after_date', (value) => {
         dateAfter = new Date(value);
         dateAfter.setDate(dateAfter.getDate() + 1);
         let today = new Date();
         return (dateAfter < today);
     }).setMessage('before_date', '%s should not be after today.');
 
-    this.validator.registerCallback('before_date', (value) => {
+    filterTransactionsValidator.validator.registerCallback('before_date', (value) => {
         if(dateAfter) {
             const dateBefore = new Date(value);
             dateBefore.setDate(dateBefore.getDate() + 1);
@@ -138,36 +96,22 @@ function FilterTransactionsValidator(elementName) {
         return true;
     }).setMessage('before_date', '%s should not be earlier than or the same as \'After the date\'.');
 
-    this.validator.registerCallback('get_less_than', (value) => {
+    filterTransactionsValidator.validator.registerCallback('get_less_than', (value) => {
         lessThen = parseFloat(value);
         return true;
     });
 
-    this.validator.registerCallback('less_than_prev', (value) => {
+    filterTransactionsValidator.validator.registerCallback('less_than_prev', (value) => {
         if (lessThen) {
             return lessThen > parseFloat(value);
         }
         return true;
     }).setMessage('less_than_prev', '%s should not be less than or equal to \'Less than\'');
 
-    this.validator.setMessage('required', '%s is required.');
+    return filterTransactionsValidator;
 }
 
-function EditTransactionValidator(elementName) {
-    EditTransactionValidator.prototype.isValid = false;
-
-    function callback(errors, event) {
-        let errorsLength = errors.length;
-        if (errorsLength === 0) {
-            EditTransactionValidator.prototype.isValid = true;
-        } else if (errorsLength > 0) {
-            const errorMessage = errors[0].message;
-            const invalidElement = document.getElementsByName(errors[0].name)[0];
-            setInvalid(invalidElement, errorMessage);
-            setValidOnClick(invalidElement);
-        }
-    }
-
+function getEditTransactionValidator(elementName) {
     const validationRules = [{
         name: 'edit_description',
         display: 'Description',
@@ -190,30 +134,31 @@ function EditTransactionValidator(elementName) {
         rules: 'required'
     }];
 
-    this.validator = new FormValidator(elementName, validationRules, callback);
+    const editTransactionsValidator = new AbstractFormValidator(elementName, validationRules);
 
-    this.validator.registerCallback('valid_date', (value) => {
+    editTransactionsValidator.validator.registerCallback('valid_date', (value) => {
         const date = new Date(value);
         return (!isNaN(date.getDate()));
     }).setMessage('valid_date', '%s should be a valid date.');
 
-    this.validator.registerCallback('after_date', (value) => {
+    editTransactionsValidator.validator.registerCallback('after_date', (value) => {
         const date = new Date(value);
         date.setDate(date.getDate() + 1);
         let today = new Date();
         return (date < today);
     }).setMessage('after_date', '%s should not be after today.');
 
-    this.validator.registerCallback('before_date', (value) => {
+    editTransactionsValidator.validator.registerCallback('before_date', (value) => {
         const date = new Date(value);
         const yearFromToday = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
         return (date > yearFromToday);
     }).setMessage('before_date', '%s should not be earlier than a year from now.');
-    this.validator.setMessage('required', '%s is required.');
+
+    return editTransactionsValidator;
 }
 
 module.exports = {
-    AddTransactionValidator,
-    FilterTransactionsValidator,
-    EditTransactionValidator
+    getAddTransactionValidator,
+    getEditTransactionValidator,
+    getFilterTransactionsValidator
 };

@@ -1,4 +1,4 @@
-const SettingsFormValidator = require('../utils/validate/settings-validate');
+const settingsValidator = require('../utils/validate/settings-validator');
 
 function updateCurrency(currency, userSettings) {
     return new Promise(async (resolve) => {
@@ -41,12 +41,12 @@ function updateLimit(limit, userSettings) {
 
 function loadThePage(userSettings) {
     const settingsForm = document.getElementById('settings-form');
-    const settingsFormValidator = new SettingsFormValidator('settings-form');
+    const settingsFormValidator = settingsValidator.getSettingsValidator('settings-form');
 
     settingsForm.addEventListener('submit', (form) => {
         form.preventDefault();
 
-        if (SettingsFormValidator.prototype.isValid) {
+        if (settingsFormValidator.isValid) {
             const currency = document.getElementById('currency').value;
             const goal = parseFloat(document.getElementById('goal').value);
             const limit = parseFloat(document.getElementById('limit').value);
