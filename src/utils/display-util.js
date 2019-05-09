@@ -15,8 +15,13 @@ function toggleElements(element1, element2) {
     displayElement(element2);
 }
 
+function isVisible(element) {
+    return element.style.display === 'block';
+}
+
 module.exports = {
     displayElement,
     hideElement,
-    toggleElements
+    toggleElements,
+    isVisible
 };
