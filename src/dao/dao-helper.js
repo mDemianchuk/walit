@@ -38,10 +38,15 @@ function getCollectionData(collection) {
     });
 }
 
+function updateDocumentField(document, field) {
+    return document.update(field);
+}
+
 module.exports = {
     getDocument,
     getDocumentData,
     getCollection,
     getCollectionWithCondition,
-    getCollectionData
+    getCollectionData,
+    updateDocumentField
 };

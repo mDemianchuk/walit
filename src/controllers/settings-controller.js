@@ -1,45 +1,27 @@
+const daoHelper = require('../dao/dao-helper');
+const authHelper = require('../dao/auth-helper');
+const redirectUtil = require('../utils/redirect-util');
 const settingsValidator = require('../utils/validate/settings-validator');
 
-function updateCurrency(currency, userSettings) {
-    return new Promise(async (resolve) => {
-        if (currency) {
-            await userSettings.update({
-                currency: currency
-            }).then(() => {
-                resolve(userSettings);
-            });
+document.addEventListener('DOMContentLoaded', () => {
+    authHelper.addSignInObserver(user => {
+        if (authHelper.isSignedIn(user)) {
+            getUserSettingsDocument(user.uid)
+                .then(userSettingsDocument => loadPage(userSettingsDocument));
+        } else {
+            redirectUtil.redirectToPage('/login');
         }
-        resolve(userSettings);
+    });
+});
+
+function getUserSettingsDocument(userId) {
+    return new Promise(resolve => {
+        daoHelper.getDocument(`walit-settings/${userId}`)
+            .then(userSettingsDocument => resolve(userSettingsDocument));
     });
 }
 
-function updateGoal(goal, userSettings) {
-    return new Promise(async (resolve) => {
-        if (goal && !isNaN(goal)) {
-            await userSettings.update({
-                goal: goal
-            }).then(() => {
-                resolve(userSettings);
-            });
-        }
-        resolve(userSettings);
-    });
-}
-
-function updateLimit(limit, userSettings) {
-    return new Promise(async (resolve) => {
-        if (limit && !isNaN(limit)) {
-            await userSettings.update({
-                limit: limit
-            }).then(() => {
-                resolve(userSettings);
-            });
-        }
-        resolve(userSettings);
-    });
-}
-
-function loadThePage(userSettings) {
+function loadPage(userSettingsDocument) {
     const settingsForm = document.getElementById('settings-form');
     const settingsFormValidator = settingsValidator.getSettingsValidator('settings-form');
 
@@ -47,27 +29,62 @@ function loadThePage(userSettings) {
         form.preventDefault();
 
         if (settingsFormValidator.isValid) {
-            const currency = document.getElementById('currency').value;
-            const goal = parseFloat(document.getElementById('goal').value);
-            const limit = parseFloat(document.getElementById('limit').value);
+            const newCurrencyValue = document.getElementById('currency').value;
+            const newGoalValue = parseFloat(document.getElementById('goal').value);
+            const newLimitValue = parseFloat(document.getElementById('limit').value);
 
-            updateCurrency(currency, userSettings)
-                .then(() => updateGoal(goal, userSettings))
-                .then(() => updateLimit(limit, userSettings))
+            let newCurrency = null;
+            let newGoal = null;
+            let newLimit = null;
+
+            if (isValidCurrency(newCurrencyValue)) {
+                newCurrency = {
+                    currency: newCurrencyValue
+                };
+            }
+
+            if (isValidAmount(newGoalValue)) {
+                newGoal = {
+                    goal: newGoalValue
+                };
+            }
+
+            if (isValidAmount(newLimitValue)) {
+                newLimit = {
+                    limit: newLimitValue
+                };
+            }
+
+            updateSettings(userSettingsDocument, newCurrency, newGoal, newLimit)
                 .then(() => settingsForm.submit());
         }
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    firebase.auth().onAuthStateChanged((user) => {
-        if (user) {
-            const userSettings = firebase.firestore()
-                .collection('walit-settings')
-                .doc(user.uid);
-            loadThePage(userSettings);
+function updateSettings(userSettingsDocument, newCurrency, newGoal, newLimit) {
+    return new Promise(resolve => {
+        updateField(userSettingsDocument, newCurrency)
+            .then(() => updateField(userSettingsDocument, newGoal))
+            .then(() => updateField(userSettingsDocument, newLimit))
+            .then(() => resolve());
+    });
+}
+
+function updateField(userSettingsDocument, newField) {
+    return new Promise(resolve => {
+        if (newField) {
+            daoHelper.updateDocumentField(userSettingsDocument, newField)
+                .then(() => resolve())
         } else {
-            window.location.replace('/login');
+            resolve();
         }
     });
-});
+}
+
+function isValidCurrency(currency) {
+    return currency;
+}
+
+function isValidAmount(amount) {
+    return amount && !isNaN(amount);
+}
