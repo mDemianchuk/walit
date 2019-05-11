@@ -1,4 +1,6 @@
 const signUpValidator = require('../utils/validate/signup-validator');
+const authHelper = require('../dao/auth-helper');
+const daoHelper = require('../dao/dao-helper');
 
 document.addEventListener('DOMContentLoaded', event => {
 
@@ -12,18 +14,22 @@ document.addEventListener('DOMContentLoaded', event => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            firebase.auth().createUserWithEmailAndPassword(email, password)
+            authHelper.createUserWithEmailAndPassword(email, password)
                 .then(() => {
-                    const user = firebase.auth().currentUser;
+                    const user = authHelper.getCurrentUser();
                     if (user) {
-                        firebase.firestore().collection('walit-settings').doc(user.uid).set({
+                        const defaultSettings = {
                             currency: '$',
                             limit: 2000,
                             goal: 2000
-                        }).then(() => {
-                            alert('Account successfully created');
-                            signUpForm.submit();
-                        });
+                        };
+
+                        daoHelper.getDocument(`walit-settings/${user.uid}`)
+                            .then(document => daoHelper.setDocumentField(document, defaultSettings))
+                            .then(() => {
+                                alert('Account successfully created');
+                                signUpForm.submit();
+                            });
                     }
                 })
         }

@@ -42,11 +42,16 @@ function updateDocumentField(document, field) {
     return document.update(field);
 }
 
+function setDocumentField(document, field) {
+    return document.set(field);
+}
+
 module.exports = {
     getDocument,
     getDocumentData,
     getCollection,
     getCollectionWithCondition,
     getCollectionData,
-    updateDocumentField
+    updateDocumentField,
+    setDocumentField
 };

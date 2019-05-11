@@ -6,8 +6,16 @@ function signInWithEmailAndPassword(email, password) {
     return firebase.auth().signInWithEmailAndPassword(email, password)
 }
 
+function createUserWithEmailAndPassword(email, password) {
+    return firebase.auth().createUserWithEmailAndPassword(email, password)
+}
+
 function addSignInObserver(observer) {
     firebase.auth().onAuthStateChanged(observer);
+}
+
+function getCurrentUser() {
+    return firebase.auth().currentUser;
 }
 
 function isSignedIn(user) {
@@ -21,7 +29,9 @@ function signOut() {
 module.exports = {
     initializeSession,
     signInWithEmailAndPassword,
+    createUserWithEmailAndPassword,
     addSignInObserver,
+    getCurrentUser,
     isSignedIn,
     signOut
 };
