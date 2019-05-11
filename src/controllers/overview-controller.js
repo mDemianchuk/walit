@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             signOutButton.addEventListener('click', () => {
                 authHelper.signOut()
-                    .catch((error) => alert(error));
+                    .catch(error => alert(error));
             });
         } else {
             redirectUtil.redirectToPage('/login');
@@ -44,7 +44,7 @@ function retrieveUserTransactionsByType(userId, transactionsType) {
     };
 
     return new Promise(resolve => {
-        daoHelper.getCollection(`walit-transactions/${userId}/transactions`)
+        daoHelper.getCollectionByPath(`walit-transactions/${userId}/transactions`)
             .then(userTransactionsCollection =>
                 daoHelper.getCollectionWithCondition(userTransactionsCollection, transactionTypeCondition))
             .then(sameTypeTransactionsCollection => daoHelper.getCollectionData(sameTypeTransactionsCollection))
@@ -54,7 +54,7 @@ function retrieveUserTransactionsByType(userId, transactionsType) {
 
 function retrieveUserSettings(userId) {
     return new Promise(resolve => {
-        daoHelper.getDocument(`walit-settings/${userId}`)
+        daoHelper.getDocumentByPath(`walit-settings/${userId}`)
             .then(document => daoHelper.getDocumentData(document))
             .then(userSettings => resolve(userSettings));
     });
