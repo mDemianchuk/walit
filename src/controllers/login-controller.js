@@ -1,4 +1,5 @@
 const loginValidator = require('../utils/validate/login-validator');
+const authHelper = require('../dao/auth-helper');
 
 document.addEventListener('DOMContentLoaded', event => {
     const loginForm = document.getElementById('login-form');
@@ -11,14 +12,10 @@ document.addEventListener('DOMContentLoaded', event => {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
 
-            firebase.auth().signInWithEmailAndPassword(email, password)
-                .then(() => {
-                    loginForm.submit();
-                }, () => {
-                    alert('Invalid login or password');
-                }, (error) => {
-                    alert(error)
-                });
+            authHelper.initializeSession()
+                .then(() => authHelper.signInWithEmailAndPassword(email, password))
+                .then(() => loginForm.submit())
+                .catch((error) => alert(error.message));
         }
     });
 

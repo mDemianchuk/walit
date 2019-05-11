@@ -116,7 +116,8 @@ async function loadThePage(userId, userTransactions) {
     const editTransactionFormValidator = transactionValidator.getEditTransactionValidator('edit-transaction-form');
 
     signOutButton.addEventListener('click', () => {
-        firebase.auth().signOut();
+        daoUtil.signOut()
+            .catch((error) => alert(error));
     });
 
     let transactionsJson = [];

@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/mDemianchuk/walit.git"
   },
-  "author": "Asbel Assefa, Vihar Doshi, Shend Vishi, and Mykola Demianchuk",
+  "author": "Shend Vishi, and Mykola Demianchuk",
   "homepage": "https://mdemianchuk.github.io/walit/",
   "devDependencies": {
     "chart.js": "^2.7.3",
@@ -19,8 +19,6 @@
     "uuid": "^3.3.2",
     "validate-js": "^2.0.1",
     "webpack": "^4.29.6",
-    "webpack-cli": "^3.3.0",
-    "@firebase/app": "latest",
-    "@firebase/firestore": "latest"
+    "webpack-cli": "^3.3.0"
   }
 }
