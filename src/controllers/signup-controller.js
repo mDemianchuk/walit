@@ -7,8 +7,8 @@ document.addEventListener('DOMContentLoaded', event => {
     const signUpForm = document.getElementById('signup-form');
     const signUpFormValidator = signUpValidator.getSignUpValidator('signup-form');
 
-    signUpForm.addEventListener('submit', (form) => {
-        form.preventDefault();
+    signUpForm.addEventListener('submit', event => {
+        event.preventDefault();
 
         if (signUpFormValidator.isValid) {
             const email = document.getElementById('email').value;
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', event => {
                             goal: 2000
                         };
 
-                        daoHelper.getDocument(`walit-settings/${user.uid}`)
+                        daoHelper.getDocumentByPath(`walit-settings/${user.uid}`)
                             .then(document => daoHelper.setDocumentField(document, defaultSettings))
                             .then(() => {
                                 alert('Account successfully created');

@@ -1,6 +1,7 @@
 const daoHelper = require('../dao/dao-helper');
 const authHelper = require('../dao/auth-helper');
 const redirectUtil = require('../utils/redirect-util');
+const validatorUtil = require('../utils/validate/validator-util');
 const settingsValidator = require('../utils/validate/settings-validator');
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 function getUserSettingsDocument(userId) {
     return new Promise(resolve => {
-        daoHelper.getDocument(`walit-settings/${userId}`)
+        daoHelper.getDocumentByPath(`walit-settings/${userId}`)
             .then(userSettingsDocument => resolve(userSettingsDocument));
     });
 }
@@ -25,8 +26,8 @@ function loadPage(userSettingsDocument) {
     const settingsForm = document.getElementById('settings-form');
     const settingsFormValidator = settingsValidator.getSettingsValidator('settings-form');
 
-    settingsForm.addEventListener('submit', (form) => {
-        form.preventDefault();
+    settingsForm.addEventListener('submit', event => {
+        event.preventDefault();
 
         if (settingsFormValidator.isValid) {
             const newCurrencyValue = document.getElementById('currency').value;
@@ -37,19 +38,19 @@ function loadPage(userSettingsDocument) {
             let newGoal = null;
             let newLimit = null;
 
-            if (isValidCurrency(newCurrencyValue)) {
+            if (validatorUtil.isValidString(newCurrencyValue)) {
                 newCurrency = {
                     currency: newCurrencyValue
                 };
             }
 
-            if (isValidAmount(newGoalValue)) {
+            if (validatorUtil.isValidNumber(newGoalValue)) {
                 newGoal = {
                     goal: newGoalValue
                 };
             }
 
-            if (isValidAmount(newLimitValue)) {
+            if (validatorUtil.isValidNumber(newLimitValue)) {
                 newLimit = {
                     limit: newLimitValue
                 };
@@ -79,12 +80,4 @@ function updateField(userSettingsDocument, newField) {
             resolve();
         }
     });
-}
-
-function isValidCurrency(currency) {
-    return currency;
-}
-
-function isValidAmount(amount) {
-    return amount && !isNaN(amount);
 }

@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', event => {
     const loginForm = document.getElementById('login-form');
     const loginFormValidator = loginValidator.getLoginValidator('login-form');
 
-    loginForm.addEventListener('submit', (form) => {
-        form.preventDefault();
+    loginForm.addEventListener('submit', event => {
+        event.preventDefault();
 
         if (loginFormValidator.isValid) {
             const email = document.getElementById('email').value;
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', event => {
             authHelper.initializeSession()
                 .then(() => authHelper.signInWithEmailAndPassword(email, password))
                 .then(() => loginForm.submit())
-                .catch((error) => alert(error.message));
+                .catch(error => alert(error.message));
         }
     });
 

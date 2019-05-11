@@ -1,4 +1,4 @@
-function getDocument(documentPath) {
+function getDocumentByPath(documentPath) {
     return new Promise(resolve => {
         resolve(firebase.firestore().doc(documentPath));
     })
@@ -12,7 +12,7 @@ function getDocumentData(document) {
     });
 }
 
-function getCollection(collectionPath) {
+function getCollectionByPath(collectionPath) {
     return new Promise(resolve => {
         resolve(firebase.firestore().collection(collectionPath));
     })
@@ -21,6 +21,12 @@ function getCollection(collectionPath) {
 function getCollectionWithCondition(collection, condition) {
     return new Promise(resolve => {
         resolve(collection.where(condition.fieldPath, condition.opStr, condition.value));
+    });
+}
+
+function sortCollectionByField(collection, field) {
+    return new Promise(resolve => {
+        resolve(collection.orderBy(field, 'desc'));
     });
 }
 
@@ -46,12 +52,18 @@ function setDocumentField(document, field) {
     return document.set(field);
 }
 
+function deleteDocument(document) {
+    return document.delete();
+}
+
 module.exports = {
-    getDocument,
+    getDocumentByPath,
     getDocumentData,
-    getCollection,
+    getCollectionByPath,
     getCollectionWithCondition,
+    sortCollectionByField,
     getCollectionData,
     updateDocumentField,
-    setDocumentField
+    setDocumentField,
+    deleteDocument
 };
