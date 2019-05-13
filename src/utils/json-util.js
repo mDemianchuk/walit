@@ -28,26 +28,6 @@ function getTransactionsByType(transactionsJson, type) {
     return transactionsJson.filter((transaction) => transaction.type === type);
 }
 
-function getTransactionByUuid(transactionsJson, transactionUuid) {
-    return transactionsJson.filter((transaction) => transaction.uuid === transactionUuid);
-}
-
-function updateTransactionByUuid(transactionsJson, newTransaction) {
-    transactionsJson.forEach(function (transaction) {
-        if (transaction.uuid === newTransaction.uuid) {
-            transaction.date = newTransaction.date;
-            transaction.type = newTransaction.type;
-            transaction.description = newTransaction.description;
-            transaction.category = newTransaction.category;
-            transaction.amount = newTransaction.amount;
-        }
-    });
-}
-
-function deleteTransactionByUuid(transactionsJson, transactionUuid) {
-    return transactionsJson.filter((transaction) => transaction.uuid !== transactionUuid);
-}
-
 function getTotal(transactionsJson) {
     let total = 0;
     for (let key in transactionsJson) {
@@ -88,14 +68,6 @@ function getCategories(transactionsJson) {
     return Array.from(categoriesSet);
 }
 
-function sortJsonByProperty(transactionsJson, property) {
-    return transactionsJson.sort((a, b) => (a[property] < b[property]) ? 1 : -1)
-}
-
-function isValidJson(json) {
-    return !(json === undefined || json === null || json.length === 0);
-}
-
 module.exports = {
     getTransactionsInDateRange,
     getTransactionsAfterDate,
@@ -106,10 +78,5 @@ module.exports = {
     getTransactionsByType,
     getTotal,
     getTransactionsByDay,
-    getCategories,
-    sortJsonByProperty,
-    isValidJson,
-    getTransactionByUuid,
-    updateTransactionByUuid,
-    deleteTransactionByUuid
+    getCategories
 };

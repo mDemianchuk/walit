@@ -18,6 +18,5 @@ document.addEventListener('DOMContentLoaded', event => {
                 .catch(error => alert(error.message));
         }
     });
-
 });
 
