@@ -1,11 +1,11 @@
-const signUpValidator = require('../utils/validate/signup-validator');
+const signUpValidator = require('../utils/validate/sign-up-validator');
 const authHelper = require('../dao/auth-helper');
 const daoHelper = require('../dao/dao-helper');
 
 document.addEventListener('DOMContentLoaded', event => {
 
-    const signUpForm = document.getElementById('signup-form');
-    const signUpFormValidator = signUpValidator.getSignUpValidator('signup-form');
+    const signUpForm = document.getElementById('sign-up-form');
+    const signUpFormValidator = signUpValidator.getSignUpValidator('sign-up-form');
 
     signUpForm.addEventListener('submit', event => {
         event.preventDefault();

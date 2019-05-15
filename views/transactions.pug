@@ -1,0 +1,106 @@
+extends layout-with navbar
+
+block variables
+    - var pageTitle = 'Transactions'
+
+block append links
+    link(rel='stylesheet', href='../stylesheets/shared/input-form.css')
+    link(rel='stylesheet', href='../stylesheets/shared/large-button.css')
+    link(rel='stylesheet', href='../stylesheets/shared/table.css')
+    link(rel='stylesheet', href='../stylesheets/shared/modal-container.css')
+    link(rel='stylesheet', href='../stylesheets/shared/loader.css')
+
+block append body
+    main
+        #loader.loader
+        #header-top.hidden.page-container
+            h1 Your most recent transactions
+            h3 waLit made your finances easy
+        #no-transactions.hidden.page-container
+            h1 Looks like there are no transactions to display
+            h3 Add at least one transaction
+        #transactions-container.hidden.transactions-container
+            table#transactions-table
+                thead
+                    tr
+                        th Date
+                        th Description
+                        th Category
+                        th Amount
+                        th Type
+                        th Actions
+                tbody#transactions-table-body
+        #button-container.hidden.page-container
+            button#add-transaction-button.large-button
+                span.icon
+                    i.fas.fa-plus
+                .title Add a transaction
+            button#filter-transactions-button.large-button
+                span.icon
+                    i.fas.fa-search
+                .title Filter transactions
+        #add-transaction-modal.hidden.modal-container
+            .modal-content
+                h1 Add a transaction
+                h3 waLit made your finances easy
+                form#add-transaction-form.transaction-form(name='add-transaction-form', method='post')
+                    input#add-description.single(name='add_description', type='text', placeholder='Description of transaction', autocomplete='off')
+                    input#add-category.single(name='add_category', list='add-categories', placeholder='Category', autocomplete='off')
+                    datalist#add-categories
+                        option(value='Utilities')
+                        option(value='Rent')
+                        option(value='Medical')
+                        option(value='Education')
+                        option(value='Loans')
+                    input#add-date.single(name='add_date', placeholder='Date', type='text', onfocus="(this.type='date')", onblur="(this.type='text')")
+                    input#add-amount.single(name='add_amount', type='number', step='0.01', placeholder='Amount')
+                    select#add-type.single(name='add_type')
+                        option(value='', disabled='', selected='') Type
+                        option(value='Income') Income
+                        option(value='Expense') Expense
+                    input#add-transaction-submit.single(type='submit', value='Add')
+        #edit-transaction-modal.hidden.modal-container
+            .modal-content
+                h1 Edit a transaction
+                h3 waLit made your finances easy
+                form#edit-transaction-form.transaction-form(name='edit-transaction-form', method='post')
+                    input#edit-id(name='editId', type='text', value='', hidden='')
+                    input#edit-description.single(name='edit_description', type='text', placeholder='Description of transaction', autocomplete='off')
+                    input#edit-category.single(name='edit_category', list='edit-categories', placeholder='Category', autocomplete='off')
+                    datalist#edit-categories
+                        option(value='Utilities')
+                        option(value='Rent')
+                        option(value='Medical')
+                        option(value='Education')
+                        option(value='Loans')
+                    input#edit-date.single(name='edit_date', placeholder='Date', type='text', onfocus="(this.type='date')", onblur="(this.type='text')")
+                    input#edit-amount.single(name='edit_amount', type='number', step='0.01', placeholder='Amount')
+                    select#edit-type.single(name='edit_type')
+                        option(value='', disabled='', selected='') Type
+                        option(value='Income') Income
+                        option(value='Expense') Expense
+                    input#edit-transaction-submit.single(type='submit', value='Update')
+        #filter-transactions-modal.hidden.modal-container
+            .modal-content
+                h1 Filter transactions
+                h3 waLit made your finances easy
+                form#filter-transactions-form.transaction-form(name='filter-transactions-form', method='get')
+                    input#filter-category.single(name='filter-category', list='filter-categories', maxlength='20', placeholder='Category', autocomplete='off')
+                    datalist#filter-categories
+                        option(value='Utilities')
+                        option(value='Rent')
+                        option(value='Medical')
+                        option(value='Education')
+                        option(value='Loans')
+                    select#filter-type.single(name='filter-type')
+                        option(value='', disabled='', selected='') Type
+                        option(value='Income') Income
+                        option(value='Expense') Expense
+                    input#filter-date-after.single(name='filter-date-after', placeholder='After the date', type='text', onfocus="(this.type='date')", onblur="(this.type='text')")
+                    input#filter-date-before.single(name='filter-date-before', placeholder='Before the date', type='text', onfocus="(this.type='date')", onblur="(this.type='text')")
+                    input#filter-less-than.single(name='filter-less-than', type='number', min='0', step='0.01', placeholder='Less than')
+                    input#filter-more-than.single(name='filter-more-than', type='number', min='0', step='0.01', placeholder='More than')
+                    input#filter-transactions-submit.single(type='submit', value='Filter')
+
+block append scripts
+    script(src='../scriptBundles/transactions_controller.js')

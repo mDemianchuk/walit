@@ -30,11 +30,6 @@ nav a:hover {
   transition: var(--hover-transition);
 }
 
-nav a.active {
-  color: var(--main-text-color-inverse);
-  background-color: var(--active-background-color);
-}
-
 i {
   padding-right: var(--navbar-icon-padding);
 }

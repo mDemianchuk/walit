@@ -1,0 +1,21 @@
+extends layout
+
+block variables
+    - var pageTitle = 'Log In'
+
+block append links
+    link(rel='stylesheet', href='../stylesheets/shared/central-container.css')
+
+block append body
+    main
+        .central-container
+            p.logo waLit
+            form#login-form(name='login-form', method='post')
+                input#email.single(name='email', type='text', placeholder='Email', autocomplete='off')
+                input#password.single(name='password', type='password', placeholder='Password', autocomplete='off')
+                input(type='submit', value='Log In')
+                span Not registered?
+                    a(href='/sign-up')  Create an account
+
+block append scripts
+        script(src='../scriptBundles/login_controller.js')

@@ -1,0 +1,22 @@
+extends layout
+
+block variables
+    - var pageTitle = 'Sign Up'
+
+block append links
+    link(rel='stylesheet', href='../stylesheets/shared/central-container.css')
+
+block append body
+    main
+        .central-container
+            p.logo waLit
+            form#sign-up-form(name='sign-up-form', method='post')
+                input#email.single(name='email', type='text', placeholder='E-mail Address', autocomplete='off')
+                input#password.single(name='password', type='password', placeholder='Password', autocomplete='off')
+                input#password-confirm.single(name='password-confirm', type='password', placeholder='Confirm Password', autocomplete='off')
+                input(type='submit', value='Sign Up')
+                span Already have an account?
+                    a(href='/login')  Log In
+
+block append scripts
+    script(src='../scriptBundles/sign_up_controller.js')
