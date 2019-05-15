@@ -13,22 +13,10 @@ let userCurrency;
 let userTransactions;
 
 document.addEventListener('DOMContentLoaded', () => {
-    const signOutButton = document.getElementById('sign-out');
-
-    authHelper.addSignInObserver(user => {
-        if (authHelper.isSignedIn(user)) {
-            userId = user.uid;
-            retrieveUserData()
-                .then(() => loadPage());
-
-            signOutButton.addEventListener('click', () => {
-                authHelper.signOut()
-                    .catch(error => alert(error));
-            });
-        } else {
-            redirectUtil.redirectToPage('/login');
-        }
-    });
+    const user = authHelper.getCurrentUser();
+    userId = user.uid;
+    retrieveUserData()
+        .then(userData => loadPage(userData));
 });
 
 function retrieveUserData() {
@@ -87,7 +75,7 @@ function loadPage() {
             let description = document.getElementById('add-description').value;
             let category = document.getElementById('add-category').value;
             let date = new Date(document.getElementById('add-date').value);
-                date.setDate(date.getDate() + 1);
+            date.setDate(date.getDate() + 1);
             let amount = parseFloat(document.getElementById('add-amount').value);
             let type = document.getElementById('add-type').value;
             let uuid = generateUuid();
@@ -125,7 +113,7 @@ function loadPage() {
             if (editTransactionFormValidator.isValid) {
                 let uuid = document.getElementById('edit-id').value;
                 let date = new Date(document.getElementById('edit-date').value);
-                    date.setDate(date.getDate() + 1);
+                date.setDate(date.getDate() + 1);
                 let type = document.getElementById('edit-type').value;
                 let description = document.getElementById('edit-description').value;
                 let category = document.getElementById('edit-category').value;
@@ -140,7 +128,7 @@ function loadPage() {
                 };
 
                 retrieveTransactionDocument(uuid)
-                    .then(newTransactionDocument => daoHelper.updateDocumentField(newTransactionDocument, newTransaction))
+                    .then(newTransactionDocument => daoHelper.updateDocumentFieldIfValid(newTransactionDocument, newTransaction))
                     .then(() => editTransactionForm.submit())
             }
         });
@@ -158,9 +146,9 @@ function loadPage() {
 
             if (filterTransactionsFormValidator.isValid) {
                 let dateAfter = new Date(document.getElementById('filter-date-after').value);
-                    dateAfter.setDate(dateAfter.getDate() + 1);
+                dateAfter.setDate(dateAfter.getDate() + 1);
                 let dateBefore = new Date(document.getElementById('filter-date-before').value);
-                    dateBefore.setDate(dateBefore.getDate() + 1);
+                dateBefore.setDate(dateBefore.getDate() + 1);
                 let type = document.getElementById('filter-type').value;
                 let category = document.getElementById('filter-category').value;
                 let lessThan = parseFloat(document.getElementById('filter-less-than').value);
@@ -242,50 +230,50 @@ function createAndDisplayTransactionsTable(transactions) {
 function createTransactionRow(transaction, transactionTableBody) {
 
     let row = transactionTableBody.insertRow();
-        row.id = transaction.uuid;
+    row.id = transaction.uuid;
 
     const transactionDate = dateUtil.getShortDate(transaction.date.toDate());
     let dateColumn = row.insertCell(0);
-        dateColumn.innerHTML = transactionDate;
-        dateColumn.className = 'date';
+    dateColumn.innerHTML = transactionDate;
+    dateColumn.className = 'date';
 
     let descriptionColumn = row.insertCell(1);
-        descriptionColumn.innerHTML = transaction.description;
-        descriptionColumn.className = 'description';
+    descriptionColumn.innerHTML = transaction.description;
+    descriptionColumn.className = 'description';
 
     let categoryColumn = row.insertCell(2);
-        categoryColumn.innerHTML = transaction.category;
-        categoryColumn.className = 'category';
+    categoryColumn.innerHTML = transaction.category;
+    categoryColumn.className = 'category';
 
     let amountColumn = row.insertCell(3);
-        amountColumn.innerHTML = transaction.amount;
-        amountColumn.className = 'amount';
+    amountColumn.innerHTML = transaction.amount;
+    amountColumn.className = 'amount';
 
     let typeColumn = row.insertCell(4);
-        typeColumn.innerHTML = transaction.type;
-        typeColumn.className = 'type';
+    typeColumn.innerHTML = transaction.type;
+    typeColumn.className = 'type';
 
     let actionsColumn = row.insertCell(5);
 
     let editButton = document.createElement('button');
     let editButtonSpan = document.createElement('span');
     let editButtonIcon = document.createElement('i');
-        editButton.className = 'edit-transaction-button';
-        editButtonSpan.className = 'icon';
-        editButtonIcon.classList.add('fas', 'fa-edit');
-        editButtonSpan.append(editButtonIcon);
-        editButton.append(editButtonSpan);
+    editButton.className = 'edit-transaction-button';
+    editButtonSpan.className = 'icon';
+    editButtonIcon.classList.add('fas', 'fa-edit');
+    editButtonSpan.append(editButtonIcon);
+    editButton.append(editButtonSpan);
 
     let deleteButton = document.createElement('button');
     let deleteButtonSpan = document.createElement('span');
     let deleteButtonIcon = document.createElement('i');
-        deleteButton.className = 'delete-transaction-button';
-        deleteButtonSpan.className = 'icon';
-        deleteButtonIcon.classList.add('fas', 'fa-trash-alt');
-        deleteButtonSpan.append(deleteButtonIcon);
-        deleteButton.append(deleteButtonSpan);
+    deleteButton.className = 'delete-transaction-button';
+    deleteButtonSpan.className = 'icon';
+    deleteButtonIcon.classList.add('fas', 'fa-trash-alt');
+    deleteButtonSpan.append(deleteButtonIcon);
+    deleteButton.append(deleteButtonSpan);
 
-        actionsColumn.append(editButton, deleteButton);
+    actionsColumn.append(editButton, deleteButton);
 
     const editTransactionModal = document.getElementById('edit-transaction-modal');
     onClickDisplayModalContainer(editButton, editTransactionModal);

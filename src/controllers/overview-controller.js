@@ -1,64 +1,5 @@
-const daoHelper = require('../dao/dao-helper');
-const authHelper = require('../dao/auth-helper');
 const chartUtil = require('../utils/chart-util');
 const displayUtil = require('../utils/display-util');
-const redirectUtil = require('../utils/redirect-util');
-
-document.addEventListener('DOMContentLoaded', () => {
-    const signOutButton = document.getElementById('sign-out');
-
-    authHelper.addSignInObserver(user => {
-        if (authHelper.isSignedIn(user)) {
-            retrieveUserData(user.uid)
-                .then(userData => loadPage(userData));
-
-            signOutButton.addEventListener('click', () => {
-                authHelper.signOut()
-                    .catch(error => alert(error));
-            });
-        } else {
-            redirectUtil.redirectToPage('/login');
-        }
-    });
-});
-
-function retrieveUserData(userId) {
-    const userData = {};
-
-    return new Promise(resolve => {
-        retrieveUserSettings(userId)
-            .then(userSettings => userData.settings = userSettings)
-            .then(() => retrieveUserTransactionsByType(userId, 'Income'))
-            .then((userIncome) => userData.income = userIncome)
-            .then(() => retrieveUserTransactionsByType(userId, 'Expense'))
-            .then((userExpense) => userData.expense = userExpense)
-            .then(() => resolve(userData));
-    });
-}
-
-function retrieveUserTransactionsByType(userId, transactionsType) {
-    const transactionTypeCondition = {
-        fieldPath: 'type',
-        opStr: '==',
-        value: transactionsType
-    };
-
-    return new Promise(resolve => {
-        daoHelper.getCollectionByPath(`walit-transactions/${userId}/transactions`)
-            .then(userTransactionsCollection =>
-                daoHelper.getCollectionWithCondition(userTransactionsCollection, transactionTypeCondition))
-            .then(sameTypeTransactionsCollection => daoHelper.getCollectionData(sameTypeTransactionsCollection))
-            .then(sameTypeTransactions => resolve(sameTypeTransactions));
-    });
-}
-
-function retrieveUserSettings(userId) {
-    return new Promise(resolve => {
-        daoHelper.getDocumentByPath(`walit-settings/${userId}`)
-            .then(document => daoHelper.getDocumentData(document))
-            .then(userSettings => resolve(userSettings));
-    });
-}
 
 function loadPage(userData) {
     const loaderAnimation = document.getElementById('loader');
@@ -134,3 +75,5 @@ function activateSwitchElement(switchElement, container1, container2, container3
         }
     });
 }
+
+module.exports = loadPage;

@@ -5,6 +5,7 @@
 package-lock.json
 **/scriptBundles
 .firebase
+.idea/
 
 ### Node ###
 # Logs

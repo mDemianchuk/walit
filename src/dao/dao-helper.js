@@ -1,3 +1,6 @@
+const firebase = require('firebase/app');
+require('@firebase/firestore')
+
 function getDocumentByPath(documentPath) {
     return new Promise(resolve => {
         resolve(firebase.firestore().doc(documentPath));
@@ -44,8 +47,15 @@ function getCollectionData(collection) {
     });
 }
 
-function updateDocumentField(document, field) {
-    return document.update(field);
+function updateDocumentFieldIfValid(document, field) {
+    return new Promise(resolve => {
+        if(field) {
+            document.update(field)
+                .then(() => resolve(document));
+        } else {
+            resolve(document);
+        }
+    });
 }
 
 function setDocumentField(document, field) {
@@ -63,7 +73,7 @@ module.exports = {
     getCollectionWithCondition,
     sortCollectionByField,
     getCollectionData,
-    updateDocumentField,
+    updateDocumentFieldIfValid,
     setDocumentField,
     deleteDocument
 };

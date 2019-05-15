@@ -1,3 +1,6 @@
+const firebase = require('firebase/app');
+require('@firebase/auth');
+
 function initializeSession() {
     return firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION);
 }
@@ -10,16 +13,24 @@ function createUserWithEmailAndPassword(email, password) {
     return firebase.auth().createUserWithEmailAndPassword(email, password)
 }
 
-function addSignInObserver(observer) {
-    firebase.auth().onAuthStateChanged(observer);
-}
-
 function getCurrentUser() {
     return firebase.auth().currentUser;
 }
 
-function isSignedIn(user) {
-    return user;
+function getUserIdIfSignedIn() {
+    return new Promise((resolve, reject) => {
+        addSignInObserver(user => {
+            if (user) {
+                resolve(user.uid);
+            } else {
+                reject();
+            }
+        })
+    });
+}
+
+function addSignInObserver(observer) {
+    firebase.auth().onAuthStateChanged(observer);
 }
 
 function signOut() {
@@ -30,8 +41,7 @@ module.exports = {
     initializeSession,
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
-    addSignInObserver,
     getCurrentUser,
-    isSignedIn,
+    getUserIdIfSignedIn,
     signOut
 };
