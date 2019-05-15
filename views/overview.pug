@@ -1,0 +1,42 @@
+extends layout-with navbar
+
+block variables
+    - var pageTitle = 'Overview'
+
+block append links
+    link(rel='stylesheet', href='../stylesheets/overview.css')
+    link(rel='stylesheet', href='../stylesheets/shared/loader.css')
+
+block append body
+    main#main-content
+        #loader.loader
+        #header-top.hidden.page-container
+            h1 Track your finances with ease
+            h3 Customize your currency, monthly goal, and limit in Settings
+        #no-transactions.hidden.page-container
+            h1 Looks like there are no transactions to display
+            h3 Add at least one Income and one Expense transaction on Transactions page
+        #toggle-container.hidden.toggle-container
+            span.switch-container
+                span Income
+                label.switch
+                    input#transaction-type-switch(type='checkbox')
+                    span.slider-type
+                span Expense
+            span.switch-container
+                span Line Chart
+                label.switch
+                    input#chart-type-switch(type='checkbox')
+                    span.slider-chart
+                span Doughnut Chart
+        #expense-line-chart-container.hidden.chart-container
+            canvas#expense-line-chart.chart
+        #expense-doughnut-chart-container.hidden.chart-container
+            canvas#expense-doughnut-chart.chart
+        #income-line-chart-container.hidden.chart-container
+            canvas#income-line-chart.chart
+        #income-doughnut-chart-container.hidden.chart-container
+            canvas#income-doughnut-chart.chart
+
+block append scripts
+    script(src='../scriptBundles/overview_controller.js')

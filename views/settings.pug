@@ -1,0 +1,26 @@
+extends layout
+
+block variables
+    - var pageTitle = 'Settings'
+
+block append links
+    link(rel='stylesheet', href='../stylesheets/shared/central-container.css')
+
+block append body
+    main
+        .central-container
+            p.logo Settings
+            form#settings-form(name='settings-form', method='post')
+                input#goal.single(name='goal', type='number', step='0.01', placeholder='Monthly Income Goal', autocomplete='off')
+                input#limit.single(name='limit', type='number', step='0.01', placeholder='Monthly Expense Limit', autocomplete='off')
+                select#currency.single(name='settings-currency')
+                    option(value='', disabled='', selected='') Currency
+                    option(value='$') United States Dollars
+                    option(value='€') Euro
+                    option(value='£') United Kingdom Pounds
+                input(type='submit', value='Save')
+                span Changed your mind?
+                    a(href='/overview')  Exit without changes
+
+block append scripts
+    script(src='../scriptBundles/settings_controller.js')

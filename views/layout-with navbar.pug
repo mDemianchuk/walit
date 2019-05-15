@@ -1,0 +1,21 @@
+extends layout
+
+block append links
+    link(rel='stylesheet', href='https://use.fontawesome.com/releases/v5.8.1/css/all.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+    link(rel='stylesheet', href='../stylesheets/shared/navbar.css')
+
+block append body
+    nav
+        .navbar-group
+            a(href='/overview') Overview
+            a(href='/transactions') Transactions
+        .navbar-group
+            a.logo(href='/overview') waLit
+        .navbar-group
+            a(href='/settings')
+                i.fa.fa-cog(aria-hidden='true')
+                | Settings
+            a#sign-out(href='/login')
+                i.fa.fa-fw.fa-user
+                | Log Out

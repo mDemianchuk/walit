@@ -1,0 +1,26 @@
+block variables
+doctype html
+html(lang='en')
+    head
+        meta(charset='utf-8')
+        title #{pageTitle} | waLit - Your Personal Budget Manager
+        block links
+            link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=Poppins')
+            link(rel='stylesheet', href='../stylesheets/shared/constants.css')
+            link(rel='stylesheet', href='../stylesheets/shared/page.css')
+    body
+        block body
+        block scripts
+            script(src='https://www.gstatic.com/firebasejs/5.10.1/firebase-app.js')
+            script(src='https://www.gstatic.com/firebasejs/5.10.1/firebase-auth.js')
+            script(src='https://www.gstatic.com/firebasejs/5.10.1/firebase-firestore.js')
+            script.
+                var config = {
+                    apiKey: "AIzaSyDYZEY_AVfgdayz0fy5-XruR6L6PN07uow",
+                    authDomain: "mdemianchuk-walit.firebaseapp.com",
+                    databaseURL: "https://mdemianchuk-walit.firebaseio.com",
+                    projectId: "mdemianchuk-walit",
+                    storageBucket: "mdemianchuk-walit.appspot.com",
+                    messagingSenderId: "28154671558"
+                };
+                firebase.initializeApp(config);
